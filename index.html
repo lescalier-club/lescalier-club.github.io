@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L'Escalier</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="L'Escalier, le club des entrepreneurs de 18 à 30 ans qui montent ensemble, à Montpellier. Gratuit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400;62..125,500;62..125,700;62..125,900&family=Instrument+Serif:ital@0;1&display=swap">
+<style>
+/* Concept : la page est une ascension. On part du parking de Cazevieille, de nuit (0 m),
+   on arrive au sommet du Pic Saint-Loup au lever du soleil (658 m). Un altimètre suit la montée. */
+:root {
+  --nuit: #15120E;
+  --nuit-2: #1D1914;
+  --trait: #3A332A;
+  --creme: #F4F1E9;
+  --creme-2: #B8B0A1;
+  --orange: #D76634;
+  --braise: #8E3816;
+  --aube: #F3B36B;
+
+  --f-display: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --f-sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+
+  --t-xs: .78rem; --t-s: .92rem; --t-m: 1.06rem; --t-l: 1.35rem;
+  --t-xl: clamp(2rem, 5.2vw, 3.6rem);
+  --t-xxl: clamp(2.8rem, 9vw, 6.6rem);
+
+  --gutter-l: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+  --max: 1120px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--nuit);
+  color: var(--creme);
+  font-family: var(--f-sans);
+  font-size: var(--t-m);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+::selection { background: var(--orange); color: var(--nuit); }
+
+.wrap {
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-left: var(--gutter-l);
+  padding-right: var(--gutter-r);
+}
+section { position: relative; }
+.band { padding-block: clamp(72px, 12vw, 140px); }
+
+/* Étiquettes d'altitude */
+.alt {
+  display: inline-flex; align-items: center; gap: .6em;
+  font-family: var(--f-sans);
+  font-stretch: 125%;
+  font-weight: 700;
+  font-size: var(--t-xs);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--orange);
+  font-variant-numeric: tabular-nums;
+}
+.alt::before { content: ""; width: 14px; height: 8px; background:
+  linear-gradient(var(--orange),var(--orange)) 0 100%/5px 3px no-repeat,
+  linear-gradient(var(--orange),var(--orange)) 5px 50%/5px 3px no-repeat,
+  linear-gradient(var(--orange),var(--orange)) 10px 0/4px 3px no-repeat; }
+.alt .lieu { color: var(--creme-2); letter-spacing: .08em; font-weight: 500; }
+
+h1, h2, h3 { margin: 0; font-weight: 400; text-wrap: balance; }
+h2 {
+  font-family: var(--f-display);
+  font-size: var(--t-xl);
+  line-height: 1.02;
+  letter-spacing: -.01em;
+  margin-top: 18px;
+  max-width: 18ch;
+}
+h2 em, .hero h1 em { font-style: italic; color: var(--orange); }
+.lead { color: var(--creme-2); max-width: 58ch; margin: 22px 0 0; font-size: var(--t-l); line-height: 1.5; }
+p { margin: 0; }
+
+/* ---------- HERO ---------- */
+.hero { overflow: hidden; }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.hero .wrap { position: relative; padding-block: clamp(28px, 5vw, 48px) clamp(64px, 10vw, 120px); }
+.top {
+  display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.marque { display: inline-flex; align-items: flex-end; gap: 12px; text-decoration: none; }
+.marque svg { width: 38px; height: auto; }
+.marque span {
+  font-family: var(--f-sans); font-stretch: 125%; font-weight: 900;
+  font-size: 1.15rem; letter-spacing: .02em; line-height: 1;
+}
+.top .cta-mini {
+  font-stretch: 112%; font-weight: 700; font-size: var(--t-s);
+  text-decoration: none; padding: 10px 16px; border: 1.5px solid var(--creme);
+  transition: background .2s, color .2s;
+}
+.top .cta-mini:hover { background: var(--creme); color: var(--nuit); }
+
+.hero-grid {
+  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .9fr);
+  gap: clamp(24px, 5vw, 64px); align-items: end; margin-top: clamp(56px, 10vw, 120px);
+}
+.hero h1 {
+  font-family: var(--f-display);
+  font-size: var(--t-xxl);
+  line-height: .95;
+  letter-spacing: -.02em;
+  margin-top: 22px;
+}
+.hero .sous {
+  margin-top: 28px; display: flex; flex-wrap: wrap; gap: 8px 22px;
+  font-stretch: 112%; font-weight: 500; font-size: var(--t-s); color: var(--creme-2);
+}
+.hero .sous b { color: var(--creme); font-weight: 700; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--f-sans); font-stretch: 112%; font-weight: 700; font-size: var(--t-m);
+  padding: 16px 22px; text-decoration: none; border: 0; cursor: pointer;
+  background: var(--orange); color: var(--nuit);
+  box-shadow: 6px 6px 0 var(--creme);
+  transition: transform .15s, box-shadow .15s;
+}
+.btn:hover { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 var(--creme); }
+.btn:active { transform: translate(4px,4px); box-shadow: 2px 2px 0 var(--creme); }
+.btn.ghost { background: transparent; color: var(--creme); box-shadow: none; border: 1.5px solid var(--trait); }
+.btn.ghost:hover { border-color: var(--creme); transform: none; }
+
+.escalier-hero { width: 100%; max-width: 420px; justify-self: end; }
+.escalier-hero .marches { fill: none; stroke: var(--creme); stroke-width: 7; stroke-linecap: square; stroke-linejoin: miter;
+  stroke-dasharray: 520; stroke-dashoffset: 0; animation: trace 1.6s .2s cubic-bezier(.6,0,.2,1) both; }
+.escalier-hero .roi { fill: var(--orange); transform-box: fill-box; transform-origin: 50% 100%;
+  animation: pose .5s 1.6s cubic-bezier(.2,1.6,.4,1) both; }
+@keyframes trace { from { stroke-dashoffset: 520; } }
+@keyframes pose { from { transform: translateY(-40px); opacity: 0; } }
+.escalier-hero figcaption { margin-top: 14px; font-size: var(--t-xs); color: var(--creme-2); letter-spacing: .06em; text-transform: uppercase; font-stretch: 112%; text-align: right; }
+
+/* ---------- MANIFESTE ---------- */
+.manifeste { background: var(--nuit-2); border-block: 1px solid var(--trait); }
+.manifeste .grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(28px, 6vw, 80px); align-items: start; }
+.citation {
+  font-family: var(--f-display); font-size: clamp(1.7rem, 3.6vw, 2.7rem); line-height: 1.15; margin: 0;
+}
+.citation em { color: var(--orange); }
+.manifeste .texte { display: grid; gap: 18px; max-width: 60ch; color: var(--creme-2); font-size: var(--t-l); line-height: 1.55; }
+.manifeste .texte strong { color: var(--creme); font-weight: 500; }
+.signature { display: flex; align-items: center; gap: 14px; margin-top: 10px; color: var(--creme); font-size: var(--t-s); }
+.signature .trait { width: 40px; height: 2px; background: var(--orange); }
+
+/* ---------- MARCHES (interactif) ---------- */
+.rythme { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1px; background: var(--trait); border: 1px solid var(--trait); margin-top: 40px; max-width: 760px; }
+.rythme div { background: var(--nuit); padding: 20px 22px; }
+.rythme b { display: block; font-family: var(--f-display); font-size: 1.6rem; font-weight: 400; }
+.rythme span { color: var(--creme-2); font-size: var(--t-s); }
+
+.escalier {
+  margin-top: 56px;
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: end; gap: 0;
+  min-height: 330px;
+}
+.marche {
+  position: relative; display: flex; flex-direction: column; justify-content: flex-start; gap: 6px;
+  text-align: left; font: inherit; color: var(--creme); cursor: pointer;
+  background: var(--nuit-2); border: 0; border-top: 3px solid var(--creme); border-left: 1px solid var(--trait);
+  padding: 16px 14px; transition: background .2s, border-color .2s;
+}
+.marche:nth-child(1) { height: 110px; } .marche:nth-child(2) { height: 165px; } .marche:nth-child(3) { height: 220px; }
+.marche:nth-child(4) { height: 275px; } .marche:nth-child(5) { height: 330px; }
+.marche .n { font-stretch: 125%; font-weight: 900; font-size: var(--t-xs); letter-spacing: .12em; color: var(--creme-2); }
+.marche .nom { font-family: var(--f-display); font-size: clamp(1.1rem, 2.1vw, 1.7rem); line-height: 1.05; }
+.marche:hover { background: #262019; }
+.marche[aria-pressed="true"] { background: var(--orange); color: var(--nuit); border-top-color: var(--orange); }
+.marche[aria-pressed="true"] .n { color: var(--nuit); }
+.marche .pion { position: absolute; top: -34px; left: 14px; width: 18px; display: none; }
+.marche[aria-pressed="true"] .pion { display: block; }
+.detail {
+  border: 1px solid var(--trait); border-top: 0; padding: 26px clamp(18px, 3vw, 32px);
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 12px 40px; align-items: baseline;
+}
+.detail h3 { font-family: var(--f-display); font-size: clamp(1.6rem, 3vw, 2.3rem); line-height: 1.05; }
+.detail p { color: var(--creme-2); max-width: 56ch; }
+.detail .preuve { grid-column: 2; font-size: var(--t-s); color: var(--creme); }
+.detail .preuve::before { content: "La preuve : "; color: var(--orange); font-weight: 700; }
+.note { margin-top: 18px; font-size: var(--t-s); color: var(--creme-2); max-width: 70ch; }
+
+/* ---------- PILIERS ---------- */
+.piliers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 48px; border-top: 1px solid var(--trait); }
+.pilier { padding: 26px 24px 30px 0; border-bottom: 1px solid var(--trait); display: grid; gap: 8px; align-content: start; }
+.pilier:not(:nth-child(3n+1)) { padding-left: 24px; border-left: 1px solid var(--trait); }
+.pilier h3 { font-family: var(--f-display); font-size: 1.75rem; line-height: 1.1; }
+.pilier p { color: var(--creme-2); font-size: var(--t-s); max-width: 34ch; }
+.voix { margin-top: 26px; font-family: var(--f-display); font-style: italic; font-size: var(--t-l); color: var(--creme); }
+
+/* ---------- ACTIVITÉS ---------- */
+.activites { margin-top: 44px; border-top: 1px solid var(--creme); }
+.activite {
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.6fr) auto; gap: 8px 32px; align-items: baseline;
+  padding: 24px 0; border-bottom: 1px solid var(--trait);
+}
+.activite h3 { font-family: var(--f-display); font-size: clamp(1.7rem, 3.4vw, 2.6rem); line-height: 1; }
+.activite p { color: var(--creme-2); max-width: 54ch; }
+.activite .quand { font-stretch: 112%; font-weight: 700; font-size: var(--t-xs); letter-spacing: .1em; text-transform: uppercase; color: var(--orange); white-space: nowrap; }
+.activite.phare h3 { color: var(--orange); }
+
+/* ---------- FAMILLE ---------- */
+.famille .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 80px); margin-top: 44px; }
+.lois { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: loi; }
+.lois li { counter-increment: loi; display: grid; grid-template-columns: 44px minmax(0,1fr); gap: 4px 14px; padding: 18px 0; border-top: 1px solid var(--trait); }
+.lois li::before { content: counter(loi); font-family: var(--f-display); font-size: 2rem; line-height: 1; color: var(--orange); grid-row: span 2; }
+.lois b { font-weight: 700; font-stretch: 105%; }
+.lois span { color: var(--creme-2); font-size: var(--t-s); }
+.portes h3 { font-stretch: 125%; font-weight: 900; font-size: var(--t-xs); letter-spacing: .14em; text-transform: uppercase; color: var(--creme-2); margin-bottom: 14px; }
+.porte { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; padding: 16px 0; border-top: 1px solid var(--trait); flex-wrap: wrap; }
+.porte b { font-family: var(--f-display); font-weight: 400; font-size: 1.5rem; }
+.porte span { color: var(--creme-2); font-size: var(--t-s); }
+
+/* ---------- COMPARATIF ---------- */
+.compare { margin-top: 44px; display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1fr) minmax(0, 1fr); border-top: 1px solid var(--creme); }
+.compare > div { padding: 20px 18px 20px 0; border-bottom: 1px solid var(--trait); }
+.compare .h { font-stretch: 125%; font-weight: 900; font-size: var(--t-xs); letter-spacing: .14em; text-transform: uppercase; color: var(--creme-2); }
+.compare .h.ici { color: var(--orange); }
+.compare .k { color: var(--creme-2); font-size: var(--t-s); }
+.compare .ailleurs { color: var(--creme-2); text-decoration: line-through; text-decoration-color: var(--braise); text-decoration-thickness: 2px; }
+.compare .nous { font-family: var(--f-display); font-size: 1.45rem; line-height: 1.15; }
+
+/* ---------- SOMMET ---------- */
+.sommet {
+  background:
+    linear-gradient(to bottom, var(--nuit) 0, #2A1610 90px, var(--braise) 220px, var(--orange) 400px, var(--aube) 100%);
+  color: var(--creme);
+}
+.sommet .wrap { padding-block: clamp(90px, 14vw, 170px) clamp(60px, 9vw, 100px); }
+.sommet .metres {
+  font-family: var(--f-sans); font-stretch: 125%; font-weight: 900;
+  font-size: clamp(4.5rem, 19vw, 13rem); line-height: .82; letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+}
+.sommet .metres small { font-size: .35em; letter-spacing: 0; }
+.sommet h2 { max-width: 16ch; }
+.etapes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin-top: 52px; border-top: 2px solid var(--nuit); }
+.etape { padding: 18px 18px 0 0; display: grid; gap: 6px; align-content: start; }
+.etape .n { font-stretch: 125%; font-weight: 900; font-size: var(--t-xs); letter-spacing: .12em; color: var(--nuit); }
+.etape b { font-family: var(--f-display); font-weight: 400; font-size: 1.5rem; color: var(--nuit); line-height: 1.1; }
+.etape span { font-size: var(--t-s); color: #2A1610; }
+.sommet .actions { margin-top: 48px; }
+.sommet .btn { background: var(--nuit); color: var(--creme); box-shadow: 6px 6px 0 var(--creme); }
+.sommet .btn.ghost { background: transparent; color: var(--nuit); border-color: var(--nuit); box-shadow: none; }
+.lien-note { margin-top: 16px; font-size: var(--t-s); color: var(--nuit); min-height: 1.4em; }
+
+footer { background: var(--aube); color: var(--nuit); }
+footer .wrap { padding-block: 26px calc(26px + env(safe-area-inset-bottom, 0px)); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: var(--t-s); font-stretch: 112%; }
+footer a { font-weight: 700; }
+
+/* ---------- ALTIMÈTRE ---------- */
+.altimetre {
+  position: fixed; z-index: 20;
+  right: calc(18px + env(safe-area-inset-right, 0px)); top: 50%; transform: translateY(-50%);
+  display: grid; justify-items: end; gap: 10px; pointer-events: none;
+  font-stretch: 125%; font-weight: 700; font-size: .7rem; letter-spacing: .1em; color: var(--creme-2);
+  font-variant-numeric: tabular-nums;
+}
+.altimetre .rail { position: relative; width: 2px; height: 46vh; background: var(--trait); }
+.altimetre .rempli { position: absolute; bottom: 0; left: 0; width: 2px; height: 0; background: var(--orange); }
+.altimetre .pion { position: absolute; left: -8px; bottom: 0; width: 18px; transform: translateY(50%); }
+.altimetre .valeur { color: var(--creme); font-size: .82rem; }
+.altimetre .lieu { max-width: 11ch; text-align: right; }
+.altimetre { transition: opacity .3s; }
+.altimetre.arrive { opacity: 0; }
+
+@media (max-width: 860px) {
+  .hero-grid, .manifeste .grid, .famille .grid { grid-template-columns: minmax(0, 1fr); }
+  .escalier-hero { justify-self: start; max-width: 300px; }
+  .escalier-hero figcaption { text-align: left; }
+  .piliers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pilier:not(:nth-child(3n+1)) { padding-left: 0; border-left: 0; }
+  .pilier:nth-child(2n) { padding-left: 20px; border-left: 1px solid var(--trait); }
+  .activite { grid-template-columns: minmax(0, 1fr); }
+  .detail { grid-template-columns: minmax(0, 1fr); }
+  .detail .preuve { grid-column: 1; }
+  .etapes { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 22px; }
+  .altimetre { top: auto; transform: none; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); right: calc(14px + env(safe-area-inset-right, 0px));
+    background: var(--nuit); border: 1px solid var(--trait); padding: 8px 12px; grid-auto-flow: column; align-items: center; }
+  .altimetre .rail, .altimetre .lieu { display: none; }
+}
+@media (max-width: 560px) {
+  .piliers { grid-template-columns: minmax(0, 1fr); }
+  .pilier:nth-child(2n) { padding-left: 0; border-left: 0; }
+  .escalier { grid-template-columns: minmax(0, 1fr); min-height: 0; gap: 0; }
+  .marche, .marche:nth-child(n) { height: auto; flex-direction: row; align-items: baseline; gap: 14px; border-left: 0; }
+  .marche:nth-child(1) { margin-right: 32%; } .marche:nth-child(2) { margin-right: 24%; } .marche:nth-child(3) { margin-right: 16%; }
+  .marche:nth-child(4) { margin-right: 8%; }
+  .escalier { display: flex; flex-direction: column-reverse; align-items: stretch; }
+  .marche .pion { top: 14px; left: auto; right: 12px; }
+  .marche[aria-pressed="true"] .pion g { fill: var(--nuit); }
+  .compare { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .compare .k { grid-column: 1 / -1; padding-bottom: 0; border-bottom: 0; color: var(--orange); font-weight: 700; font-size: var(--t-xs); letter-spacing: .1em; text-transform: uppercase; }
+  .compare .h.vide { display: none; }
+  .rythme { grid-template-columns: minmax(0, 1fr); }
+  .etapes { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .escalier-hero .marches, .escalier-hero .roi { animation: none; }
+  .btn, .marche { transition: none; }
+}
+</style>
+</head>
+<body>
+
+
+<section class="hero" id="depart">
+  <canvas id="topo" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="top">
+      <a class="marque" href="#depart" aria-label="L'Escalier, retour en haut">
+        <svg viewBox="0 0 60 64" aria-hidden="true">
+          <path d="M3 61 V52 H15 V40 H27 V28 H39 V16 H51" fill="none" stroke="#F4F1E9" stroke-width="5" stroke-linecap="square"/>
+          <g transform="translate(39.5 0) scale(1.15)" fill="#D76634"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g>
+        </svg>
+        <span>L’ESCALIER</span>
+      </a>
+      <a class="cta-mini" href="#sommet">Rejoindre le club</a>
+    </div>
+
+    <div class="hero-grid">
+      <div>
+        <span class="alt">0 m <span class="lieu">Montpellier · le départ</span></span>
+        <h1>Le club des entrepreneurs qui <em>montent.</em></h1>
+        <div class="sous"><span><b>18 – 30 ans</b></span><span><b>Montpellier</b></span><span><b>Gratuit</b>, sur un appel de 20 min</span></div>
+        <div class="actions">
+          <a class="btn" href="#sommet">Je veux monter</a>
+          <a class="btn ghost" href="#monter">Comment on monte ↓</a>
+        </div>
+      </div>
+      <figure class="escalier-hero" style="margin:0">
+        <svg viewBox="0 -40 300 300" role="img" aria-label="Un escalier de cinq marches, un roi d'échecs orange posé sur la dernière">
+          <path class="marches" d="M6 254 V214 H66 V164 H126 V114 H186 V64 H246 V40 H294"/>
+          <g transform="translate(246 -28) scale(4.8)"><g class="roi"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></g>
+        </svg>
+        <figcaption>Ici, tout le monde part d’en bas</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="manifeste band" id="pourquoi">
+  <div class="wrap">
+    <span class="alt">120 m <span class="lieu">Pourquoi ce club</span></span>
+    <div class="grid" style="margin-top:28px">
+      <p class="citation">« Tu deviens la moyenne des gens qui t’entourent. Autour de moi, il n’y en avait pas assez qui <em>montent</em>. »</p>
+      <div class="texte">
+        <p>J’ai 20 ans. J’ai lancé plusieurs activités, je les ai arrêtées. Et j’ai compris une chose : <strong>tout seul, tu tournes en rond.</strong></p>
+        <p>Alors je construis l’endroit qui me manquait. Un environnement pour ceux qui ont envie de monter, qui ont le même état d’esprit. Pas pour ceux qui sont déjà arrivés.</p>
+        <p>Je pars de zéro, et je documente tout : <strong>les chiffres, les erreurs, les refus.</strong> Si tu montes avec moi, on le fait ensemble.</p>
+        <div class="signature"><span class="trait"></span>Adam, fondateur</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="monter">
+  <div class="wrap">
+    <span class="alt">240 m <span class="lieu">Comment on monte</span></span>
+    <h2>Ton grade ici est <em>prouvé</em>, jamais déclaré.</h2>
+    <p class="lead">Chaque marche est un fait réel de ton activité. Tu ne montes pas parce que tu le dis, tu montes parce que c’est arrivé.</p>
+
+    <div class="rythme" aria-label="Le rythme de la semaine">
+      <div><b>Lundi</b><span>Tu annonces ta marche de la semaine devant le groupe.</span></div>
+      <div><b>Vendredi</b><span>Tu dis si elle est passée. Personne ne lâche quand d’autres attendent son résultat.</span></div>
+    </div>
+
+    <div class="escalier" role="group" aria-label="Les marches du club">
+      <button class="marche" type="button" data-i="0" aria-pressed="true"><svg class="pion" viewBox="0 0 10 14" aria-hidden="true"><g fill="#D76634"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></svg><span class="n">MARCHE 0</span><span class="nom">Tu arrives</span></button>
+      <button class="marche" type="button" data-i="1" aria-pressed="false"><svg class="pion" viewBox="0 0 10 14" aria-hidden="true"><g fill="#D76634"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></svg><span class="n">MARCHE 1</span><span class="nom">Premier client</span></button>
+      <button class="marche" type="button" data-i="2" aria-pressed="false"><svg class="pion" viewBox="0 0 10 14" aria-hidden="true"><g fill="#D76634"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></svg><span class="n">MARCHE 2</span><span class="nom">1 000 € par mois</span></button>
+      <button class="marche" type="button" data-i="3" aria-pressed="false"><svg class="pion" viewBox="0 0 10 14" aria-hidden="true"><g fill="#D76634"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></svg><span class="n">MARCHE 3</span><span class="nom">5 000 € par mois</span></button>
+      <button class="marche" type="button" data-i="4" aria-pressed="false"><svg class="pion" viewBox="0 0 10 14" aria-hidden="true"><g fill="#D76634"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></svg><span class="n">MARCHE 4</span><span class="nom">Tu tends la main</span></button>
+    </div>
+    <div class="detail" id="detail" aria-live="polite">
+      <h3 id="d-titre">Tu arrives</h3>
+      <p id="d-texte">Un appel de 20 minutes avec moi. Tu me racontes ce que tu fais et où tu veux aller, je t’explique le club, et on fixe ensemble ta première marche.</p>
+      <p class="preuve" id="d-preuve">tu es là, et tu as envie de monter.</p>
+    </div>
+    <p class="note">Tes chiffres restent entre toi et moi. Ce qui se dit dans le club ne sort pas du club.</p>
+  </div>
+</section>
+
+<section class="manifeste band" id="partage">
+  <div class="wrap">
+    <span class="alt">360 m <span class="lieu">Ce qu’on partage</span></span>
+    <h2>Pas de théorie. Ce qu’on fait <em>vraiment</em>.</h2>
+    <div class="piliers">
+      <div class="pilier"><h3>Le mental</h3><p>Les habitudes et la discipline qui tiennent quand la motivation lâche.</p></div>
+      <div class="pilier"><h3>Le corps</h3><p>On s’entraîne comme des athlètes, avec le coach du club. Ton business ne monte pas plus haut que ton énergie.</p></div>
+      <div class="pilier"><h3>L’intérieur</h3><p>Spiritualité, loi de l’attraction. Une grosse partie de ce que je veux transmettre. Libre à chacun.</p></div>
+      <div class="pilier"><h3>L’argent</h3><p>Statuts, compta, banque pro, crédit : chaque étape administrative, marche par marche.</p></div>
+      <div class="pilier"><h3>L’IA et les outils</h3><p>Mon second cerveau, mes prompts, les outils que j’utilise tous les jours.</p></div>
+      <div class="pilier"><h3>Vendre</h3><p>Prospection, appels, contenu : les petites techniques qui font signer.</p></div>
+    </div>
+    <p class="voix">Je partage ce que je fais, et ce qui marche pour moi.</p>
+  </div>
+</section>
+
+<section class="band" id="vivre">
+  <div class="wrap">
+    <span class="alt">450 m <span class="lieu">Ce qu’on vit ensemble</span></span>
+    <h2>On ne parle pas business derrière un écran. On <em>vit</em> des choses.</h2>
+    <div class="activites">
+      <div class="activite phare"><h3>La Montée</h3><p>Le Pic Saint-Loup de nuit, à la frontale. Au sommet, au lever du soleil, chacun dit son objectif du trimestre. Puis petit-déj tous ensemble.</p><span class="quand">Chaque trimestre</span></div>
+      <div class="activite"><h3>La Table</h3><p>Un vrai repas, tout le monde assis. Tour de table : ton métier, ta marche du mois. Le cœur du club.</p><span class="quand">Chaque mois</span></div>
+      <div class="activite"><h3>Sous pression</h3><p>Stand de tir encadré par des pros. Respirer, se concentrer, décider sous pression, comme en business.</p><span class="quand">Événement</span></div>
+      <div class="activite"><h3>Le sport</h3><p>Des séances en groupe avec le coach du club.</p><span class="quand">Régulier</span></div>
+      <div class="activite"><h3>Le saut</h3><p>Le parachute, pour ceux qui veulent passer un cap. Le jour où tu sautes, la peur devient une porte.</p><span class="quand">Pour les volontaires</span></div>
+      <div class="activite"><h3>Le jour des proches</h3><p>Tu viens avec quelqu’un de ton entourage, pour montrer à ceux que tu aimes ce que tu construis.</p><span class="quand">1 à 2 fois par an</span></div>
+      <div class="activite"><h3>La retraite</h3><p>48 h loin de tout. Sport le matin, deep work la journée, l’intérieur le soir.</p><span class="quand">48 heures</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="manifeste band famille" id="famille">
+  <div class="wrap">
+    <span class="alt">540 m <span class="lieu">Une famille</span></span>
+    <h2>On monte <em>ensemble</em>, ou on ne monte pas.</h2>
+    <div class="grid">
+      <ol class="lois" aria-label="Les règles de la famille">
+        <li><b>On ne laisse personne seul.</b><span>Deux semaines sans nouvelles, et un membre t’écrit. Le creux est normal, l’abandon non.</span></li>
+        <li><b>Chacun a un parrain.</b><span>Quelqu’un d’un étage au-dessus t’accueille. Quand tu montes, tu deviens parrain à ton tour.</span></li>
+        <li><b>On célèbre chaque marche.</b><span>Premier client, premiers 1 000 € : tout le monde le fête, en vrai, à la table.</span></li>
+        <li><b>On se dit la vérité.</b><span>Franc, jamais méchant. On peut discuter sans se disputer.</span></li>
+        <li><b>La compétition, c’est contre soi-même.</b><span>Tu te compares à ton mois dernier, jamais pour écraser l’autre.</span></li>
+      </ol>
+      <div class="portes">
+        <h3>Ceux qui ouvrent les portes</h3>
+        <div class="porte"><b>Le coach du club</b><span>Entraînement et physique</span></div>
+        <div class="porte"><b>LFMEAL</b><span>Nutrition et repas</span></div>
+        <div class="porte"><b>onveutacheter.fr</b><span>Crédit immobilier et assurance</span></div>
+        <div class="porte"><b>Nos accompagnants</b><span>Énergie et spiritualité</span></div>
+        <div class="porte"><b>Et bientôt d’autres</b><span>Un pro de confiance pour chaque marche</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="difference">
+  <div class="wrap">
+    <span class="alt">610 m <span class="lieu">La différence</span></span>
+    <h2>Les autres clubs t’attendent en haut. Nous, on part d’<em>en bas</em>.</h2>
+    <div class="compare" role="table" aria-label="Les autres clubs comparés à L'Escalier">
+      <div class="h vide" role="columnheader"></div><div class="h" role="columnheader">Ailleurs</div><div class="h ici" role="columnheader">À L’Escalier</div>
+      <div class="k" role="rowheader">Pour entrer</div><div class="ailleurs" role="cell">Prouve que tu gagnes déjà 15 000 € par mois</div><div class="nous" role="cell">Montre que tu as envie de monter</div>
+      <div class="k" role="rowheader">Le prix</div><div class="ailleurs" role="cell">Communiqué après candidature</div><div class="nous" role="cell">Gratuit. Un appel de 20 minutes.</div>
+      <div class="k" role="rowheader">Ton statut</div><div class="ailleurs" role="cell">Il s’achète</div><div class="nous" role="cell">Il se prouve, marche après marche</div>
+      <div class="k" role="rowheader">On se retrouve</div><div class="ailleurs" role="cell">Dans un salon d’hôtel</div><div class="nous" role="cell">Au sommet du Pic Saint-Loup, avant le lever du soleil</div>
+    </div>
+  </div>
+</section>
+
+<section class="sommet" id="sommet">
+  <div class="wrap">
+    <span class="alt" style="color:var(--aube)">Le sommet <span class="lieu" style="color:var(--creme)">Pic Saint-Loup</span></span>
+    <p class="metres" aria-label="658 mètres">658<small> m</small></p>
+    <h2>Ta première marche, c’est <em style="color:var(--creme)">aujourd’hui</em>.</h2>
+    <div class="etapes">
+      <div class="etape"><span class="n">1</span><b>Réserve ton appel</b><span>20 minutes avec moi, pour faire connaissance.</span></div>
+      <div class="etape"><span class="n">2</span><b>Entre sur le Discord</b><span>C’est là que vit le club, tous les jours.</span></div>
+      <div class="etape"><span class="n">3</span><b>Présente-toi</b><span>Qui tu es, ce que tu fais, où tu veux aller.</span></div>
+      <div class="etape"><span class="n">4</span><b>Fixe ta marche</b><span>Le lundi suivant, devant tout le monde.</span></div>
+    </div>
+    <div class="actions">
+      <a class="btn" id="lien-appel" href="#sommet">Réserver mon appel de 20 min</a>
+      <a class="btn ghost" id="lien-discord" href="#sommet">Voir le Discord</a>
+    </div>
+    <p class="lien-note" id="lien-note" aria-live="polite"></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>L’Escalier · Montpellier · Fondé par Adam</span>
+    <a id="lien-insta" href="#sommet">Suivre la montée sur Instagram</a>
+  </div>
+</footer>
+
+<div class="altimetre" aria-hidden="true">
+  <span class="valeur" id="alt-val">0 m</span>
+  <div class="rail"><div class="rempli" id="alt-rempli"></div><svg class="pion" id="alt-pion" viewBox="0 0 10 14"><g fill="#D76634"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></svg></div>
+  <span class="lieu" id="alt-lieu">Le départ</span>
+</div>
+
+<script>
+// Liens à compléter avant la mise en ligne
+const LIENS = {
+  appel: "https://calendly.com/adam34abad/appel-l-escalier",
+  discord: "",   // ex. https://discord.gg/xxxx
+  instagram: ""  // ex. https://www.instagram.com/lescalier.club
+};
+
+(function liens() {
+  const note = document.getElementById("lien-note");
+  [["lien-appel", LIENS.appel], ["lien-discord", LIENS.discord], ["lien-insta", LIENS.instagram]].forEach(([id, url]) => {
+    const a = document.getElementById(id);
+    if (url) { a.href = url; a.target = "_blank"; a.rel = "noopener"; }
+    else a.addEventListener("click", e => { e.preventDefault(); note.textContent = "Le lien arrive très bientôt. En attendant, écris-nous sur Instagram."; });
+  });
+})();
+
+// Les marches
+const MARCHES = [
+  ["Tu arrives", "Un appel de 20 minutes avec moi. Tu me racontes ce que tu fais et où tu veux aller, je t’explique le club, et on fixe ensemble ta première marche.", "tu es là, et tu as envie de monter."],
+  ["Premier client", "Quelqu’un paie pour ce que tu fais. C’est la marche la plus dure, et c’est là que le club pousse le plus fort.", "une facture ou un paiement reçu."],
+  ["1 000 € par mois", "Un revenu qui revient chaque mois. Tu n’es plus en test, tu as une activité.", "ton chiffre du mois, montré en privé."],
+  ["5 000 € par mois", "Tu peux en vivre. Tu structures : compta, outils, premières délégations. Les partenaires du club t’ouvrent les portes.", "trois mois au-dessus de 5 000 €."],
+  ["Tu tends la main", "Tu deviens parrain. Tu accueilles quelqu’un d’en bas et tu lui transmets ce qu’on t’a donné.", "quelqu’un monte grâce à toi."]
+];
+document.querySelectorAll(".marche").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".marche").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+  const m = MARCHES[+b.dataset.i];
+  document.getElementById("d-titre").textContent = m[0];
+  document.getElementById("d-texte").textContent = m[1];
+  document.getElementById("d-preuve").textContent = m[2];
+}));
+
+// Altimètre : chaque section a son altitude, on interpole entre elles
+(function altimetre() {
+  const val = document.getElementById("alt-val"), rempli = document.getElementById("alt-rempli"),
+        pion = document.getElementById("alt-pion"), lieu = document.getElementById("alt-lieu"),
+        boite = document.querySelector(".altimetre");
+  const reperes = [["depart", 0, "Le départ"], ["pourquoi", 120, "Pourquoi"], ["monter", 240, "Comment on monte"],
+                   ["partage", 360, "Ce qu’on partage"], ["vivre", 450, "Ce qu’on vit"], ["famille", 540, "La famille"],
+                   ["difference", 610, "La différence"], ["sommet", 658, "Le sommet"]]
+    .map(([id, m, nom]) => ({ el: document.getElementById(id), m, nom }));
+  let attente = false;
+  function maj() {
+    attente = false;
+    const y = scrollY + innerHeight * 0.45;
+    const max = document.documentElement.scrollHeight - innerHeight;
+    let m = 0, nom = reperes[0].nom;
+    for (let i = 0; i < reperes.length; i++) {
+      const a = reperes[i], b = reperes[i + 1];
+      const ya = a.el.offsetTop, yb = b ? b.el.offsetTop : ya;
+      if (y >= ya) {
+        nom = a.nom;
+        m = b ? a.m + (b.m - a.m) * Math.min(1, (y - ya) / Math.max(1, yb - ya)) : a.m;
+      }
+    }
+    if (max > 0 && scrollY >= max - 2) { m = 658; nom = "Le sommet"; }
+    m = Math.round(m);
+    const p = m / 658;
+    val.textContent = m + " m";
+    rempli.style.height = (p * 100) + "%";
+    pion.style.bottom = (p * 100) + "%";
+    lieu.textContent = nom;
+    boite.classList.toggle("arrive", m >= 640);
+  }
+  addEventListener("scroll", () => { if (!attente) { attente = true; requestAnimationFrame(maj); } }, { passive: true });
+  addEventListener("resize", maj);
+  maj();
+})();
+
+// Courbes de niveau du massif, en fond du départ
+(function topo() {
+  const c = document.getElementById("topo"), ctx = c.getContext("2d");
+  function dessin() {
+    const r = c.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2);
+    c.width = r.width * d; c.height = r.height * d; ctx.scale(d, d);
+    ctx.clearRect(0, 0, r.width, r.height);
+    const cx = r.width * .78, cy = r.height * .62;
+    for (let k = 1; k <= 16; k++) {
+      const R = k * Math.max(r.width, r.height) * .045;
+      ctx.beginPath();
+      for (let t = 0; t <= Math.PI * 2 + .01; t += .04) {
+        const n = 1 + .16 * Math.sin(3 * t + k * .5) + .08 * Math.sin(7 * t - k) + .05 * Math.cos(11 * t + k * .3);
+        const x = cx + Math.cos(t) * R * 1.35 * n, y = cy + Math.sin(t) * R * .8 * n;
+        t === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = k === 6 ? "rgba(215,102,52,.35)" : "rgba(244,241,233,.07)";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+  }
+  dessin();
+  let t; addEventListener("resize", () => { clearTimeout(t); t = setTimeout(dessin, 150); });
+})();
+</script>
+
+</body>
+</html>
