@@ -141,12 +141,13 @@ p { margin: 0; }
 .btn.ghost:hover { border-color: var(--creme); transform: none; }
 
 .escalier-hero { width: 100%; max-width: 420px; justify-self: end; }
-.escalier-hero .marches { fill: none; stroke: var(--creme); stroke-width: 7; stroke-linecap: square; stroke-linejoin: miter;
-  stroke-dasharray: 520; stroke-dashoffset: 0; animation: trace 1.6s .2s cubic-bezier(.6,0,.2,1) both; }
-.escalier-hero .roi { fill: var(--orange); transform-box: fill-box; transform-origin: 50% 100%;
-  animation: pose .5s 1.6s cubic-bezier(.2,1.6,.4,1) both; }
-@keyframes trace { from { stroke-dashoffset: 520; } }
-@keyframes pose { from { transform: translateY(-40px); opacity: 0; } }
+.escalier-hero .hm { fill: var(--nuit-2); stroke: var(--trait); stroke-width: 1; transition: fill .45s ease; }
+.escalier-hero .hm-bord { stroke: var(--creme); stroke-width: 6; stroke-linecap: square; }
+.escalier-hero .hm.lit[data-i="0"] { fill: #4A2013; } .escalier-hero .hm.lit[data-i="1"] { fill: #7A3017; }
+.escalier-hero .hm.lit[data-i="2"] { fill: #B84C1C; } .escalier-hero .hm.lit[data-i="3"] { fill: var(--orange); }
+.escalier-hero .hm.lit[data-i="4"] { fill: var(--aube); }
+.roi-saut { transition: transform .38s cubic-bezier(.3,1.5,.5,1); }
+.rejouer { font: inherit; color: var(--orange); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; letter-spacing: inherit; text-transform: inherit; }
 .escalier-hero figcaption { margin-top: 14px; font-size: var(--t-xs); color: var(--creme-2); letter-spacing: .06em; text-transform: uppercase; font-stretch: 112%; text-align: right; }
 
 /* ---------- MANIFESTE ---------- */
@@ -183,8 +184,13 @@ p { margin: 0; }
 .marche .n { font-stretch: 125%; font-weight: 900; font-size: var(--t-xs); letter-spacing: .12em; color: var(--creme-2); }
 .marche .nom { font-family: var(--f-display); font-size: clamp(1.1rem, 2.1vw, 1.7rem); line-height: 1.05; }
 .marche:hover { background: #262019; }
-.marche[aria-pressed="true"] { background: var(--orange); color: var(--nuit); border-top-color: var(--orange); }
-.marche[aria-pressed="true"] .n { color: var(--nuit); }
+.marche { transition: background .5s ease, color .5s ease; }
+.marche:nth-child(1) { --tint: #4A2013; --ink: var(--creme); } .marche:nth-child(2) { --tint: #7A3017; --ink: var(--creme); }
+.marche:nth-child(3) { --tint: #B84C1C; --ink: var(--nuit); } .marche:nth-child(4) { --tint: var(--orange); --ink: var(--nuit); }
+.marche:nth-child(5) { --tint: var(--aube); --ink: var(--nuit); }
+.marche.lit { background: var(--tint); color: var(--ink); border-top-color: var(--tint); }
+.marche.lit .n { color: var(--ink); opacity: .75; }
+.marche[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--creme); }
 .marche .pion { position: absolute; top: -34px; left: 14px; width: 18px; display: none; }
 .marche[aria-pressed="true"] .pion { display: block; }
 .detail {
@@ -292,9 +298,11 @@ footer a { font-weight: 700; }
   .detail { grid-template-columns: minmax(0, 1fr); }
   .detail .preuve { grid-column: 1; }
   .etapes { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 22px; }
-  .altimetre { top: auto; transform: none; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); right: calc(14px + env(safe-area-inset-right, 0px));
-    background: var(--nuit); border: 1px solid var(--trait); padding: 8px 12px; grid-auto-flow: column; align-items: center; }
-  .altimetre .rail, .altimetre .lieu { display: none; }
+  .altimetre { right: calc(3px + env(safe-area-inset-right, 0px)); gap: 6px; }
+  .altimetre .rail { height: 30vh; }
+  .altimetre .lieu { display: none; }
+  .altimetre .valeur { background: var(--nuit); border: 1px solid var(--trait); padding: 2px 5px; font-size: .66rem; }
+  .altimetre .pion { width: 13px; left: -5.5px; }
 }
 @media (max-width: 560px) {
   .piliers { grid-template-columns: minmax(0, 1fr); }
@@ -305,7 +313,7 @@ footer a { font-weight: 700; }
   .marche:nth-child(4) { margin-right: 8%; }
   .escalier { display: flex; flex-direction: column-reverse; align-items: stretch; }
   .marche .pion { top: 14px; left: auto; right: 12px; }
-  .marche[aria-pressed="true"] .pion g { fill: var(--nuit); }
+  .marche .pion g { fill: var(--creme); }
   .compare { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .compare .k { grid-column: 1 / -1; padding-bottom: 0; border-bottom: 0; color: var(--orange); font-weight: 700; font-size: var(--t-xs); letter-spacing: .1em; text-transform: uppercase; }
   .compare .h.vide { display: none; }
@@ -314,7 +322,7 @@ footer a { font-weight: 700; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .escalier-hero .marches, .escalier-hero .roi { animation: none; }
+  .escalier-hero .hm, .roi-saut { transition: none; }
   .btn, .marche { transition: none; }
 }
 </style>
@@ -347,11 +355,11 @@ footer a { font-weight: 700; }
         </div>
       </div>
       <figure class="escalier-hero" style="margin:0">
-        <svg viewBox="0 -40 300 300" role="img" aria-label="Un escalier de cinq marches, un roi d'échecs orange posé sur la dernière">
-          <path class="marches" d="M6 254 V214 H66 V164 H126 V114 H186 V64 H246 V40 H294"/>
-          <g transform="translate(246 -28) scale(4.8)"><g class="roi"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></g>
+        <svg id="hero-esc" viewBox="0 -40 300 300" role="img" aria-label="Un escalier de cinq marches qui se colorent l'une après l'autre, un roi d'échecs orange les gravit jusqu'en haut">
+          <rect class="hm" data-i="0" x="6.0" y="210" width="57.6" height="44"/><line class="hm-bord" x1="6.0" y1="210" x2="63.6" y2="210"/><rect class="hm" data-i="1" x="63.6" y="166" width="57.6" height="88"/><line class="hm-bord" x1="63.6" y1="166" x2="121.2" y2="166"/><rect class="hm" data-i="2" x="121.2" y="122" width="57.6" height="132"/><line class="hm-bord" x1="121.2" y1="122" x2="178.8" y2="122"/><rect class="hm" data-i="3" x="178.8" y="78" width="57.6" height="176"/><line class="hm-bord" x1="178.8" y1="78" x2="236.4" y2="78"/><rect class="hm" data-i="4" x="236.4" y="34" width="57.6" height="220"/><line class="hm-bord" x1="236.4" y1="34" x2="294.0" y2="34"/>
+          <g id="hero-roi" class="roi-saut"><g transform="scale(4.8)" fill="#D76634"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></g>
         </svg>
-        <figcaption>Ici, tout le monde part d’en bas</figcaption>
+        <figcaption>Ici, tout le monde part d’en bas · <button type="button" id="rejouer" class="rejouer">Rejouer la montée</button></figcaption>
       </figure>
     </div>
   </div>
@@ -533,6 +541,46 @@ document.querySelectorAll(".marche").forEach(b => b.addEventListener("click", ()
   document.getElementById("d-texte").textContent = m[1];
   document.getElementById("d-preuve").textContent = m[2];
 }));
+
+// Le départ : le roi gravit les 5 marches, chacune se teinte quand il s'y pose
+(function montee() {
+  const marches = [...document.querySelectorAll("#hero-esc .hm")], roi = document.getElementById("hero-roi");
+  const pos = i => { const r = marches[i]; return [(+r.getAttribute("x")) + 4.8, (+r.getAttribute("y")) - 67]; };
+  const calme = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let minuteurs = [];
+  function poser(i) {
+    const [x, y] = pos(i);
+    roi.style.transform = `translate(${x}px, ${y}px)`;
+    marches.forEach((m, j) => m.classList.toggle("lit", j <= i));
+  }
+  function jouer() {
+    minuteurs.forEach(clearTimeout); minuteurs = [];
+    if (calme) { poser(4); return; }
+    poser(0);
+    for (let i = 1; i < 5; i++) minuteurs.push(setTimeout(() => poser(i), 350 + i * 480));
+  }
+  document.getElementById("rejouer").addEventListener("click", jouer);
+  jouer();
+})();
+
+// Comment on monte : les marches se teintent à mesure qu'on descend dans la page
+(function marchesAuDefilement() {
+  const esc = document.querySelector(".escalier"), btns = [...document.querySelectorAll(".marche")];
+  let choisiParClic = false, derniere = -2, attente = false;
+  btns.forEach(b => b.addEventListener("click", () => { choisiParClic = true; }));
+  function maj() {
+    attente = false;
+    const r = esc.getBoundingClientRect();
+    const p = (innerHeight * 0.85 - r.top) / (r.height + innerHeight * 0.35);
+    const k = Math.max(-1, Math.min(4, Math.floor(p * 5)));
+    if (k === derniere) return;
+    derniere = k;
+    btns.forEach((b, i) => b.classList.toggle("lit", i <= k));
+    if (!choisiParClic && k >= 0) btns[k].click(), choisiParClic = false;
+  }
+  addEventListener("scroll", () => { if (!attente) { attente = true; requestAnimationFrame(maj); } }, { passive: true });
+  maj();
+})();
 
 // Altimètre : chaque section a son altitude, on interpole entre elles
 (function altimetre() {
