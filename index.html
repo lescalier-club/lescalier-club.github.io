@@ -48,6 +48,11 @@ body {
 }
 a { color: inherit; }
 :focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+.fondateurs { display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: baseline; justify-content: center; margin: 8px auto 28px; padding: 16px 20px; background: var(--nuit); border: 1px solid var(--orange); border-radius: 14px; max-width: 560px; }
+.fondateurs .f-titre { width: 100%; margin: 0; text-align: center; color: var(--orange); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; }
+.fondateurs .f-places, .fondateurs .f-compte { margin: 0; color: var(--creme); font-variant-numeric: tabular-nums; }
+.fondateurs .f-places b { color: var(--orange); font-size: 1.6rem; }
+.fondateurs .f-compte b { color: var(--creme); }
 ::selection { background: var(--orange); color: var(--nuit); }
 
 .wrap {
@@ -482,6 +487,11 @@ footer a { font-weight: 700; }
     <span class="alt" style="color:var(--aube)">Le sommet <span class="lieu" style="color:var(--creme)">Pic Saint-Loup</span></span>
     <p class="metres" aria-label="658 mètres">658<small> m</small></p>
     <h2>Ta première marche, c’est <em style="color:var(--creme)">aujourd’hui</em>.</h2>
+    <div class="fondateurs" id="fondateurs" aria-live="polite">
+      <p class="f-titre">Membres fondateurs</p>
+      <p class="f-places"><b id="f-reste">10</b> places restantes sur <span id="f-total">10</span></p>
+      <p class="f-compte">Ouverture le <b>jeudi 26 novembre</b> · <span id="f-jours"></span></p>
+    </div>
     <div class="etapes">
       <div class="etape"><span class="n">1</span><b>Réserve ton appel</b><span>20 minutes avec moi, pour faire connaissance.</span></div>
       <div class="etape"><span class="n">2</span><b>Entre sur le Discord</b><span>C’est là que vit le club, tous les jours.</span></div>
@@ -514,8 +524,20 @@ footer a { font-weight: 700; }
 const LIENS = {
   appel: "https://calendly.com/adam34abad/appel-l-escalier",
   discord: "",   // ex. https://discord.gg/xxxx
-  instagram: ""  // ex. https://www.instagram.com/lescalier.club
+  instagram: "https://www.instagram.com/lescalier.club"
 };
+
+// Membres fondateurs : mettre à jour « pris » à chaque fondateur confirmé (vrais chiffres uniquement).
+const FONDATEURS = { total: 10, pris: 0, ouverture: "2026-11-26T00:00:00+01:00" };
+
+(function fondateurs() {
+  const reste = Math.max(0, FONDATEURS.total - FONDATEURS.pris);
+  document.getElementById("f-reste").textContent = reste;
+  document.getElementById("f-total").textContent = FONDATEURS.total;
+  const jours = Math.ceil((new Date(FONDATEURS.ouverture) - new Date()) / 86400000);
+  document.getElementById("f-jours").textContent =
+    jours > 1 ? `dans ${jours} jours` : jours === 1 ? "demain" : "le club est ouvert";
+})();
 
 (function liens() {
   const note = document.getElementById("lien-note");
