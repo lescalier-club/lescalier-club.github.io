@@ -8,7 +8,16 @@
 <meta name="description" content="L'Escalier, le club des entrepreneurs de 18 à 30 ans qui montent ensemble, à Montpellier. Gratuit.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400;62..125,500;62..125,700;62..125,900&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400;62..125,500;62..125,700;62..125,900&family=Instrument+Serif:ital@0;1&family=Herr+Von+Muellerhoff&display=swap">
+<link rel="icon" type="image/png" href="media/icone.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lescalier-club.github.io/">
+<meta property="og:title" content="L’Escalier, le club des entrepreneurs qui montent">
+<meta property="og:description" content="Montpellier, 18 à 30 ans. Gratuit, sur un appel de 20 minutes. 10 places de membres fondateurs avant l’ouverture du 26 novembre.">
+<meta property="og:image" content="https://lescalier-club.github.io/media/partage.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <style>
 /* Concept : la page est une ascension. On part du parking de Cazevieille, de nuit (0 m),
    on arrive au sommet du Pic Saint-Loup au lever du soleil (658 m). Un altimètre suit la montée. */
@@ -54,6 +63,39 @@ a { color: inherit; }
 .fondateurs .f-places b { color: var(--orange); font-size: 1.6rem; }
 .fondateurs .f-compte b { color: var(--creme); }
 ::selection { background: var(--orange); color: var(--nuit); }
+
+/* ---------- BANDEAU DE LA HYPE ---------- */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 31; background: var(--orange); }
+.hype { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; background: var(--orange); color: var(--nuit); }
+.hype-in { max-width: var(--max); margin-inline: auto; padding-left: var(--gutter-l); padding-right: var(--gutter-r); padding-block: 9px;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 20px;
+  font-stretch: 112%; font-weight: 700; font-size: var(--t-s); font-variant-numeric: tabular-nums; }
+.hype-in b { font-weight: 900; }
+.hype-in a { color: var(--nuit); text-underline-offset: 3px; }
+@media (max-width: 600px) {
+  .hype-in { font-size: .8rem; gap: 2px 14px; padding-block: 7px; }
+  .hype-in .long { display: none; }
+}
+
+/* ---------- LETTRE DU FONDATEUR ---------- */
+.portrait { margin: 0; max-width: 380px; }
+.portrait video { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px;
+  filter: contrast(1.06) saturate(.9); box-shadow: 14px 14px 0 var(--braise); background: var(--nuit); }
+.portrait figcaption { margin-top: 28px; color: var(--creme-2); font-size: var(--t-s); }
+.lettre .citation { margin-bottom: 26px; }
+.paraphe { font-family: "Herr Von Muellerhoff", cursive; font-size: 3.6rem; line-height: .9; color: var(--creme); margin-top: 8px; }
+
+/* ---------- QUESTIONS ---------- */
+.faq { margin-top: 36px; max-width: 760px; border-top: 1px solid var(--trait); }
+.faq details { border-bottom: 1px solid var(--trait); }
+.faq summary { cursor: pointer; list-style: none; padding: 20px 44px 20px 0; position: relative;
+  font-family: var(--f-display); font-size: clamp(1.3rem, 2.6vw, 1.7rem); line-height: 1.25; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+  font-family: var(--f-sans); font-size: 1.6rem; color: var(--orange); transition: transform .2s; }
+.faq details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+.faq details p { margin: 0 0 22px; color: var(--creme-2); max-width: 62ch; }
+@media (prefers-reduced-motion: reduce) { .faq summary::after { transition: none; } }
 
 .wrap {
   max-width: var(--max);
@@ -168,7 +210,7 @@ p { margin: 0; }
 .signature .trait { width: 40px; height: 2px; background: var(--orange); }
 
 /* ---------- MARCHES (interactif) ---------- */
-.rythme { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1px; background: var(--trait); border: 1px solid var(--trait); margin-top: 40px; max-width: 760px; }
+.rythme { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1px; background: var(--trait); border: 1px solid var(--trait); margin-top: 40px; }
 .rythme div { background: var(--nuit); padding: 20px 22px; }
 .rythme b { display: block; font-family: var(--f-display); font-size: 1.6rem; font-weight: 400; }
 .rythme span { color: var(--creme-2); font-size: var(--t-s); }
@@ -322,7 +364,6 @@ footer a { font-weight: 700; }
   .compare { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .compare .k { grid-column: 1 / -1; padding-bottom: 0; border-bottom: 0; color: var(--orange); font-weight: 700; font-size: var(--t-xs); letter-spacing: .1em; text-transform: uppercase; }
   .compare .h.vide { display: none; }
-  .rythme { grid-template-columns: minmax(0, 1fr); }
   .etapes { grid-template-columns: minmax(0, 1fr); }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -333,6 +374,13 @@ footer a { font-weight: 700; }
 </style>
 </head>
 <body>
+<div class="hype" id="hype" role="region" aria-label="Lancement du club">
+  <div class="hype-in">
+    <span id="h-jour">Lancement le mercredi 28 octobre</span>
+    <span><b id="h-places">10</b> places<span class="long"> de membres fondateurs</span></span>
+    <a class="long" href="#sommet">Réserver mon appel</a>
+  </div>
+</div>
 
 
 <section class="hero" id="depart">
@@ -373,13 +421,20 @@ footer a { font-weight: 700; }
 <section class="manifeste band" id="pourquoi">
   <div class="wrap">
     <span class="alt">120 m <span class="lieu">Pourquoi ce club</span></span>
-    <div class="grid" style="margin-top:28px">
-      <p class="citation">« Tu deviens la moyenne des gens qui t’entourent. Les miens m’ont fait <em>monter</em>. À mon tour de créer cet environnement. »</p>
+    <div class="grid lettre" style="margin-top:28px">
+      <figure class="portrait">
+        <video id="portrait-video" src="media/adam.mp4" poster="media/adam.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Adam, le fondateur, face caméra"></video>
+        <figcaption>Montpellier, octobre 2026. Le jour où j’ai lancé le club.</figcaption>
+      </figure>
+      <div>
+        <p class="citation">« Tu deviens la moyenne des gens qui t’entourent. Les miens m’ont fait <em>monter</em>. À mon tour de créer cet environnement. »</p>
       <div class="texte">
         <p>J’ai 20 ans. J’ai lancé plusieurs activités, je les ai arrêtées. Et j’ai compris une chose : <strong>tout seul, tu tournes en rond.</strong></p>
         <p>Alors je construis un endroit pour ceux qui ont envie de monter, qui ont le même état d’esprit. Pas pour ceux qui sont déjà arrivés : pour ceux qui partent d’en bas.</p>
         <p>Je pars de zéro, et je documente tout : <strong>les chiffres, les erreurs, les refus.</strong> Si tu montes avec moi, on le fait ensemble.</p>
-        <div class="signature"><span class="trait"></span>Adam, fondateur</div>
+        <div class="paraphe" aria-hidden="true">Adam</div>
+        <div class="signature"><span class="trait"></span>Adam, 20 ans, fondateur de L’Escalier</div>
+      </div>
       </div>
     </div>
   </div>
@@ -391,9 +446,12 @@ footer a { font-weight: 700; }
     <h2>Ton grade ici est <em>prouvé</em>, jamais déclaré.</h2>
     <p class="lead">Chaque marche est un fait réel de ton activité. Tu ne montes pas parce que tu le dis, tu montes parce que c’est arrivé.</p>
 
-    <div class="rythme" aria-label="Le rythme de la semaine">
+    <div class="rythme" aria-label="Les rendez-vous du club">
       <div><b>Lundi</b><span>Tu annonces ta marche de la semaine devant le groupe.</span></div>
+      <div><b>Mercredi</b><span>Tu dis ce qui te bloque. Quelqu’un a déjà vécu ça.</span></div>
       <div><b>Vendredi</b><span>Tu dis si elle est passée. Personne ne lâche quand d’autres attendent son résultat.</span></div>
+      <div><b>Le 1er</b><span>Ton objectif des 30 jours, écrit devant tout le monde.</span></div>
+      <div><b>Le 30</b><span>Le palier : objectif tenu ou pas. On regarde, et on repart.</span></div>
     </div>
 
     <div class="escalier" role="group" aria-label="Les marches du club">
@@ -482,6 +540,21 @@ footer a { font-weight: 700; }
   </div>
 </section>
 
+<section class="band" id="questions">
+  <div class="wrap">
+    <span class="alt">630 m <span class="lieu">Tes questions</span></span>
+    <h2>Avant de réserver ton appel.</h2>
+    <div class="faq">
+      <details><summary>C’est vraiment gratuit ?</summary><p>Oui. Entrer dans le club ne coûte rien : la seule condition, c’est l’appel de 20 minutes avec moi. Certaines activités, comme le stand de tir ou le saut, ont un coût, toujours annoncé à l’avance.</p></details>
+      <details><summary>Il faut déjà avoir une entreprise ?</summary><p>Non. Tu peux être au tout début : une idée, un premier client, une activité à côté des cours. Ce qu’on te demande, c’est l’envie de monter.</p></details>
+      <details><summary>Je ne suis pas à Montpellier.</summary><p>Le club vit sur Discord, tu peux le suivre de partout en France. Les activités en vrai, comme la Montée ou la Table, se passent à Montpellier.</p></details>
+      <details><summary>Comment se passe l’appel de 20 minutes ?</summary><p>Tu me racontes ce que tu fais et où tu veux aller. Je t’explique le club, et on fixe ensemble ta première marche. Ce n’est pas un appel de vente.</p></details>
+      <details><summary>C’est quoi, un membre fondateur ?</summary><p>L’un des 10 premiers. Tu entres avant l’ouverture du 26 novembre, tu construis le club avec moi dans un salon réservé, et tu fais partie de la première Montée.</p></details>
+      <details><summary>Ça prend combien de temps ?</summary><p>Trois messages par semaine dans le club (lundi, mercredi, vendredi), et deux sessions de deep-work si tu veux. Le reste, c’est toi qui choisis.</p></details>
+    </div>
+  </div>
+</section>
+
 <section class="sommet" id="sommet">
   <div class="wrap">
     <span class="alt" style="color:var(--aube)">Le sommet <span class="lieu" style="color:var(--creme)">Pic Saint-Loup</span></span>
@@ -528,7 +601,7 @@ const LIENS = {
 };
 
 // Membres fondateurs : mettre à jour « pris » à chaque fondateur confirmé (vrais chiffres uniquement).
-const FONDATEURS = { total: 10, pris: 0, ouverture: "2026-11-26T00:00:00+01:00" };
+const FONDATEURS = { total: 10, pris: 0, jour1: "2026-10-28T00:00:00+01:00", ouverture: "2026-11-26T00:00:00+01:00" };
 
 (function fondateurs() {
   const reste = Math.max(0, FONDATEURS.total - FONDATEURS.pris);
@@ -537,6 +610,16 @@ const FONDATEURS = { total: 10, pris: 0, ouverture: "2026-11-26T00:00:00+01:00" 
   const jours = Math.ceil((new Date(FONDATEURS.ouverture) - new Date()) / 86400000);
   document.getElementById("f-jours").textContent =
     jours > 1 ? `dans ${jours} jours` : jours === 1 ? "demain" : "le club est ouvert";
+
+  document.getElementById("h-places").textContent = reste;
+  const n = Math.floor((new Date() - new Date(FONDATEURS.jour1)) / 86400000) + 1;
+  document.getElementById("h-jour").textContent =
+    n < 1 ? (innerWidth < 600 ? "Lancement le 28 octobre" : "Lancement le mercredi 28 octobre") : n <= 30 ? `Jour ${n} sur 30` : "Le club est ouvert";
+})();
+
+(function portrait() {
+  const v = document.getElementById("portrait-video");
+  if (v && matchMedia("(prefers-reduced-motion: reduce)").matches) { v.removeAttribute("autoplay"); v.pause(); }
 })();
 
 (function liens() {
@@ -611,7 +694,7 @@ document.querySelectorAll(".marche").forEach(b => b.addEventListener("click", ()
         boite = document.querySelector(".altimetre");
   const reperes = [["depart", 0, "Le départ"], ["pourquoi", 120, "Pourquoi"], ["monter", 240, "Comment on monte"],
                    ["partage", 360, "Ce qu’on partage"], ["vivre", 450, "Ce qu’on vit"], ["famille", 540, "La famille"],
-                   ["difference", 610, "La différence"], ["sommet", 658, "Le sommet"]]
+                   ["difference", 610, "La différence"], ["questions", 630, "Tes questions"], ["sommet", 658, "Le sommet"]]
     .map(([id, m, nom]) => ({ el: document.getElementById(id), m, nom }));
   let attente = false;
   function maj() {
