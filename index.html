@@ -334,8 +334,10 @@ footer a { font-weight: 700; }
 .altimetre { transition: opacity .3s; }
 .altimetre.arrive { opacity: 0; }
 /* L'altimètre est fixé à droite : on réserve sa place pour qu'il ne passe jamais sur le contenu */
+/* Marges identiques des deux côtés : le contenu reste centré */
 @media (min-width: 861px) and (max-width: 1360px) {
-  .wrap { padding-right: max(var(--gutter-r), 130px); }
+  .wrap { padding-inline: 84px; }
+  .altimetre .lieu { display: none; }
 }
 
 @media (max-width: 860px) {
@@ -355,7 +357,7 @@ footer a { font-weight: 700; }
   .altimetre .valeur { background: var(--nuit); border: 1px solid var(--trait); padding: 2px 5px; font-size: .66rem; }
   .altimetre .pion { width: 13px; left: -5.5px; }
   .altimetre .valeur { display: none; }
-  .wrap { padding-right: max(var(--gutter-r), 28px); }
+  .wrap { padding-inline: max(var(--gutter-l), 28px) max(var(--gutter-r), 28px); }
 }
 @media (max-width: 560px) {
   .piliers { grid-template-columns: minmax(0, 1fr); }
