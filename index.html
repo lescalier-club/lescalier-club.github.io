@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lescalier-club.github.io/">
 <meta property="og:title" content="L’Escalier, le club des entrepreneurs qui montent">
-<meta property="og:description" content="Montpellier, 18 à 30 ans. Entrée offerte à vie aux 10 membres fondateurs, sur un appel de 20 minutes. 10 places de membres fondateurs avant l’ouverture du 26 novembre.">
+<meta property="og:description" content="Montpellier, 18 à 30 ans. Entrée offerte à vie aux 10 membres fondateurs, sur un appel de 20 minutes. 10 places de membres fondateurs avant l’ouverture du 8 décembre.">
 <meta property="og:image" content="https://lescalier-club.github.io/media/partage.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -589,7 +589,7 @@ footer a { font-weight: 700; }
       <details><summary>Comment se passe l’appel de 20 minutes ?</summary><p>Tu me racontes ce que tu fais et où tu veux aller, je t’explique le club. Ce n’est pas un appel de vente. Si on y va ensemble, on fixe un cadrage de 30 minutes pour poser ton projet.</p></details>
       <details><summary>Tu es coach ?</summary><p>Non, et je ne prétends pas tout savoir. Mon métier, c’est de mettre les bonnes personnes en relation et d’aller chercher les réponses. Ce que je ne sais pas, je le trouve : dans le réseau du club, chez nos partenaires, et avec les outils d’IA que j’ai construits. Essaie : ça ne te coûte rien.</p></details>
       <details><summary>Mon projet ne rentre dans aucune case.</summary><p>Tant mieux. Chacun est unique, et ce qui te rend atypique est souvent ta valeur ajoutée. Au cadrage, on part de qui tu es, pas d’un modèle tout fait.</p></details>
-      <details><summary>C’est quoi, un membre fondateur ?</summary><p>L’un des 10 premiers. Tu entres avant l’ouverture du 26 novembre, tu construis le club avec moi dans un salon réservé, et tu fais partie de la première Montée.</p></details>
+      <details><summary>C’est quoi, un membre fondateur ?</summary><p>L’un des 10 premiers. Tu entres avant l’ouverture du 8 décembre, tu construis le club avec moi dans un salon réservé, et tu fais partie de la première Montée.</p></details>
       <details><summary>Ça prend combien de temps ?</summary><p>Trois messages par semaine dans le club (lundi, mercredi, vendredi), et deux sessions de deep-work si tu veux. Le reste, c’est toi qui choisis.</p></details>
     </div>
   </div>
@@ -603,7 +603,7 @@ footer a { font-weight: 700; }
     <div class="fondateurs" id="fondateurs" aria-live="polite">
       <p class="f-titre">Membres fondateurs</p>
       <p class="f-places"><b id="f-reste">10</b> places restantes sur <span id="f-total">10</span></p>
-      <p class="f-compte">Ouverture le <b>jeudi 26 novembre</b> · <span id="f-jours"></span></p>
+      <p class="f-compte">Ouverture le <b>mardi 8 décembre</b> · <span id="f-jours"></span></p>
     </div>
     <div class="etapes">
       <div class="etape"><span class="n">1</span><b>Réserve ton appel</b><span>20 minutes avec moi, pour faire connaissance.</span></div>
@@ -655,7 +655,7 @@ const LIENS = {
 };
 
 // Membres fondateurs : mettre à jour « pris » à chaque fondateur confirmé (vrais chiffres uniquement).
-const FONDATEURS = { total: 10, pris: 0, jour1: "2026-10-28T00:00:00+01:00", ouverture: "2026-11-26T00:00:00+01:00" };
+const FONDATEURS = { total: 10, pris: 0, jour1: "2026-11-09T00:00:00+01:00", ouverture: "2026-12-08T00:00:00+01:00" };
 
 (function fondateurs() {
   const reste = Math.max(0, FONDATEURS.total - FONDATEURS.pris);
@@ -668,7 +668,7 @@ const FONDATEURS = { total: 10, pris: 0, jour1: "2026-10-28T00:00:00+01:00", ouv
   document.getElementById("h-places").textContent = reste;
   const n = Math.floor((new Date() - new Date(FONDATEURS.jour1)) / 86400000) + 1;
   document.getElementById("h-jour").textContent =
-    n < 1 ? (innerWidth < 600 ? "Lancement le 28 octobre" : "Lancement le mercredi 28 octobre") : n <= 30 ? `Jour ${n} sur 30` : "Le club est ouvert";
+    n < 1 ? (innerWidth < 600 ? "Lancement le 9 novembre" : "Lancement le lundi 9 novembre") : n <= 30 ? `Jour ${n} sur 30` : "Le club est ouvert";
 })();
 
 (function portrait() {
