@@ -173,6 +173,19 @@ p { margin: 0; }
   font-stretch: 112%; font-weight: 500; font-size: var(--t-s); color: var(--creme-2);
 }
 .hero .sous b { color: var(--creme); font-weight: 700; }
+.inscription { margin-top: 44px; padding: clamp(20px, 4vw, 32px); background: var(--nuit); border-radius: 16px; max-width: 640px; color: var(--creme); }
+.inscription h3 { margin: 0 0 6px; font-family: var(--f-display); font-weight: 400; font-size: 1.8rem; line-height: 1.1; }
+.inscription .sous { margin: 0 0 20px; color: var(--creme); opacity: .8; font-size: var(--t-s); }
+.inscription label { display: grid; gap: 6px; margin-bottom: 14px; font-size: var(--t-s); font-weight: 600; }
+.inscription input[type=text], .inscription textarea { width: 100%; box-sizing: border-box; padding: 12px 14px; font: inherit; font-weight: 400; color: var(--creme); background: #221D17; border: 1.5px solid var(--trait); border-radius: 10px; }
+.inscription textarea { min-height: 76px; resize: vertical; }
+.inscription input:focus-visible, .inscription textarea:focus-visible { outline: 2px solid var(--orange); outline-offset: 1px; border-color: var(--orange); }
+.inscription .accord { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; font-size: var(--t-xs); line-height: 1.45; opacity: .85; }
+.inscription .accord input { margin-top: 2px; accent-color: var(--orange); width: 18px; height: 18px; flex: none; }
+.inscription .piege { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.inscription .btn { margin-top: 6px; border: 0; cursor: pointer; }
+.inscription .retour { margin: 14px 0 0; font-size: var(--t-s); min-height: 1.2em; }
+.inscription.fini form { display: none; }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
 .btn {
   display: inline-flex; align-items: center; gap: 10px;
@@ -598,6 +611,20 @@ footer a { font-weight: 700; }
       <div class="etape"><span class="n">3</span><b>Présente-toi</b><span>Qui tu es, ce que tu fais, où tu veux aller.</span></div>
       <div class="etape"><span class="n">4</span><b>Fixe ta marche</b><span>Le lundi suivant, devant tout le monde.</span></div>
     </div>
+    <div class="inscription" id="inscription">
+      <h3>Inscris-toi en 1 minute</h3>
+      <p class="sous">Je te réponds sous 48 h pour caler ton appel de 20 min.</p>
+      <form id="form-inscription" novalidate>
+        <label>Ton prénom<input type="text" name="prenom" maxlength="60" autocomplete="given-name" required></label>
+        <label>Ton Instagram ou ton e-mail<input type="text" name="contact" maxlength="120" autocomplete="email" required></label>
+        <label>Ce que tu construis<textarea name="projet" maxlength="400" placeholder="Ton projet, ton activité, même si c’est juste une idée."></textarea></label>
+        <label>Ta première marche<textarea name="marche" maxlength="300" placeholder="Un premier client, 1 000 € par mois, ton premier post…"></textarea></label>
+        <label class="piege" aria-hidden="true">Site web<input type="text" name="site_web" tabindex="-1" autocomplete="off"></label>
+        <label class="accord"><input type="checkbox" name="accord" required><span>J’accepte qu’Adam garde ces infos pour me recontacter à propos du club. Elles ne sont ni vendues ni partagées, et je peux demander leur suppression à tout moment.</span></label>
+        <button class="btn" type="submit">Je veux monter</button>
+      </form>
+      <p class="retour" id="retour-inscription" aria-live="polite"></p>
+    </div>
     <div class="actions">
       <a class="btn" id="lien-appel" href="#sommet">Réserver mon appel de 20 min</a>
       <a class="btn ghost" id="lien-discord" href="#sommet">Voir le Discord</a>
@@ -647,6 +674,28 @@ const FONDATEURS = { total: 10, pris: 0, jour1: "2026-10-28T00:00:00+01:00", ouv
 (function portrait() {
   const v = document.getElementById("portrait-video");
   if (v && matchMedia("(prefers-reduced-motion: reduce)").matches) { v.removeAttribute("autoplay"); v.pause(); }
+})();
+
+(function inscription() {
+  const form = document.getElementById("form-inscription");
+  const retour = document.getElementById("retour-inscription");
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const d = Object.fromEntries(new FormData(form));
+    d.accord = form.accord.checked;
+    if (!d.prenom.trim() || !d.contact.trim()) { retour.textContent = "Il me faut au moins ton prénom et un moyen de te recontacter."; return; }
+    if (!d.accord) { retour.textContent = "Coche la case d’accord pour que je puisse te recontacter."; return; }
+    const bouton = form.querySelector("button"); bouton.disabled = true; retour.textContent = "Envoi…";
+    try {
+      const r = await fetch("https://147-93-53-37.sslip.io/inscription", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(d) });
+      if (!r.ok) throw new Error(r.status);
+      document.getElementById("inscription").classList.add("fini");
+      retour.innerHTML = `C’est noté, ${d.prenom.trim().replace(/[<>&]/g, "")} ✅ Je te recontacte sous 48 h. Tu peux aussi <a href="${LIENS.appel}" target="_blank" rel="noopener" style="color:var(--orange)">réserver ton appel maintenant</a>.`;
+    } catch (err) {
+      bouton.disabled = false;
+      retour.textContent = "Oups, l’envoi n’a pas marché. Réessaie dans une minute, ou écris-nous sur Instagram.";
+    }
+  });
 })();
 
 (function liens() {
