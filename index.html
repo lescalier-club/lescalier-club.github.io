@@ -3,18 +3,78 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>L'Escalier</title>
+<title>L'Escalier · Club d'entrepreneurs 18-30 ans à Montpellier</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="L'Escalier, le club des entrepreneurs de 18 à 30 ans qui montent ensemble, à Montpellier. Entrée offerte à vie aux 10 membres fondateurs.">
+<meta name="description" content="Club d'entrepreneurs de 18 à 30 ans à Montpellier : on monte ensemble, marche par marche. Rituels chaque semaine, rendez-vous en vrai chaque mois.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400;62..125,500;62..125,700;62..125,900&family=Instrument+Serif:ital@0;1&family=Herr+Von+Muellerhoff&display=swap">
+<link rel="canonical" href="https://lescalierclub.fr/">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="L'Escalier">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://lescalierclub.fr/#club",
+   "name": "L'Escalier",
+   "url": "https://lescalierclub.fr/",
+   "logo": "https://lescalierclub.fr/media/icone.png",
+   "image": "https://lescalierclub.fr/media/partage.png",
+   "description": "L'Escalier est un club d'entrepreneurs de 18 à 30 ans à Montpellier (Hérault), fondé en octobre 2026 par Adam Abad. On y entre après un appel de 20 minutes, on avance chaque semaine ensemble sur Discord, et on se retrouve en vrai chaque mois.",
+   "foundingDate": "2026-10",
+   "founder": {
+    "@id": "https://lescalierclub.fr/fondateur/#adam"
+   },
+   "areaServed": [
+    {
+     "@type": "City",
+     "name": "Montpellier"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Hérault"
+    }
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Montpellier",
+    "addressRegion": "Occitanie",
+    "addressCountry": "FR"
+   },
+   "knowsAbout": [
+    "entrepreneuriat",
+    "jeunes entrepreneurs",
+    "réseau d'entrepreneurs",
+    "deep work"
+   ],
+   "sameAs": [
+    "https://www.instagram.com/lescalier.club",
+    "https://www.tiktok.com/@lescalierclub",
+    "https://www.youtube.com/@lescalier_club"
+   ]
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://lescalierclub.fr/#site",
+   "name": "L'Escalier",
+   "url": "https://lescalierclub.fr/",
+   "inLanguage": "fr-FR",
+   "publisher": {
+    "@id": "https://lescalierclub.fr/#club"
+   }
+  }
+ ]
+}
+</script>
 <link rel="icon" type="image/png" href="media/icone.png">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://lescalier-club.github.io/">
+<meta property="og:url" content="https://lescalierclub.fr/">
 <meta property="og:title" content="L’Escalier, le club des entrepreneurs qui montent">
 <meta property="og:description" content="Montpellier, 18 à 30 ans. Entrée offerte à vie aux 10 membres fondateurs, sur un appel de 20 minutes. 10 places de membres fondateurs avant l’ouverture du 8 décembre.">
-<meta property="og:image" content="https://lescalier-club.github.io/media/partage.png">
+<meta property="og:image" content="https://lescalierclub.fr/media/partage.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -86,6 +146,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .paraphe { font-family: "Herr Von Muellerhoff", cursive; font-size: 3.6rem; line-height: .9; color: var(--creme); margin-top: 8px; }
 
 /* ---------- QUESTIONS ---------- */
+.faq-liens { margin: 36px 0 18px; padding-left: 1.2em; max-width: 760px; } .faq-liens li { margin: 8px 0; }
+.faq-liens { margin: 36px 0 18px; padding-left: 1.2em; max-width: 760px; } .faq-liens li { margin: 8px 0; }
 .faq { margin-top: 36px; max-width: 760px; border-top: 1px solid var(--trait); }
 .faq details { border-bottom: 1px solid var(--trait); }
 .faq summary { cursor: pointer; list-style: none; padding: 20px 44px 20px 0; position: relative;
@@ -168,6 +230,7 @@ p { margin: 0; }
   letter-spacing: -.02em;
   margin-top: 22px;
 }
+.hero .definition { max-width: 46ch; color: var(--creme-2); font-size: var(--t-m); margin: 0 0 18px; }
 .hero .sous {
   margin-top: 28px; display: flex; flex-wrap: wrap; gap: 8px 22px;
   font-stretch: 112%; font-weight: 500; font-size: var(--t-s); color: var(--creme-2);
@@ -422,6 +485,7 @@ footer a { font-weight: 700; }
       <div>
         <span class="alt">0 m <span class="lieu">Montpellier · le départ</span></span>
         <h1>Le club des entrepreneurs qui <em>montent.</em></h1>
+        <p class="definition">L'Escalier est un club d'entrepreneurs de 18 à 30 ans à Montpellier (Hérault), fondé en octobre 2026 par Adam Abad. On y entre après un appel de 20 minutes, on avance chaque semaine ensemble sur Discord, et on se retrouve en vrai chaque mois.</p>
         <div class="sous"><span><b>18 – 30 ans</b></span><span><b>Montpellier</b></span><span><b>Offert</b> aux 10 fondateurs</span></div>
         <div class="actions">
           <a class="btn" href="#sommet">Je veux monter</a>
@@ -582,16 +646,8 @@ footer a { font-weight: 700; }
   <div class="wrap">
     <span class="alt">630 m <span class="lieu">Tes questions</span></span>
     <h2>Avant de réserver ton appel.</h2>
-    <div class="faq">
-      <details><summary>Combien ça coûte ?</summary><p>Pour les 10 membres fondateurs, rien, et à vie : la seule condition, c’est l’appel de 20 minutes avec moi. Après eux, c’est 49 € par mois, avec une activité du club incluse chaque mois. Les autres activités, comme le stand de tir ou le saut, ont un coût, toujours annoncé à l’avance.</p></details>
-      <details><summary>Il faut déjà avoir une entreprise ?</summary><p>Non. Tu peux être au tout début : une idée, un premier client, une activité à côté des cours. Ce qu’on te demande, c’est l’envie de monter.</p></details>
-      <details><summary>Je ne suis pas à Montpellier.</summary><p>Le club vit sur Discord, tu peux le suivre de partout en France. Les activités en vrai, comme la Montée ou la Table, se passent à Montpellier.</p></details>
-      <details><summary>Comment se passe l’appel de 20 minutes ?</summary><p>Tu me racontes ce que tu fais et où tu veux aller, je t’explique le club. Ce n’est pas un appel de vente. Si on y va ensemble, on fixe un cadrage de 30 minutes pour poser ton projet.</p></details>
-      <details><summary>Tu es coach ?</summary><p>Non, et je ne prétends pas tout savoir. Mon métier, c’est de mettre les bonnes personnes en relation et d’aller chercher les réponses. Ce que je ne sais pas, je le trouve : dans le réseau du club, chez nos partenaires, et avec les outils d’IA que j’ai construits. Essaie : ça ne te coûte rien.</p></details>
-      <details><summary>Mon projet ne rentre dans aucune case.</summary><p>Tant mieux. Chacun est unique, et ce qui te rend atypique est souvent ta valeur ajoutée. Au cadrage, on part de qui tu es, pas d’un modèle tout fait.</p></details>
-      <details><summary>C’est quoi, un membre fondateur ?</summary><p>L’un des 10 premiers. Tu entres avant l’ouverture du 8 décembre, tu construis le club avec moi dans un salon réservé, et tu fais partie de la première Montée.</p></details>
-      <details><summary>Ça prend combien de temps ?</summary><p>Trois messages par semaine dans le club (lundi, mercredi, vendredi), et deux sessions de deep-work si tu veux. Le reste, c’est toi qui choisis.</p></details>
-    </div>
+    <ul class="faq-liens"><li><a href="/questions/#q0">C&#x27;est quoi, L&#x27;Escalier ?</a></li><li><a href="/questions/#q1">Qui peut entrer ?</a></li><li><a href="/questions/#q2">Comment candidater ?</a></li><li><a href="/questions/#q3">Combien ça coûte ?</a></li><li><a href="/questions/#q4">Qu&#x27;est-ce qu&#x27;on fait dans le club ?</a></li><li><a href="/questions/#q5">Il faut déjà avoir une entreprise ?</a></li><li><a href="/questions/#q6">Je ne suis pas à Montpellier.</a></li><li><a href="/questions/#q7">Comment se passe l&#x27;appel de 20 minutes ?</a></li><li><a href="/questions/#q8">C&#x27;est quoi, un membre fondateur ?</a></li><li><a href="/questions/#q9">Ça prend combien de temps ?</a></li><li><a href="/questions/#q10">Que deviennent mes chiffres ?</a></li><li><a href="/questions/#q11">Le fondateur est coach ?</a></li></ul>
+      <p><a href="/questions/">Toutes les réponses →</a></p>
   </div>
 </section>
 
@@ -635,7 +691,8 @@ footer a { font-weight: 700; }
 
 <footer>
   <div class="wrap">
-    <span>L’Escalier · Montpellier · Fondé par Adam</span>
+    <span>L’Escalier · club d’entrepreneurs 18-30 ans · Montpellier, Hérault</span>
+    <span class="pied-pages"><a href="/le-club/">Le club</a> · <a href="/rejoindre/">Rejoindre</a> · <a href="/rendez-vous/">Les rendez-vous</a> · <a href="/questions/">Questions</a> · <a href="/fondateur/">Le fondateur</a></span>
     <a id="lien-insta" href="#sommet">Suivre la montée sur Instagram</a>
   </div>
 </footer>
