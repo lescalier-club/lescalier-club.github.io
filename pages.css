@@ -11,5 +11,5 @@ h2{font-family:var(--f-display);font-weight:400;font-size:1.7rem;margin:40px 0 1
 .lead{font-size:1.2rem;color:var(--creme)}p,li{color:var(--creme-2)}b{color:var(--creme)}
 .liste{padding-left:1.2em}.liste li{margin:6px 0}blockquote{font-family:var(--f-display);font-size:1.6rem;margin:24px 0;color:var(--creme)}
 .btn{display:inline-block;background:var(--orange);color:var(--nuit);font-weight:700;padding:14px 22px;border-radius:999px;text-decoration:none}
-.suite{margin-top:36px}details{border-bottom:1px solid var(--trait)}summary{cursor:pointer;padding:16px 0;color:var(--creme);font-weight:700}
+.suite{margin-top:36px}.prochain{border-left:3px solid var(--orange);padding:6px 0 6px 14px;color:var(--creme)}details{border-bottom:1px solid var(--trait)}summary{cursor:pointer;padding:16px 0;color:var(--creme);font-weight:700}
 footer{background:var(--aube);color:var(--nuit)}footer .wrap{padding-block:22px;display:flex;flex-wrap:wrap;gap:10px 18px;font-size:.92rem}footer a{color:var(--nuit);font-weight:700}
