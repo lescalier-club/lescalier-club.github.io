@@ -125,7 +125,7 @@ body {
 a { color: inherit; }
 :focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
 .fondateurs { display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: baseline; justify-content: center; margin: 8px auto 28px; padding: 16px 20px; background: var(--nuit); border: 1px solid var(--orange); border-radius: 14px; max-width: 560px; }
-.fondateurs .f-titre { width: 100%; margin: 0; text-align: center; color: var(--orange); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; }
+.fondateurs .f-titre { width: 100%; margin: 0; text-align: center; color: var(--orange); font-size: var(--t-s); letter-spacing: .01em; font-weight: 500; }
 .fondateurs .f-places, .fondateurs .f-compte { margin: 0; color: var(--creme); font-variant-numeric: tabular-nums; }
 .fondateurs .f-places b { color: var(--orange); font-size: 1.6rem; }
 .fondateurs .f-compte b { color: var(--creme); }
@@ -134,13 +134,13 @@ a { color: inherit; }
 /* ---------- BANDEAU DE LA HYPE ---------- */
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 31; background: var(--orange); }
 .hype { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; background: var(--orange); color: var(--nuit); }
-.hype-in { max-width: var(--max); margin-inline: auto; padding-left: var(--gutter-l); padding-right: var(--gutter-r); padding-block: 9px;
+.hype-in { max-width: var(--max); margin-inline: auto; padding-left: var(--gutter-l); padding-right: var(--gutter-r); padding-block: 8px;
   display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 20px;
-  font-stretch: 112%; font-weight: 700; font-size: var(--t-s); font-variant-numeric: tabular-nums; }
-.hype-in b { font-weight: 900; }
+  font-weight: 500; font-size: var(--t-s); font-variant-numeric: tabular-nums; }
+.hype-in b { font-weight: 600; }
 .hype-in a { color: var(--nuit); text-underline-offset: 3px; }
 @media (max-width: 600px) {
-  .hype-in { font-size: .8rem; gap: 2px 14px; padding-block: 7px; }
+  .hype-in { font-size: .8rem; gap: 2px 16px; padding-block: 8px; }
   .hype-in .long { display: none; }
 }
 
@@ -149,15 +149,11 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .portrait video { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px;
   filter: contrast(1.06) saturate(.9); box-shadow: 14px 14px 0 var(--braise); background: var(--nuit); }
 .portrait figcaption { margin-top: 28px; color: var(--creme-2); font-size: var(--t-s); }
-.lettre .citation { margin-bottom: 26px; }
+.lettre .citation { margin-bottom: 24px; }
 .paraphe { font-family: "Herr Von Muellerhoff", cursive; font-size: 3.6rem; line-height: .9; color: var(--creme); margin-top: 8px; }
 
 /* ---------- QUESTIONS ---------- */
-.faq-liens { margin: 36px 0 18px; padding-left: 1.2em; max-width: 760px; } .faq-liens li { margin: 8px 0; }
-.faq-liens { margin: 36px 0 18px; padding-left: 1.2em; max-width: 760px; } .faq-liens li { margin: 8px 0; }
-.faq-liens { margin: 36px 0 18px; padding-left: 1.2em; max-width: 760px; } .faq-liens li { margin: 8px 0; }
-.faq-liens { margin: 36px 0 18px; padding-left: 1.2em; max-width: 760px; } .faq-liens li { margin: 8px 0; }
-.faq-liens { margin: 36px 0 18px; padding-left: 1.2em; max-width: 760px; } .faq-liens li { margin: 8px 0; }
+.faq-liens { margin: 36px 0 16px; padding-left: 1.2em; max-width: 760px; } .faq-liens li { margin: 8px 0; }
 .faq { margin-top: 36px; max-width: 760px; border-top: 1px solid var(--trait); }
 .faq details { border-bottom: 1px solid var(--trait); }
 .faq summary { cursor: pointer; list-style: none; padding: 20px 44px 20px 0; position: relative;
@@ -166,7 +162,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .faq summary::after { content: "+"; position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
   font-family: var(--f-sans); font-size: 1.6rem; color: var(--orange); transition: transform .2s; }
 .faq details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
-.faq details p { margin: 0 0 22px; color: var(--creme-2); max-width: 62ch; }
+.faq details p { margin: 0 0 24px; color: var(--creme-2); max-width: 62ch; }
 @media (prefers-reduced-motion: reduce) { .faq summary::after { transition: none; } }
 
 .wrap {
@@ -183,10 +179,9 @@ section { position: relative; }
   display: inline-flex; align-items: center; gap: .6em;
   font-family: var(--f-sans);
   font-stretch: 125%;
-  font-weight: 700;
-  font-size: var(--t-xs);
-  letter-spacing: .14em;
-  text-transform: uppercase;
+  font-weight: 600;
+  font-size: var(--t-s);
+  letter-spacing: .01em;
   color: var(--orange);
   font-variant-numeric: tabular-nums;
 }
@@ -194,7 +189,7 @@ section { position: relative; }
   linear-gradient(var(--orange),var(--orange)) 0 100%/5px 3px no-repeat,
   linear-gradient(var(--orange),var(--orange)) 5px 50%/5px 3px no-repeat,
   linear-gradient(var(--orange),var(--orange)) 10px 0/4px 3px no-repeat; }
-.alt .lieu { color: var(--creme-2); letter-spacing: .08em; font-weight: 500; }
+.alt .lieu { color: var(--creme-2); font-weight: 400; }
 
 h1, h2, h3 { margin: 0; font-weight: 400; text-wrap: balance; }
 h2 {
@@ -202,11 +197,11 @@ h2 {
   font-size: var(--t-xl);
   line-height: 1.02;
   letter-spacing: -.01em;
-  margin-top: 18px;
+  margin-top: 16px;
   max-width: 18ch;
 }
-h2 em, .hero h1 em { font-style: italic; color: var(--orange); }
-.lead { color: var(--creme-2); max-width: 58ch; margin: 22px 0 0; font-size: var(--t-l); line-height: 1.5; }
+h2 em, .hero h1 em { font-style: normal; color: var(--orange); }
+.lead { color: var(--creme-2); max-width: 58ch; margin: 24px 0 0; font-size: var(--t-l); line-height: 1.5; }
 p { margin: 0; }
 
 /* ---------- HERO ---------- */
@@ -223,8 +218,8 @@ p { margin: 0; }
   font-size: 1.15rem; letter-spacing: .02em; line-height: 1;
 }
 .top .cta-mini {
-  font-stretch: 112%; font-weight: 700; font-size: var(--t-s);
-  text-decoration: none; padding: 10px 16px; border: 1.5px solid var(--creme);
+  font-weight: 500; font-size: var(--t-s);
+  text-decoration: none; padding: 12px 16px; border: 1.5px solid var(--creme);
   transition: background .2s, color .2s;
 }
 .top .cta-mini:hover { background: var(--creme); color: var(--nuit); }
@@ -238,32 +233,32 @@ p { margin: 0; }
   font-size: var(--t-xxl);
   line-height: .95;
   letter-spacing: -.02em;
-  margin-top: 22px;
+  margin-top: 24px;
 }
-.hero .definition { max-width: 46ch; color: var(--creme-2); font-size: var(--t-m); margin: 0 0 18px; }
+.hero .definition { max-width: 46ch; color: var(--creme-2); font-size: var(--t-m); margin: 0 0 16px; }
 .hero .sous {
-  margin-top: 28px; display: flex; flex-wrap: wrap; gap: 8px 22px;
-  font-stretch: 112%; font-weight: 500; font-size: var(--t-s); color: var(--creme-2);
+  margin-top: 28px; display: flex; flex-wrap: wrap; gap: 8px 24px;
+  font-weight: 400; font-size: var(--t-s); color: var(--creme-2);
 }
-.hero .sous b { color: var(--creme); font-weight: 700; }
+.hero .sous b { color: var(--creme); font-weight: 500; }
 .inscription { margin-top: 44px; padding: clamp(20px, 4vw, 32px); background: var(--nuit); border-radius: 16px; max-width: 640px; color: var(--creme); }
 .inscription h3 { margin: 0 0 6px; font-family: var(--f-display); font-weight: 400; font-size: 1.8rem; line-height: 1.1; }
 .inscription .sous { margin: 0 0 20px; color: var(--creme); opacity: .8; font-size: var(--t-s); }
-.inscription label { display: grid; gap: 6px; margin-bottom: 14px; font-size: var(--t-s); font-weight: 600; }
-.inscription input[type=text], .inscription textarea { width: 100%; box-sizing: border-box; padding: 12px 14px; font: inherit; font-weight: 400; color: var(--creme); background: #221D17; border: 1.5px solid var(--trait); border-radius: 10px; }
+.inscription label { display: grid; gap: 6px; margin-bottom: 16px; font-size: var(--t-s); font-weight: 600; }
+.inscription input[type=text], .inscription textarea { width: 100%; box-sizing: border-box; padding: 12px 16px; font: inherit; font-weight: 400; color: var(--creme); background: #221D17; border: 1.5px solid var(--trait); border-radius: 10px; }
 .inscription textarea { min-height: 76px; resize: vertical; }
 .inscription input:focus-visible, .inscription textarea:focus-visible { outline: 2px solid var(--orange); outline-offset: 1px; border-color: var(--orange); }
-.inscription .accord { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; font-size: var(--t-xs); line-height: 1.45; opacity: .85; }
+.inscription .accord { display: flex; gap: 12px; align-items: flex-start; font-weight: 400; font-size: var(--t-xs); line-height: 1.45; opacity: .85; }
 .inscription .accord input { margin-top: 2px; accent-color: var(--orange); width: 18px; height: 18px; flex: none; }
 .inscription .piege { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .inscription .btn { margin-top: 6px; border: 0; cursor: pointer; }
-.inscription .retour { margin: 14px 0 0; font-size: var(--t-s); min-height: 1.2em; }
+.inscription .retour { margin: 16px 0 0; font-size: var(--t-s); min-height: 1.2em; }
 .inscription.fini form { display: none; }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
 .btn {
-  display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--f-sans); font-stretch: 112%; font-weight: 700; font-size: var(--t-m);
-  padding: 16px 22px; text-decoration: none; border: 0; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--f-sans); font-weight: 600; font-size: var(--t-m);
+  padding: 16px 24px; text-decoration: none; border: 0; cursor: pointer;
   background: var(--orange); color: var(--nuit);
   box-shadow: 6px 6px 0 var(--creme);
   transition: transform .15s, box-shadow .15s;
@@ -279,9 +274,9 @@ p { margin: 0; }
 .escalier-hero .hm.lit[data-i="0"] { fill: #4A2013; } .escalier-hero .hm.lit[data-i="1"] { fill: #7A3017; }
 .escalier-hero .hm.lit[data-i="2"] { fill: #B84C1C; } .escalier-hero .hm.lit[data-i="3"] { fill: var(--orange); }
 .escalier-hero .hm.lit[data-i="4"] { fill: var(--aube); }
-.roi-saut { transition: transform .38s cubic-bezier(.3,1.5,.5,1); }
+.roi-saut { transition: transform .38s cubic-bezier(.2,.8,.2,1); }
 .rejouer { font: inherit; color: var(--orange); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; letter-spacing: inherit; text-transform: inherit; }
-.escalier-hero figcaption { margin-top: 14px; font-size: var(--t-xs); color: var(--creme-2); letter-spacing: .06em; text-transform: uppercase; font-stretch: 112%; text-align: right; }
+.escalier-hero figcaption { margin-top: 16px; font-size: var(--t-xs); color: var(--creme-2); text-align: right; }
 
 /* ---------- MANIFESTE ---------- */
 .manifeste { background: var(--nuit-2); border-block: 1px solid var(--trait); }
@@ -289,15 +284,15 @@ p { margin: 0; }
 .citation {
   font-family: var(--f-display); font-size: clamp(1.7rem, 3.6vw, 2.7rem); line-height: 1.15; margin: 0;
 }
-.citation em { color: var(--orange); }
-.manifeste .texte { display: grid; gap: 18px; max-width: 60ch; color: var(--creme-2); font-size: var(--t-l); line-height: 1.55; }
+.citation em { font-style: normal; color: var(--orange); }
+.manifeste .texte { display: grid; gap: 16px; max-width: 60ch; color: var(--creme-2); font-size: var(--t-l); line-height: 1.55; }
 .manifeste .texte strong { color: var(--creme); font-weight: 500; }
-.signature { display: flex; align-items: center; gap: 14px; margin-top: 10px; color: var(--creme); font-size: var(--t-s); }
+.signature { display: flex; align-items: center; gap: 16px; margin-top: 12px; color: var(--creme); font-size: var(--t-s); }
 .signature .trait { width: 40px; height: 2px; background: var(--orange); }
 
 /* ---------- MARCHES (interactif) ---------- */
 .rythme { display: flex; flex-wrap: wrap; gap: 1px; background: var(--trait); border: 1px solid var(--trait); margin-top: 40px; }
-.rythme div { flex: 1 1 170px; background: var(--nuit); padding: 20px 22px; }
+.rythme div { flex: 1 1 170px; background: var(--nuit); padding: 20px 24px; }
 .rythme b { display: block; font-family: var(--f-display); font-size: 1.6rem; font-weight: 400; }
 .rythme span { color: var(--creme-2); font-size: var(--t-s); }
 
@@ -310,11 +305,11 @@ p { margin: 0; }
   position: relative; display: flex; flex-direction: column; justify-content: flex-start; gap: 6px;
   text-align: left; font: inherit; color: var(--creme); cursor: pointer;
   background: var(--nuit-2); border: 0; border-top: 3px solid var(--creme); border-left: 1px solid var(--trait);
-  padding: 16px 14px; transition: background .2s, border-color .2s;
+  padding: 16px 16px; transition: background .2s, border-color .2s;
 }
 .marche:nth-child(1) { height: 110px; } .marche:nth-child(2) { height: 165px; } .marche:nth-child(3) { height: 220px; }
 .marche:nth-child(4) { height: 275px; } .marche:nth-child(5) { height: 330px; }
-.marche .n { font-stretch: 125%; font-weight: 900; font-size: var(--t-xs); letter-spacing: .12em; color: var(--creme-2); }
+.marche .n { font-weight: 500; font-size: var(--t-xs); letter-spacing: .01em; color: var(--creme-2); font-variant-numeric: tabular-nums; }
 .marche .nom { font-family: var(--f-display); font-size: clamp(1.1rem, 2.1vw, 1.7rem); line-height: 1.05; }
 .marche:hover { background: #262019; }
 .marche { transition: background .5s ease, color .5s ease; }
@@ -327,22 +322,22 @@ p { margin: 0; }
 .marche .pion { position: absolute; top: -34px; left: 14px; width: 18px; display: none; }
 .marche[aria-pressed="true"] .pion { display: block; }
 .detail {
-  border: 1px solid var(--trait); border-top: 0; padding: 26px clamp(18px, 3vw, 32px);
+  border: 1px solid var(--trait); border-top: 0; padding: 24px clamp(16px, 3vw, 32px);
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 12px 40px; align-items: baseline;
 }
 .detail h3 { font-family: var(--f-display); font-size: clamp(1.6rem, 3vw, 2.3rem); line-height: 1.05; }
 .detail p { color: var(--creme-2); max-width: 56ch; }
 .detail .preuve { grid-column: 2; font-size: var(--t-s); color: var(--creme); }
-.detail .preuve::before { content: "La preuve : "; color: var(--orange); font-weight: 700; }
-.note { margin-top: 18px; font-size: var(--t-s); color: var(--creme-2); max-width: 70ch; }
+.detail .preuve::before { content: "La preuve : "; color: var(--orange); font-weight: 500; }
+.note { margin-top: 16px; font-size: var(--t-s); color: var(--creme-2); max-width: 70ch; }
 
 /* ---------- PILIERS ---------- */
 .piliers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 48px; border-top: 1px solid var(--trait); }
-.pilier { padding: 26px 24px 30px 0; border-bottom: 1px solid var(--trait); display: grid; gap: 8px; align-content: start; }
+.pilier { padding: 24px 24px 32px 0; border-bottom: 1px solid var(--trait); display: grid; gap: 8px; align-content: start; }
 .pilier:not(:nth-child(3n+1)) { padding-left: 24px; border-left: 1px solid var(--trait); }
 .pilier h3 { font-family: var(--f-display); font-size: 1.75rem; line-height: 1.1; }
 .pilier p { color: var(--creme-2); font-size: var(--t-s); max-width: 34ch; }
-.voix { margin-top: 26px; font-family: var(--f-display); font-style: italic; font-size: var(--t-l); color: var(--creme); }
+.voix { margin-top: 28px; font-family: var(--f-display); font-size: var(--t-l); color: var(--creme); }
 
 /* ---------- ACTIVITÉS ---------- */
 .activites { margin-top: 44px; border-top: 1px solid var(--creme); }
@@ -352,25 +347,25 @@ p { margin: 0; }
 }
 .activite h3 { font-family: var(--f-display); font-size: clamp(1.7rem, 3.4vw, 2.6rem); line-height: 1; }
 .activite p { color: var(--creme-2); max-width: 54ch; }
-.activite .quand { font-stretch: 112%; font-weight: 700; font-size: var(--t-xs); letter-spacing: .1em; text-transform: uppercase; color: var(--orange); white-space: nowrap; }
+.activite .quand { font-weight: 500; font-size: var(--t-s); color: var(--orange); white-space: nowrap; }
 .activite.phare h3 { color: var(--orange); }
 
 /* ---------- FAMILLE ---------- */
 .famille .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 80px); margin-top: 44px; }
 .lois { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: loi; }
-.lois li { counter-increment: loi; display: grid; grid-template-columns: 44px minmax(0,1fr); gap: 4px 14px; padding: 18px 0; border-top: 1px solid var(--trait); }
+.lois li { counter-increment: loi; display: grid; grid-template-columns: 44px minmax(0,1fr); gap: 4px 16px; padding: 16px 0; border-top: 1px solid var(--trait); }
 .lois li::before { content: counter(loi); font-family: var(--f-display); font-size: 2rem; line-height: 1; color: var(--orange); grid-row: span 2; }
-.lois b { font-weight: 700; font-stretch: 105%; }
+.lois b { font-weight: 500; }
 .lois span { color: var(--creme-2); font-size: var(--t-s); }
-.portes h3 { font-stretch: 125%; font-weight: 900; font-size: var(--t-xs); letter-spacing: .14em; text-transform: uppercase; color: var(--creme-2); margin-bottom: 14px; }
+.portes h3 { font-weight: 500; font-size: var(--t-s); color: var(--creme-2); margin-bottom: 16px; }
 .porte { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; padding: 16px 0; border-top: 1px solid var(--trait); flex-wrap: wrap; }
 .porte b { font-family: var(--f-display); font-weight: 400; font-size: 1.5rem; }
 .porte span { color: var(--creme-2); font-size: var(--t-s); }
 
 /* ---------- COMPARATIF ---------- */
 .compare { margin-top: 44px; display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1fr) minmax(0, 1fr); border-top: 1px solid var(--creme); }
-.compare > div { padding: 20px 18px 20px 0; border-bottom: 1px solid var(--trait); }
-.compare .h { font-stretch: 125%; font-weight: 900; font-size: var(--t-xs); letter-spacing: .14em; text-transform: uppercase; color: var(--creme-2); }
+.compare > div { padding: 20px 16px 20px 0; border-bottom: 1px solid var(--trait); }
+.compare .h { font-weight: 500; font-size: var(--t-s); color: var(--creme-2); }
 .compare .h.ici { color: var(--orange); }
 .compare .k { color: var(--creme-2); font-size: var(--t-s); }
 .compare .ailleurs { color: var(--creme-2); text-decoration: line-through; text-decoration-color: var(--braise); text-decoration-thickness: 2px; }
@@ -384,15 +379,15 @@ p { margin: 0; }
 }
 .sommet .wrap { padding-block: clamp(90px, 14vw, 170px) clamp(60px, 9vw, 100px); }
 .sommet .metres {
-  font-family: var(--f-sans); font-stretch: 125%; font-weight: 900;
+  font-family: var(--f-sans); font-stretch: 112%; font-weight: 600;
   font-size: clamp(4.5rem, 19vw, 13rem); line-height: .82; letter-spacing: -.03em;
   font-variant-numeric: tabular-nums;
 }
 .sommet .metres small { font-size: .35em; letter-spacing: 0; }
 .sommet h2 { max-width: 16ch; }
 .etapes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin-top: 52px; border-top: 2px solid var(--nuit); }
-.etape { padding: 18px 18px 0 0; display: grid; gap: 6px; align-content: start; }
-.etape .n { font-stretch: 125%; font-weight: 900; font-size: var(--t-xs); letter-spacing: .12em; color: var(--nuit); }
+.etape { padding: 16px 16px 0 0; display: grid; gap: 6px; align-content: start; }
+.etape .n { font-weight: 600; font-size: var(--t-s); color: var(--nuit); font-variant-numeric: tabular-nums; }
 .etape b { font-family: var(--f-display); font-weight: 400; font-size: 1.5rem; color: var(--nuit); line-height: 1.1; }
 .etape span { font-size: var(--t-s); color: #2A1610; }
 .sommet .actions { margin-top: 48px; }
@@ -401,15 +396,15 @@ p { margin: 0; }
 .lien-note { margin-top: 16px; font-size: var(--t-s); color: var(--nuit); min-height: 1.4em; }
 
 footer { background: var(--aube); color: var(--nuit); }
-footer .wrap { padding-block: 26px calc(26px + env(safe-area-inset-bottom, 0px)); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: var(--t-s); font-stretch: 112%; }
-footer a { font-weight: 700; }
+footer .wrap { padding-block: 24px calc(24px + env(safe-area-inset-bottom, 0px)); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: var(--t-s); }
+footer a { font-weight: 500; }
 
 /* ---------- ALTIMÈTRE ---------- */
 .altimetre {
   position: fixed; z-index: 20;
   right: calc(18px + env(safe-area-inset-right, 0px)); top: 50%; transform: translateY(-50%);
-  display: grid; justify-items: end; gap: 10px; pointer-events: none;
-  font-stretch: 125%; font-weight: 700; font-size: .7rem; letter-spacing: .1em; color: var(--creme-2);
+  display: grid; justify-items: end; gap: 12px; pointer-events: none;
+  font-weight: 500; font-size: .75rem; letter-spacing: .01em; color: var(--creme-2);
   font-variant-numeric: tabular-nums;
 }
 .altimetre .rail { position: relative; width: 2px; height: 46vh; background: var(--trait); }
@@ -436,11 +431,11 @@ footer a { font-weight: 700; }
   .activite { grid-template-columns: minmax(0, 1fr); }
   .detail { grid-template-columns: minmax(0, 1fr); }
   .detail .preuve { grid-column: 1; }
-  .etapes { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 22px; }
+  .etapes { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 24px; }
   .altimetre { right: calc(3px + env(safe-area-inset-right, 0px)); gap: 6px; }
   .altimetre .rail { height: 30vh; }
   .altimetre .lieu { display: none; }
-  .altimetre .valeur { background: var(--nuit); border: 1px solid var(--trait); padding: 2px 5px; font-size: .66rem; }
+  .altimetre .valeur { background: var(--nuit); border: 1px solid var(--trait); padding: 2px 4px; font-size: .66rem; }
   .altimetre .pion { width: 13px; left: -5.5px; }
   .altimetre .valeur { display: none; }
   .wrap { padding-inline: max(var(--gutter-l), 28px) max(var(--gutter-r), 28px); }
@@ -449,14 +444,14 @@ footer a { font-weight: 700; }
   .piliers { grid-template-columns: minmax(0, 1fr); }
   .pilier:nth-child(2n) { padding-left: 0; border-left: 0; }
   .escalier { grid-template-columns: minmax(0, 1fr); min-height: 0; gap: 0; }
-  .marche, .marche:nth-child(n) { height: auto; flex-direction: row; align-items: baseline; gap: 14px; border-left: 0; }
+  .marche, .marche:nth-child(n) { height: auto; flex-direction: row; align-items: baseline; gap: 16px; border-left: 0; }
   .marche:nth-child(1) { margin-right: 32%; } .marche:nth-child(2) { margin-right: 24%; } .marche:nth-child(3) { margin-right: 16%; }
   .marche:nth-child(4) { margin-right: 8%; }
   .escalier { display: flex; flex-direction: column-reverse; align-items: stretch; }
   .marche .pion { top: 14px; left: auto; right: 12px; }
   .marche .pion g { fill: var(--creme); }
   .compare { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-  .compare .k { grid-column: 1 / -1; padding-bottom: 0; border-bottom: 0; color: var(--orange); font-weight: 700; font-size: var(--t-xs); letter-spacing: .1em; text-transform: uppercase; }
+  .compare .k { grid-column: 1 / -1; padding-bottom: 0; border-bottom: 0; color: var(--orange); font-weight: 500; font-size: var(--t-s); }
   .compare .h.vide { display: none; }
   .etapes { grid-template-columns: minmax(0, 1fr); }
 }
@@ -494,7 +489,7 @@ footer a { font-weight: 700; }
     <div class="hero-grid">
       <div>
         <span class="alt">0 m <span class="lieu">Montpellier · le départ</span></span>
-        <h1>Le club des entrepreneurs qui <em>montent.</em></h1>
+        <h1>Le club des entrepreneurs qui <em>montent</em></h1>
         <p class="definition">L'Escalier est un club d'entrepreneurs de 18 à 30 ans à Montpellier (Hérault), fondé en octobre 2026 par Adam Abad. On y entre après un appel de 20 minutes, on avance chaque semaine ensemble sur Discord, et on se retrouve en vrai chaque mois.</p>
         <div class="sous"><span><b>18 – 30 ans</b></span><span><b>Montpellier</b></span><span><b>Offert</b> aux 10 fondateurs</span></div>
         <div class="actions">
@@ -538,7 +533,7 @@ footer a { font-weight: 700; }
 <section class="band" id="entree">
   <div class="wrap">
     <span class="alt">180 m <span class="lieu">Ton entrée</span></span>
-    <h2>Avant de monter, on pose <em>ton</em> projet.</h2>
+    <h2>Avant de monter, on pose <em>ton</em> projet</h2>
     <p class="lead">Internet te donne l’idée des autres. Ici, on t’aide à aller au bout de la tienne : ta vision, ton histoire, ton mot.</p>
     <div class="rythme" aria-label="Les étapes de ton entrée dans le club">
       <div><b>L’appel</b><span>20 minutes avec moi. Tu me racontes ce que tu fais et où tu veux aller.</span></div>
@@ -554,7 +549,7 @@ footer a { font-weight: 700; }
 <section class="band" id="monter">
   <div class="wrap">
     <span class="alt">240 m <span class="lieu">Comment on monte</span></span>
-    <h2>Ton grade ici est <em>prouvé</em>, jamais déclaré.</h2>
+    <h2>Ton grade ici est <em>prouvé</em>, jamais déclaré</h2>
     <p class="lead">Chaque marche est un fait réel de ton activité. Tu ne montes pas parce que tu le dis, tu montes parce que c’est arrivé.</p>
 
     <div class="rythme" aria-label="Les rendez-vous du club">
@@ -566,11 +561,11 @@ footer a { font-weight: 700; }
     </div>
 
     <div class="escalier" role="group" aria-label="Les marches du club">
-      <button class="marche" type="button" data-i="0" aria-pressed="true"><svg class="pion" viewBox="0 0 10 14" aria-hidden="true"><g fill="#D76634"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></svg><span class="n">MARCHE 0</span><span class="nom">Tu arrives</span></button>
-      <button class="marche" type="button" data-i="1" aria-pressed="false"><svg class="pion" viewBox="0 0 10 14" aria-hidden="true"><g fill="#D76634"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></svg><span class="n">MARCHE 1</span><span class="nom">Premier client</span></button>
-      <button class="marche" type="button" data-i="2" aria-pressed="false"><svg class="pion" viewBox="0 0 10 14" aria-hidden="true"><g fill="#D76634"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></svg><span class="n">MARCHE 2</span><span class="nom">1 000 € par mois</span></button>
-      <button class="marche" type="button" data-i="3" aria-pressed="false"><svg class="pion" viewBox="0 0 10 14" aria-hidden="true"><g fill="#D76634"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></svg><span class="n">MARCHE 3</span><span class="nom">5 000 € par mois</span></button>
-      <button class="marche" type="button" data-i="4" aria-pressed="false"><svg class="pion" viewBox="0 0 10 14" aria-hidden="true"><g fill="#D76634"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></svg><span class="n">MARCHE 4</span><span class="nom">Tu tends la main</span></button>
+      <button class="marche" type="button" data-i="0" aria-pressed="true"><svg class="pion" viewBox="0 0 10 14" aria-hidden="true"><g fill="#D76634"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></svg><span class="n">Marche 0</span><span class="nom">Tu arrives</span></button>
+      <button class="marche" type="button" data-i="1" aria-pressed="false"><svg class="pion" viewBox="0 0 10 14" aria-hidden="true"><g fill="#D76634"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></svg><span class="n">Marche 1</span><span class="nom">Premier client</span></button>
+      <button class="marche" type="button" data-i="2" aria-pressed="false"><svg class="pion" viewBox="0 0 10 14" aria-hidden="true"><g fill="#D76634"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></svg><span class="n">Marche 2</span><span class="nom">1 000 € par mois</span></button>
+      <button class="marche" type="button" data-i="3" aria-pressed="false"><svg class="pion" viewBox="0 0 10 14" aria-hidden="true"><g fill="#D76634"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></svg><span class="n">Marche 3</span><span class="nom">5 000 € par mois</span></button>
+      <button class="marche" type="button" data-i="4" aria-pressed="false"><svg class="pion" viewBox="0 0 10 14" aria-hidden="true"><g fill="#D76634"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></svg><span class="n">Marche 4</span><span class="nom">Tu tends la main</span></button>
     </div>
     <div class="detail" id="detail" aria-live="polite">
       <h3 id="d-titre">Tu arrives</h3>
@@ -584,7 +579,7 @@ footer a { font-weight: 700; }
 <section class="manifeste band" id="partage">
   <div class="wrap">
     <span class="alt">360 m <span class="lieu">Ce qu’on partage</span></span>
-    <h2>Pas de théorie. Ce qu’on fait <em>vraiment</em>.</h2>
+    <h2>Pas de théorie. Ce qu’on fait <em>vraiment</em></h2>
     <div class="piliers">
       <div class="pilier"><h3>Le mental</h3><p>Les habitudes et la discipline qui tiennent quand la motivation lâche.</p></div>
       <div class="pilier"><h3>Le corps</h3><p>On s’entraîne comme des athlètes, avec le coach du club. Ton business ne monte pas plus haut que ton énergie.</p></div>
@@ -600,7 +595,7 @@ footer a { font-weight: 700; }
 <section class="band" id="vivre">
   <div class="wrap">
     <span class="alt">450 m <span class="lieu">Ce qu’on vit ensemble</span></span>
-    <h2>On ne parle pas business derrière un écran. On <em>vit</em> des choses.</h2>
+    <h2>On ne parle pas business derrière un écran. On <em>vit</em> des choses</h2>
     <div class="activites">
       <div class="activite phare"><h3>La Montée</h3><p>Le Pic Saint-Loup de nuit, à la frontale. Au sommet, au lever du soleil, chacun dit son objectif du trimestre. Puis petit-déj tous ensemble.</p><span class="quand">Chaque trimestre</span></div>
       <div class="activite"><h3>La Table</h3><p>Un vrai repas, tout le monde assis. Tour de table : ton métier, ta marche du mois. Le cœur du club.</p><span class="quand">Chaque mois</span></div>
@@ -618,7 +613,7 @@ footer a { font-weight: 700; }
 <section class="manifeste band famille" id="famille">
   <div class="wrap">
     <span class="alt">540 m <span class="lieu">Une famille</span></span>
-    <h2>On monte <em>ensemble</em>, ou on ne monte pas.</h2>
+    <h2>On monte <em>ensemble</em>, ou on ne monte pas</h2>
     <div class="grid">
       <ol class="lois" aria-label="Les règles de la famille">
         <li><b>On ne laisse personne seul.</b><span>Deux semaines sans nouvelles, et un membre t’écrit. Le creux est normal, l’abandon non.</span></li>
@@ -643,7 +638,7 @@ footer a { font-weight: 700; }
 <section class="band" id="difference">
   <div class="wrap">
     <span class="alt">610 m <span class="lieu">La différence</span></span>
-    <h2>Les autres clubs t’attendent en haut. Nous, on part d’<em>en bas</em>.</h2>
+    <h2>Les autres clubs t’attendent en haut. Nous, on part d’<em>en bas</em></h2>
     <div class="compare" role="table" aria-label="Les autres clubs comparés à L'Escalier">
       <div class="h vide" role="columnheader"></div><div class="h" role="columnheader">Ailleurs</div><div class="h ici" role="columnheader">À L’Escalier</div>
       <div class="k" role="rowheader">Pour entrer</div><div class="ailleurs" role="cell">Prouve que tu gagnes déjà 15 000 € par mois</div><div class="nous" role="cell">Montre que tu as envie de monter</div>
@@ -657,7 +652,7 @@ footer a { font-weight: 700; }
 <section class="band" id="questions">
   <div class="wrap">
     <span class="alt">630 m <span class="lieu">Tes questions</span></span>
-    <h2>Avant de réserver ton appel.</h2>
+    <h2>Avant de réserver ton appel</h2>
     <ul class="faq-liens"><li><a href="/questions/#q0">C&#x27;est quoi, L&#x27;Escalier ?</a></li><li><a href="/questions/#q1">Qui peut entrer ?</a></li><li><a href="/questions/#q2">Comment candidater ?</a></li><li><a href="/questions/#q3">Combien ça coûte ?</a></li><li><a href="/questions/#q4">Qu&#x27;est-ce qu&#x27;on fait dans le club ?</a></li><li><a href="/questions/#q5">Il faut déjà avoir une entreprise ?</a></li><li><a href="/questions/#q6">Je ne suis pas à Montpellier.</a></li><li><a href="/questions/#q7">Comment se passe l&#x27;appel de 20 minutes ?</a></li><li><a href="/questions/#q8">C&#x27;est quoi, un membre fondateur ?</a></li><li><a href="/questions/#q9">Ça prend combien de temps ?</a></li><li><a href="/questions/#q10">Que deviennent mes chiffres ?</a></li><li><a href="/questions/#q11">Le fondateur est coach ?</a></li></ul>
       <p><a href="/questions/">Toutes les réponses →</a></p>
   </div>
