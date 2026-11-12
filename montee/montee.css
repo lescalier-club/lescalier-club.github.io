@@ -1,0 +1,63 @@
+/* La montée : DA « Lumière dorée » (Adam, 12/11/2026) posée sur les styles du site actuel. */
+:root {
+  --marbre: #F2EBDD; --pierre: #3A3128; --or: #F4C247; --sur-or: #2A231C; --terre: #D76634;
+  --or-texte: #9A6B0B;            /* le jaune doré, assombri pour rester lisible en texte sur le marbre */
+  /* Les anciennes variables du site pointent vers la nouvelle DA : tous les composants suivent. */
+  --nuit: var(--marbre); --creme: var(--pierre); --orange: var(--or-texte); --aube: var(--or);
+  --creme-2: #6B5E50; --nuit-2: #E9E0CE;
+  --trait: rgba(58, 49, 40, .16);
+  --menu-h: 56px;
+}
+html { scroll-padding-top: calc(var(--menu-h) + 12px); }
+body { background: var(--marbre); color: var(--pierre); padding-top: var(--menu-h); }
+
+/* Lien d'évitement : premier élément au clavier, visible seulement au focus */
+.evitement { position: fixed; left: 12px; top: -60px; z-index: 30; background: var(--or); color: var(--sur-or);
+  padding: 10px 16px; border-radius: 999px; font: 600 14px var(--f-sans); text-decoration: none; }
+.evitement:focus { top: 10px; }
+
+/* Le menu : toujours visible, compact, ne recouvre jamais le contenu (le corps commence sous lui) */
+#menu { position: fixed; inset: 0 0 auto 0; height: var(--menu-h); z-index: 20; display: flex; align-items: center;
+  gap: 24px; padding: 0 clamp(16px, 4vw, 40px); background: rgba(242, 235, 221, .88);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--trait); }
+#menu .logo { display: flex; align-items: center; gap: 10px; color: var(--pierre); text-decoration: none;
+  font: 800 16px/1 var(--f-sans); letter-spacing: .05em; white-space: nowrap; }
+#menu .logo svg { width: 26px; height: 28px; }
+#menu nav { display: flex; gap: 18px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
+#menu nav::-webkit-scrollbar { display: none; }
+#menu nav a { color: var(--pierre); text-decoration: none; font: 500 14px/1 var(--f-sans); white-space: nowrap; opacity: .82; }
+#menu nav a:hover, #menu nav a:focus-visible { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 767px) {
+  #menu { gap: 12px; }
+  #menu .logo span { display: none; }
+  #menu nav { gap: 14px; }
+  #menu nav a { font-size: 13px; }
+}
+
+/* Boutons : le jaune doré du roi */
+.btn { background: var(--or) !important; color: var(--sur-or) !important; border-color: var(--or) !important; }
+.btn.ghost { background: transparent !important; color: var(--pierre) !important; border-color: var(--pierre) !important; }
+
+/* L'altitude */
+#altitude { position: fixed; right: clamp(12px, 3vw, 32px); bottom: clamp(12px, 3vw, 28px); z-index: 15;
+  font: 400 28px/1 var(--f-display); color: var(--pierre); background: rgba(242, 235, 221, .8);
+  padding: 8px 14px; border-radius: 999px; border: 1px solid var(--trait); }
+
+/* La scène 3D derrière tout */
+#scene { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; display: block; }
+#montee, footer { position: relative; z-index: 1; }
+.palier img { max-width: 100%; height: auto; border-radius: 14px; }
+
+/* Mode texte (sans 3D, ou avant que la scène soit prête) : les paliers s'empilent comme un site classique */
+html.sans-3d #scene { display: none; }
+html.sans-3d .palier, html.avec-3d:not(.scene-prete) .palier { background: transparent; }
+
+/* Mode 3D : chaque palier est un panneau de marbre translucide ; seul le palier actif se voit */
+html.avec-3d.scene-prete .palier { min-height: 100vh; display: flex; align-items: center; background: transparent; }
+html.avec-3d.scene-prete .palier > .wrap { background: rgba(242, 235, 221, .86); border: 1px solid var(--trait);
+  border-radius: 20px; padding: clamp(20px, 4vw, 44px); max-width: min(640px, 92vw); margin-inline: clamp(12px, 6vw, 96px) auto;
+  box-shadow: 0 20px 60px rgba(58, 49, 40, .14); opacity: 0; transform: translateY(24px);
+  transition: opacity .5s ease, transform .5s ease; }
+html.avec-3d.scene-prete .palier.actif > .wrap { opacity: 1; transform: none; }
+html.avec-3d.scene-prete footer { background: rgba(242, 235, 221, .92); }
+@media (prefers-reduced-motion: reduce) { .palier > .wrap { transition: none !important; } }

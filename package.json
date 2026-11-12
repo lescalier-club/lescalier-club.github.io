@@ -1,0 +1,7 @@
+{
+  "name": "lescalier-site",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test --test-concurrency=1 tests/" },
+  "devDependencies": { "@playwright/test": "1.49.1", "http-server": "14.1.1" }
+}
