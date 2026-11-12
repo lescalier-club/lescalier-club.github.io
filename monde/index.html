@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="robots" content="noindex" />
+  <title>L'Escalier · Le club des entrepreneurs qui montent</title>
+  <meta name="description" content="Club d'entrepreneurs de 18 à 30 ans à Montpellier. Monte avec nous, marche après marche." />
+  <link rel="icon" type="image/png" href="../media/icone.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" />
+  <style>
+    /* DA « Lumière dorée » (Adam, 12/11/2026) */
+    :root, .sw-root {
+      --sw-bg: #F2EBDD;            /* marbre crème */
+      --sw-ink: #3A3128;           /* brun pierre */
+      --sw-ink-soft: #6B5E50;
+      --sw-accent: #F4C247;        /* jaune doré du roi */
+      --sw-font-display: "Instrument Serif", Georgia, serif;
+      --sw-font-body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    }
+    html, body { margin: 0; background: var(--sw-bg); }
+    /* Le jaune doré sert aux boutons ; en texte sur le crème il devient illisible : on le fonce. */
+    .sw-root .sw-copy__eyebrow { color: #9A6B0B !important; font-weight: 600; letter-spacing: .04em; }
+    /* Sur téléphone, l'indication de scroll chevauchait les étiquettes du départ */
+    @media (max-width: 860px) { .sw-root .sw-hint { display: none !important; } }
+  </style>
+</head>
+<body>
+  <div id="top"></div>
+  <div id="world"></div>
+
+  <script src="scrub-engine.js"></script>
+  <script>
+    // VIDÉOS PROVISOIRES (travelling sur les images Gemini) : à remplacer par la montée Seedance (Monid).
+    const V = (n) => 'videos/provisoire_' + n + '.mp4';
+    mountScrollWorld(document.getElementById('world'), {
+      brand: { name: "L'ESCALIER", href: '#top' },
+      cta: { label: 'Rejoindre le club', href: '#sommet' },
+      hint: 'fais défiler pour monter',
+      diveScroll: 1.4,
+      sections: [
+        { id: 'depart', label: 'Le départ', still: 'assets/scene_1.jpg', stillMobile: 'assets/scene_1_vertical.jpg', clip: V(1), accent: '#F4C247',
+          scroll: 1.6, linger: 0.4,
+          eyebrow: '0 m · Montpellier · le départ',
+          title: 'Le club des entrepreneurs qui montent',
+          body: "L'Escalier est un club d'entrepreneurs de 18 à 30 ans à Montpellier (Hérault), fondé en octobre 2026 par Adam Abad.",
+          tags: ['18 – 30 ans', 'Montpellier', 'Offert aux 10 fondateurs'] },
+        { id: 'pourquoi', label: 'Pourquoi', still: 'assets/scene_2.jpg', clip: V(2), accent: '#F4C247',
+          eyebrow: '120 m · Pourquoi ce club',
+          title: '« Ici, personne ne monte à ta place. Mais personne ne monte seul. »',
+          body: "J’ai 20 ans, et mon talent a toujours été de mettre les bonnes personnes en relation.",
+          tags: ['Adam Abad, fondateur'] },
+        { id: 'monter', label: 'Comment on monte', still: 'assets/scene_3.jpg', clip: V(3), accent: '#F4C247',
+          eyebrow: '240 m · Comment on monte',
+          title: 'Ton grade ici est prouvé, jamais déclaré',
+          body: "Chaque marche est un fait réel de ton activité. Tu ne montes pas parce que tu le dis, tu montes parce que c’est arrivé.",
+          tags: ['L’appel : 20 min', 'Lundi : ta marche', 'Vendredi : le résultat'] },
+        { id: 'partage', label: 'Ce qu’on partage', still: 'assets/scene_4.jpg', clip: V(4), accent: '#F4C247',
+          eyebrow: '360 m · Ce qu’on partage',
+          title: 'Pas de théorie. Ce qu’on fait vraiment',
+          body: "On s’entraîne comme des athlètes, avec le coach du club. Ton business ne monte pas plus haut que ton énergie.",
+          tags: ['Le mental', 'Le corps', 'L’argent'] },
+        { id: 'vivre', label: 'Ce qu’on vit', still: 'assets/scene_5.jpg', clip: V(5), accent: '#F4C247',
+          eyebrow: '450 m · Ce qu’on vit ensemble',
+          title: 'On monte ensemble, ou on ne monte pas',
+          body: "La Table : un vrai repas, tout le monde assis. Tour de table : ton métier, ta marche du mois. Le cœur du club.",
+          tags: ['La Montée', 'La Table', 'Un parrain'] },
+        { id: 'sommet', label: 'Le sommet', still: 'assets/scene_6.jpg', clip: V(6), accent: '#F4C247',
+          scroll: 1.6, linger: 0.5,
+          eyebrow: '658 m · Le sommet',
+          title: 'Ta première marche, c’est aujourd’hui.',
+          body: "Membres fondateurs : 10 places, entrée offerte à vie. Ouverture le mardi 8 décembre.",
+          tags: [],
+          cta: { primary: { label: 'Réserver mon appel de 20 min', href: 'https://calendly.com/adam34abad/appel-l-escalier' },
+                 secondary: { label: 'Découvrir le club', href: '/le-club/' } } },
+      ],
+      connectors: [null, null, null, null, null],
+    });
+  </script>
+</body>
+</html>
