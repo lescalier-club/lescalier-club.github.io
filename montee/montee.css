@@ -8,7 +8,7 @@
   --trait: rgba(58, 49, 40, .16);
   --menu-h: 56px;
 }
-html { scroll-padding-top: calc(var(--menu-h) + 12px); }
+html { overflow-anchor: none; scroll-padding-top: calc(var(--menu-h) + 12px); }
 body { background: var(--marbre); color: var(--pierre); padding-top: var(--menu-h); }
 
 /* Lien d'évitement : premier élément au clavier, visible seulement au focus */
@@ -61,3 +61,12 @@ html.avec-3d.scene-prete .palier > .wrap { background: rgba(242, 235, 221, .86);
 html.avec-3d.scene-prete .palier.actif > .wrap { opacity: 1; transform: none; }
 html.avec-3d.scene-prete footer { background: rgba(242, 235, 221, .92); }
 @media (prefers-reduced-motion: reduce) { .palier > .wrap { transition: none !important; } }
+
+/* Panneaux plus larges sur grand écran ; le départ en une colonne */
+@media (min-width: 900px) { html.avec-3d.scene-prete .palier > .wrap { max-width: min(760px, 60vw); } }
+html.avec-3d.scene-prete #depart .hero-grid { grid-template-columns: 1fr; }
+html.avec-3d.scene-prete #depart .hero-grid > :not(:first-child) { display: none; } /* l'escalier dessiné laisse la place à la 3D */
+
+/* Champs du formulaire : clairs, sur le marbre */
+.palier input, .palier textarea, .palier select { background: #FBF7EF !important; color: var(--pierre) !important; border-color: var(--trait) !important; }
+.palier input::placeholder, .palier textarea::placeholder { color: #8A7D6C !important; }

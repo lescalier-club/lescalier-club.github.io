@@ -18,7 +18,7 @@ export function camera(t) {
   const y = Math.max(1.6, p.y + 3.2);
   // Pendant la montée, le regard vise les marches qui arrivent, un peu plus haut ;
   // en arrivant au sommet, il se pose sur l'horizon, par-dessus le mur.
-  const k = Math.min(1, Math.max(0, (u - 0.86) / 0.14)), lisse = k * k * (3 - 2 * k);
+  const k = Math.min(1, Math.max(0, (u - 0.8) / 0.15)), lisse = k * k * (3 - 2 * k);
   const portee = 0.8 + lisse * 5;
   return {
     position: { x: p.x, y, z: p.z },

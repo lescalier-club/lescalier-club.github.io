@@ -17,7 +17,7 @@ export function preparer() {
   after(async () => { await navigateur?.close(); serveur?.kill(); });
 }
 export async function page(appareil = 'desktop', options = {}) {
-  const ctx = await navigateur.newContext({ ...APPAREILS[appareil], ...options });
+  const ctx = await navigateur.newContext({ bypassCSP: true, ...APPAREILS[appareil], ...options });
   const p = await ctx.newPage(); p.erreurs = [];
   p.on('pageerror', e => p.erreurs.push(String(e))); p.on('console', m => m.type() === 'error' && p.erreurs.push(m.text()));
   return p;
