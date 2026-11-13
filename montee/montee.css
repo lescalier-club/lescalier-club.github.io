@@ -70,3 +70,24 @@ html.avec-3d.scene-prete #depart .hero-grid > :not(:first-child) { display: none
 /* Champs du formulaire : clairs, sur le marbre */
 .palier input, .palier textarea, .palier select { background: #FBF7EF !important; color: var(--pierre) !important; border-color: var(--trait) !important; }
 .palier input::placeholder, .palier textarea::placeholder { color: #8A7D6C !important; }
+
+/* Étape 2 (13/11, demande d'Adam) : textes centrés, espaces réguliers, bas de page lisible */
+html .palier > .wrap { text-align: center; }
+html.avec-3d.scene-prete .palier > .wrap { margin-inline: auto; padding: clamp(28px, 5vw, 48px) clamp(20px, 5vw, 48px); }
+html .palier .alt { justify-content: center; margin: 0 0 16px; }
+html .palier h1, html .palier h2 { margin: 0 auto; max-width: 20ch; }
+html .palier .definition, html .palier .lead { margin: 18px auto 0; max-width: 44ch; }
+html .palier .citation { margin: 0 auto; max-width: 24ch; }
+html .palier .etiquettes { justify-content: center; margin-top: 22px; }
+html .palier .actions { justify-content: center; margin-top: 28px; }
+html .palier .lettre { display: flex; flex-direction: column; align-items: center; gap: 24px; margin-top: 0 !important; }
+html .palier .portrait { max-width: 220px; margin: 0 auto; }
+html .palier .signature { justify-content: center; margin-top: 18px; }
+html .sommet .metres { margin: 4px 0 8px; }
+html .sommet .fondateurs { margin: 22px auto 0; }
+html .sommet .etapes { margin: 32px auto 0; max-width: 560px; text-align: center; }
+html .sommet .etape { padding: 14px 8px 0; justify-items: center; }
+footer { color: var(--pierre); }
+footer a { color: var(--pierre); }
+footer .wrap { justify-content: center; text-align: center; }
+@media (max-width: 767px) { footer .wrap { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); } }
