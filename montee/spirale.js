@@ -43,7 +43,7 @@ export function cameraTourbillon(t) {
   const a = u * Math.PI * 2 * 1.25 + 0.6;
   const y = 1.7 + u * (CONFIG.hauteur - 0.6);
   const k = Math.min(1, Math.max(0, (u - 0.82) / 0.16)), lisse = k * k * (3 - 2 * k);
-  const haut = { x: -Math.cos(a) * 3, y: y + 13 * (1 - 0.55 * u), z: -Math.sin(a) * 3 };
+  const haut = { x: -Math.cos(a) * 5, y: y + 8 * (1 - 0.5 * u), z: -Math.sin(a) * 5 };   // regard vers l'escalier qui monte, sans fixer le ciel
   const loin = { x: Math.cos(a) * 60, y: y + 0.5, z: Math.sin(a) * 60 };
   return {
     position: { x: Math.cos(a) * 4.2, y, z: Math.sin(a) * 4.2 },

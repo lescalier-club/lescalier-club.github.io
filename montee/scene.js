@@ -14,6 +14,8 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { cameraTourbillon as cameraA } from './spirale.js';
 
 const SOLEIL_BAS = new THREE.Color(0xFFE2B8), SOLEIL_HAUT = new THREE.Color(0xFFC27A);
+// Le patio à lumière cuite s'il existe, sinon la version éclairée en temps réel
+const FICHIER_PATIO = './modeles/patio-cuit.glb';
 
 export function creerScene(canvas, { qualite = 'pleine' } = {}) {
   const legere = qualite === 'legere';
@@ -58,6 +60,7 @@ export function creerScene(canvas, { qualite = 'pleine' } = {}) {
     soleil.intensity = 5.5 + 3.5 * t;
     soleil.position.set(-24, c.position.y + 52, 10); soleil.target.position.set(0, c.position.y - 8, 0); soleil.target.updateMatrixWorld();
     lueur.strength = 0.18 + 0.35 * t;
+    for (const m of cuits) m.color.setScalar(0.92 + 0.3 * t);   // la lumière cuite s'éclaire aussi en montant
     composer.render();
   }
   function rendre(t) { tCourant = t; if (pret) dessiner(t); }
@@ -71,9 +74,16 @@ export function creerScene(canvas, { qualite = 'pleine' } = {}) {
     scene.environment = pmrem.fromEquirectangular(tex).texture;
     scene.background = tex; scene.backgroundIntensity = 1.0; scene.environmentIntensity = 0.55;
   });
-  const patio = gltf.loadAsync(new URL('./modeles/patio-opt.glb', import.meta.url).href).then(g => {
+  const cuits = [];   // matières à lumière cuite : on les affiche telles que Cycles les a calculées
+  const patio = gltf.loadAsync(new URL(FICHIER_PATIO, import.meta.url).href).then(g => {
     g.scene.traverse(o => {
       if (!o.isMesh) return;
+      if (o.material && o.material.name.startsWith('cuit_')) {
+        const map = o.material.map; if (map) map.colorSpace = THREE.SRGBColorSpace;
+        o.material = new THREE.MeshBasicMaterial({ map, toneMapped: false, fog: false, side: THREE.DoubleSide });
+        cuits.push(o.material); o.castShadow = false; o.receiveShadow = false;
+        return;
+      }
       o.castShadow = !legere; o.receiveShadow = !legere;
       const m = o.material;
       if (m && m.name === 'mer') { m.roughness = 0.05; m.metalness = 0.1; }

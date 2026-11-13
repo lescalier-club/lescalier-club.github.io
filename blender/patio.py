@@ -32,10 +32,10 @@ def camera_a(t):
 
 def args():
     a = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
-    d = {'export': None, 'essai': None, 'images': 0, 'largeur': 1600, 'hauteur': 900, 'sortie': 'rendu/essai', 'echantillons': 128, 'debut': 0}
+    d = {'cuire': None, 'export': None, 'essai': None, 'images': 0, 'largeur': 1600, 'hauteur': 900, 'sortie': 'rendu/essai', 'echantillons': 128, 'debut': 0}
     for i in range(0, len(a), 2):
         k = a[i].lstrip('-'); v = a[i + 1]
-        d[k] = v if k in ('essai', 'sortie', 'export') else int(v)
+        d[k] = v if k in ('essai', 'sortie', 'export', 'cuire', 'seulement') else int(v)
     return d
 
 # ---------- matières ----------
@@ -69,7 +69,8 @@ def marbre(nom, fond, veine, rugosite=0.3, echelle=1.6):
     return m
 
 RES = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ressources')
-EXPORT = '--export' in sys.argv          # mode « fichier 3D pour le web » : UV, textures précuites, pas de brume
+EXPORT = '--export' in sys.argv and '--cuire' not in sys.argv
+CUIRE = '--cuire' in sys.argv          # mode « lumière cuite » : Cycles imprime la lumière dans les textures          # mode « fichier 3D pour le web » : UV, textures précuites, pas de brume
 
 def texture_teintee(dossier, teinte, taille=1024):
     """Pour le web : la couleur de la DA est précuite dans la texture (72 % teinte, 28 % grain réel)."""
@@ -334,7 +335,7 @@ def construire():
     }
     global M_FOND_DORE; M_FOND_DORE = matiere('fond_dore', '#E2B85C', 0.38, 0.75)
     mur(M['marbre'], M['corniche']); sol(M['sol'], M['corniche'])
-    if not EXPORT: brume()
+    if not EXPORT and not CUIRE: brume()
     escalier(M['marche'], M['or'], M['laiton'], M['balustre'])
     importer('island_tree_01', (0, 0, 0), 5.5); decor(M['fleur'], M['terre'], M['buis'])
     toit_et_roi(M['toit'], M['or']); mer(M['mer']); lumiere(scene)
@@ -360,6 +361,7 @@ def exporter_web(chemin):
     for o in list(bpy.context.scene.objects):
         if o.type != 'MESH' or o.data.users > 1 and o.name.startswith('modele_'): continue
         if any(c.name.startswith('modele_') for c in o.users_collection): continue   # modèles Poly Haven : UV d'origine
+        if o.name.startswith('cuit_'): continue   # lumière cuite : garde son propre dépliage
         bpy.ops.object.select_all(action='DESELECT'); o.select_set(True); bpy.context.view_layer.objects.active = o
         for mo in list(o.modifiers):
             try: bpy.ops.object.modifier_apply(modifier=mo.name)
@@ -373,8 +375,67 @@ def exporter_web(chemin):
                               export_lights=False, export_cameras=False, export_yup=True)
     print('EXPORT OK', chemin, os.path.getsize(chemin) // 1024, 'Ko')
 
+A_CUIRE = {'enduit': 4096, 'fond_dore': 2048, 'sol': 2048, 'marche': 4096, 'toit': 2048, 'corniche': 512}
+
+def cuire(dossier, seulement=None, echantillons=200):
+    """Cycles calcule la lumière (soleil, ciel, rebonds) et l'imprime dans une texture par matière.
+    Les objets cuits reçoivent ensuite une matière simple qui n'affiche que cette texture."""
+    scene = bpy.context.scene
+    regler_rendu(scene, 64, 64, echantillons)
+    scene.cycles.samples = echantillons
+    scene.render.bake.use_pass_direct = True; scene.render.bake.use_pass_indirect = True
+    scene.render.bake.margin = 6
+    sol_ = bpy.data.objects.get('soleil')
+    if sol_: sol_.data.energy = 10.0
+    scene.view_settings.exposure = 0.9
+    os.makedirs(dossier, exist_ok=True)
+    for nom, taille in A_CUIRE.items():
+        if seulement and nom not in seulement: continue
+        mat = bpy.data.materials.get(nom)
+        if not mat: continue
+        objs = [o for o in scene.objects if o.type == 'MESH' and o.data.materials and o.data.materials[0] == mat
+                and not any(c.name.startswith('modele_') for c in o.users_collection)]
+        if not objs: continue
+        bpy.ops.object.select_all(action='DESELECT')
+        for o in objs:
+            bpy.context.view_layer.objects.active = o; o.select_set(True)
+            for mo in list(o.modifiers):
+                try: bpy.ops.object.modifier_apply(modifier=mo.name)
+                except Exception: pass
+        bpy.context.view_layer.objects.active = objs[0]
+        if len(objs) > 1: bpy.ops.object.join()
+        ob = bpy.context.object; ob.name = 'cuit_' + nom
+        # un dépliage UV propre, réservé à la lumière
+        uv = ob.data.uv_layers.new(name='cuisson'); ob.data.uv_layers.active = uv
+        bpy.ops.object.mode_set(mode='EDIT'); bpy.ops.mesh.select_all(action='SELECT')
+        bpy.ops.uv.smart_project(angle_limit=1.15, island_margin=0.004)
+        bpy.ops.object.mode_set(mode='OBJECT')
+        img = bpy.data.images.new('cuit_' + nom, taille, taille, float_buffer=True)
+        n = mat.node_tree.nodes; noeud = n.new('ShaderNodeTexImage'); noeud.image = img
+        uvn = n.new('ShaderNodeUVMap'); uvn.uv_map = 'cuisson'; mat.node_tree.links.new(uvn.outputs['UV'], noeud.inputs['Vector'])
+        n.active = noeud
+        bpy.ops.object.select_all(action='DESELECT'); ob.select_set(True); bpy.context.view_layer.objects.active = ob
+        print('CUISSON', nom, len(objs), 'objets', taille, flush=True)
+        bpy.ops.object.bake(type='COMBINED', pass_filter={'DIRECT', 'INDIRECT', 'DIFFUSE', 'EMIT', 'TRANSMISSION'})
+        chemin = os.path.join(dossier, f'cuit_{nom}.png')
+        img.save_render(chemin, scene=scene)       # avec le rendu des couleurs du film (AgX + exposition)
+        print('CUIT', chemin, flush=True)
+        # matière finale : uniquement la lumière cuite, sur le dépliage « cuisson »
+        for l in list(ob.data.uv_layers):
+            if l.name != 'cuisson': ob.data.uv_layers.remove(l)
+        m2 = bpy.data.materials.new('cuit_' + nom); m2.use_nodes = True
+        b = m2.node_tree.nodes['Principled BSDF']; t2 = m2.node_tree.nodes.new('ShaderNodeTexImage')
+        t2.image = bpy.data.images.load(chemin); m2.node_tree.links.new(t2.outputs['Color'], b.inputs['Base Color'])
+        b.inputs['Roughness'].default_value = 1.0
+        ob.data.materials.clear(); ob.data.materials.append(m2)
+
 def main():
     a = args()
+    if a['cuire']:
+        construire(); dossier = os.path.abspath(a['cuire'])
+        seul = a.get('seulement').split(',') if a.get('seulement') else None
+        cuire(os.path.join(dossier, 'lumiere'), seul, a.get('echantillons', 200))
+        exporter_web(os.path.join(dossier, 'patio-cuit.glb')); return
     if a['export']:
         construire(); exporter_web(os.path.abspath(a['export'])); return
     scene = construire(); regler_rendu(scene, a['largeur'], a['hauteur'], a['echantillons'])
