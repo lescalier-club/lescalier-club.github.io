@@ -9,8 +9,11 @@ for (const app of ['desktop', 'mobile']) {
     assert.deepEqual(await p.locator('.palier').evaluateAll(e => e.map(x => x.dataset.etage)), ['0','1','2','3','4','5','6','7','8']);
     assert.match(await p.locator('#depart h1').innerText(), /Le club des entrepreneurs qui/);
   });
-  test(`${app} pas-de-discord`, async () => { const p = await ouvrir(); assert.doesNotMatch(await p.content(), /discord/i); });
-  test(`${app} sommet-sans-discord`, async () => { const p = await ouvrir(); assert.match(await p.locator('#sommet').innerText(), /Après l'appel, je t'envoie ton accès/); });
+  // Textes v3 adoptés par Adam (15/11) : Discord n'apparaît que dans la formule Membre, le sommet mène à la Session gratuite
+  test(`${app} discord-seulement-formule-membre`, async () => { const p = await ouvrir();
+    const hors = await p.evaluate(() => [...document.querySelectorAll('.palier')].filter(e => e.id !== 'membre').map(e => e.innerText).join(' '));
+    assert.doesNotMatch(hors, /discord/i); });
+  test(`${app} sommet-vers-la-session`, async () => { const p = await ouvrir(); assert.match(await p.locator('#sommet').innerText(), /Réserve ta place à la Session/); });
   test(`${app} photo-pas-video`, async () => {
     const p = await ouvrir(); assert.equal(await p.locator('video').count(), 0);
     assert.equal(await p.locator('#palier-adam img[src$="adam.jpg"]').count(), 1);

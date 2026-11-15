@@ -83,7 +83,7 @@ export function creerScene(canvas, { qualite = 'pleine' } = {}) {
   const cinema = new ShaderPass(CinemaShader);
   if (!legere) composer.addPass(cinema);
 
-  let pret = false, tCourant = 0;
+  let pret = false, tCourant = 0, duree = 0, lent = null;
   function redimensionner(l, h) {
     renderer.setSize(l, h, false); composer.setSize(l, h); cam.aspect = l / h; cam.updateProjectionMatrix();
   }
@@ -106,7 +106,9 @@ export function creerScene(canvas, { qualite = 'pleine' } = {}) {
     geoP.attributes.position.needsUpdate = true;
     poussiere.material.opacity = 0.35 + 0.35 * t;
     cinema.uniforms.temps.value = temps % 100;
-    composer.render();
+    const d0 = performance.now(); composer.render();
+    duree = duree * 0.8 + (performance.now() - d0) * 0.2;
+    if (duree > 60 && lent) { lent(); lent = null; }
   }
   // Une seule image par rafraîchissement d'écran, même si le défilement et la poussière la demandent tous les deux
   let raf = 0;
@@ -151,7 +153,9 @@ export function creerScene(canvas, { qualite = 'pleine' } = {}) {
     // Boucle douce (30 i/s) pour que la poussière vive même sans défiler ; coupée si l'onglet est caché ou si l'utilisateur réduit les animations
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
       const pas = legere ? 100 : 50;   // 10 à 20 i/s suffisent pour une poussière qui dérive lentement
-      setInterval(() => { if (!document.hidden) demander(); }, pas);
+      // Garde-fou : sur une machine trop lente (image > 60 ms en moyenne), la poussière se fige et seul le défilement redessine
+      const vie = setInterval(() => { if (!document.hidden) demander(); }, pas);
+      lent = () => clearInterval(vie);
     }
     document.documentElement.classList.add('scene-prete');
     window.__montee = { pret: true, qualite, rendre };
