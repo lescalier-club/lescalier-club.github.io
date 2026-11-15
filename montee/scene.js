@@ -8,7 +8,6 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
@@ -37,10 +36,11 @@ const FICHIER_PATIO = './modeles/patio-cuit.glb';
 export function creerScene(canvas, { qualite = 'pleine' } = {}) {
   const legere = qualite === 'legere';
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, legere ? 1.25 : 1.75));
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, legere ? 1.25 : 1.5));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.AgXToneMapping; renderer.toneMappingExposure = 1.0;
-  renderer.shadowMap.enabled = !legere; renderer.shadowMap.type = THREE.VSMShadowMap;
+  // Pas d'ombres en temps réel : l'éclairage est déjà cuit dans les textures (et elles faisaient ramer Chrome)
+  renderer.shadowMap.enabled = false;
 
   const scene = new THREE.Scene();
   scene.fog = new THREE.FogExp2(0xF6E3C4, 0.004);   // une brume dorée très légère : la profondeur
@@ -50,7 +50,7 @@ export function creerScene(canvas, { qualite = 'pleine' } = {}) {
 
   // Soleil de fin d'après-midi : il entre par l'ouverture et dessine les ombres
   const soleil = new THREE.DirectionalLight(SOLEIL_BAS.clone(), 3.2);
-  soleil.castShadow = !legere;
+  soleil.castShadow = false;
   soleil.shadow.mapSize.set(2048, 2048); soleil.shadow.radius = 2.5; soleil.shadow.blurSamples = 16; soleil.shadow.bias = -0.0004;
   Object.assign(soleil.shadow.camera, { left: -16, right: 16, top: 16, bottom: -16, near: 1, far: 140 });
   scene.add(soleil, soleil.target);
@@ -76,7 +76,7 @@ export function creerScene(canvas, { qualite = 'pleine' } = {}) {
   const cible4x = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: legere ? 0 : 4 });
   const composer = new EffectComposer(renderer, cible4x);
   composer.addPass(new RenderPass(scene, cam));
-  if (!legere) { const ao = new GTAOPass(scene, cam, 1, 1); ao.blendIntensity = 0.85; composer.addPass(ao); }
+  // (occlusion GTAO retirée : déjà cuite par Cycles, et c'était la passe la plus lourde)
   const lueur = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.25, 0.6, 0.88);
   composer.addPass(lueur);
   composer.addPass(new OutputPass());
@@ -108,7 +108,10 @@ export function creerScene(canvas, { qualite = 'pleine' } = {}) {
     cinema.uniforms.temps.value = temps % 100;
     composer.render();
   }
-  function rendre(t) { tCourant = t; if (pret) dessiner(t); }
+  // Une seule image par rafraîchissement d'écran, même si le défilement et la poussière la demandent tous les deux
+  let raf = 0;
+  function demander() { if (!pret || raf) return; raf = requestAnimationFrame(() => { raf = 0; dessiner(tCourant); }); }
+  function rendre(t) { tCourant = t; demander(); }
 
   // Chargements : le ciel photographié et le patio exporté de Blender
   const draco = new DRACOLoader().setDecoderPath(new URL('../vendor/addons/libs/draco/gltf/', import.meta.url).href);
@@ -132,19 +135,23 @@ export function creerScene(canvas, { qualite = 'pleine' } = {}) {
         cuits.push(o.material); o.castShadow = false; o.receiveShadow = false;
         return;
       }
-      o.castShadow = !legere; o.receiveShadow = !legere;
+      o.castShadow = false; o.receiveShadow = false;
       const m = o.material;
       if (m && m.name === 'mer') { m.roughness = 0.05; m.metalness = 0.1; }
       if (m && (m.name === 'or' || m.name === 'laiton')) { m.envMapIntensity = 2.0; m.roughness = Math.min(m.roughness ?? 0.3, 0.22); }
     });
     scene.add(g.scene);
+    // Envoyer toutes les textures à la carte graphique dès le chargement : sinon Chrome se fige une demi-seconde
+    // la première fois qu'une partie du patio apparaît en montant
+    g.scene.traverse(o => { if (o.isMesh) for (const k of ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'aoMap', 'alphaMap']) { const t = o.material?.[k]; if (t) renderer.initTexture(t); } });
+    return renderer.compileAsync(scene, cam);
   });
   Promise.all([ciel, patio]).then(() => {
     pret = true; dessiner(tCourant);
     // Boucle douce (30 i/s) pour que la poussière vive même sans défiler ; coupée si l'onglet est caché ou si l'utilisateur réduit les animations
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      const pas = legere ? 66 : 33;
-      (function vivre() { if (!document.hidden) dessiner(tCourant); setTimeout(() => requestAnimationFrame(vivre), pas); })();
+      const pas = legere ? 100 : 50;   // 10 à 20 i/s suffisent pour une poussière qui dérive lentement
+      setInterval(() => { if (!document.hidden) demander(); }, pas);
     }
     document.documentElement.classList.add('scene-prete');
     window.__montee = { pret: true, qualite, rendre };
