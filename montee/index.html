@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>L'Escalier · Club d'entrepreneurs 18-30 ans à Montpellier</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Club d'entrepreneurs de 18 à 30 ans à Montpellier : on monte ensemble, marche par marche. Rituels chaque semaine, rendez-vous en vrai chaque mois.">
+<meta name="description" content="Club d'entrepreneurs de 18 à 30 ans à Montpellier : une Session gratuite chaque semaine pour bosser ensemble, des rencontres et un moment fou chaque mois.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400;62..125,500;62..125,700;62..125,900&family=Instrument+Serif:ital@0;1&family=Herr+Von+Muellerhoff&display=swap">
@@ -83,7 +83,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lescalierclub.fr/">
 <meta property="og:title" content="L’Escalier, le club des entrepreneurs qui montent">
-<meta property="og:description" content="Montpellier, 18 à 30 ans. Entrée offerte à vie aux 10 membres fondateurs, sur un appel de 20 minutes. 10 places de membres fondateurs avant l’ouverture du 8 décembre.">
+<meta property="og:description" content="Montpellier, 18 à 30 ans. Viens bosser avec nous, c’est gratuit. Offert à vie aux 10 premiers membres, avant l’ouverture du 8 décembre.">
 <meta property="og:image" content="https://lescalierclub.fr/media/partage.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -467,6 +467,12 @@ footer a { font-weight: 500; }
 .etiquettes li { padding: 6px 14px; border: 1px solid currentColor; border-radius: 999px; font-size: var(--t-s); }
 .sommet .etapes { grid-template-columns: repeat(4, minmax(0, 1fr)); border-top-color: var(--pierre); list-style: none; padding: 0; }
 .sommet .etape span:not(.n) { color: var(--pierre); opacity: .8; }
+.formules { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 26px auto 0; max-width: 620px; text-align: left; }
+.formule { border: 1px solid rgba(58,49,40,.2); border-radius: 14px; padding: 16px 18px; }
+.formule b { display: block; margin-bottom: 8px; font-size: var(--t-s); }
+.formule ul { margin: 0; padding-left: 18px; font-size: var(--t-s); line-height: 1.5; }
+.formule.membre { background: rgba(244,194,71,.18); border-color: rgba(184,134,43,.5); }
+@media (max-width: 560px) { .formules { grid-template-columns: 1fr; } }
 .sommet .secondaire { margin-top: 28px; font-size: var(--t-s); color: var(--pierre); }
 .sommet .secondaire a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
 .inscription { margin: 28px auto 0; padding: clamp(20px, 4vw, 32px); background: var(--nuit); border-radius: 16px; max-width: 520px; color: var(--creme); text-align: left; }
@@ -498,7 +504,7 @@ footer a { font-weight: 500; }
   <div class="wrap">
     <span class="alt">0 m <span class="lieu">Montpellier · le départ</span></span>
     <h1>Le club des entrepreneurs qui <em>montent</em></h1>
-    <p class="definition">18–30 ans, à Montpellier. On avance chaque semaine ensemble, on se retrouve en vrai chaque mois.</p>
+    <p class="definition">18–30 ans, à Montpellier. On bosse ensemble, on se rencontre, on vit des moments fous.</p>
     <div class="actions">
       <a class="btn" href="#sommet">Je veux monter</a>
     </div>
@@ -513,8 +519,8 @@ footer a { font-weight: 500; }
         <img src="../media/adam.jpg" alt="Adam Abad, fondateur de L’Escalier" loading="lazy">
       </figure>
       <div>
-        <p class="citation">« Ici, personne ne monte à ta place. Mais personne ne monte <em>seul</em>. »</p>
-        <p class="lead">J’ai 20 ans. Ce qui m’a fait tenir, ce sont les gens autour de moi. J’ai créé le club pour que tu aies ça aussi.</p>
+        <p class="citation">« On a tous besoin d’être <em>entourés</em>. »</p>
+        <p class="lead">Ce qui m’a fait avancer, ce sont les bonnes personnes autour de moi. Ici, je te les présente.</p>
         <div class="signature"><span class="trait"></span>Adam Abad, fondateur</div>
       </div>
     </div>
@@ -524,53 +530,57 @@ footer a { font-weight: 500; }
 <section class="band palier" data-etage="2" id="entree">
   <div class="wrap">
     <span class="alt">180 m <span class="lieu">Ton entrée</span></span>
-    <h2>Viens bosser avec nous, <em>c’est gratuit</em></h2>
-    <p class="lead">Chaque semaine, on travaille ensemble, en vrai, à Montpellier. Tu viens 5 fois en invité.</p>
-    <ul class="etiquettes"><li>Gratuit</li><li>En vrai</li><li>5 Sessions en invité</li></ul>
+    <h2>Viens bosser avec nous. <em>C’est gratuit.</em></h2>
+    <p class="lead">Chaque semaine, à Montpellier. Tu prends juste un café.</p>
+    <ul class="etiquettes"><li>Gratuit</li><li>En vrai</li><li>Juste un café</li></ul>
   </div>
 </section>
 
-<section class="band palier" data-etage="3" id="monter">
+<section class="band palier" data-etage="3" id="semaine">
   <div class="wrap">
-    <span class="alt">240 m <span class="lieu">Comment on monte</span></span>
-    <h2>Ton grade est <em>prouvé</em>, jamais déclaré</h2>
-    <p class="lead">Lundi tu annonces ta marche, vendredi tu dis si elle est passée.</p>
-    <ul class="etiquettes"><li>Premier client</li><li>1 000 €/mois</li><li>5 000 €/mois</li></ul>
+    <span class="alt">240 m <span class="lieu">La fin de semaine</span></span>
+    <h2>Chaque semaine, on <em>fête</em> ce qu’on a fait</h2>
+    <p class="lead">Chacun raconte sa semaine. On se félicite. On repart plus fort.</p>
+    <ul class="etiquettes"><li>On partage</li><li>On se félicite</li><li>On s’entraide</li></ul>
   </div>
 </section>
 
-<section class="manifeste band palier" data-etage="4" id="partage">
+<section class="manifeste band palier" data-etage="4" id="reseau">
   <div class="wrap">
-    <span class="alt">360 m <span class="lieu">Ce qu’on partage</span></span>
-    <h2>Pas de théorie. Ce qui marche <em>vraiment</em></h2>
-    <ul class="etiquettes"><li>Le mental</li><li>Le corps</li><li>L’argent</li><li>L’IA</li><li>Vendre</li></ul>
+    <span class="alt">360 m <span class="lieu">Ton réseau</span></span>
+    <h2>Je te présente aux <em>bonnes</em> personnes</h2>
+    <p class="lead">Des membres, des partenaires, des invités de renom.</p>
+    <ul class="etiquettes"><li>Membres</li><li>Partenaires</li><li>Invités de renom</li></ul>
   </div>
 </section>
 
 <section class="band palier" data-etage="5" id="vivre">
   <div class="wrap">
     <span class="alt">450 m <span class="lieu">Ce qu’on vit</span></span>
-    <h2>On ne parle pas business derrière un écran</h2>
-    <p class="lead">Le Pic Saint-Loup de nuit, une vraie table chaque mois, le stand de tir, des business angels.</p>
-    <ul class="etiquettes"><li>La Montée</li><li>La Table</li><li>Sous pression</li></ul>
+    <h2>Une fois par mois, on vit un truc <em>fou</em></h2>
+    <p class="lead">La Montée de nuit au Pic Saint-Loup. La Table. Des soirées avec des invités de renom.</p>
+    <ul class="etiquettes"><li>La Montée de nuit</li><li>La Table</li><li>Les invités</li></ul>
   </div>
 </section>
 
 <section class="manifeste band famille palier" data-etage="6" id="famille">
   <div class="wrap">
     <span class="alt">540 m <span class="lieu">Une famille</span></span>
-    <h2>On monte <em>ensemble</em>, ou on ne monte pas</h2>
-    <p class="lead">Chacun a un parrain. Deux semaines sans nouvelles, et quelqu’un t’écrit.</p>
-    <ul class="etiquettes"><li>Un parrain</li><li>On célèbre chaque marche</li><li>Ce qui se dit ici reste ici</li></ul>
+    <h2>Une famille d’<em>entrepreneurs</em></h2>
+    <p class="lead">Sans jugement. Ce qui se dit ici reste ici.</p>
+    <ul class="etiquettes"><li>Amitié</li><li>Sans jugement</li><li>Confiance</li></ul>
   </div>
 </section>
 
-<section class="band palier" data-etage="7" id="difference">
+<section class="band palier" data-etage="7" id="membre">
   <div class="wrap">
-    <span class="alt">610 m <span class="lieu">La différence</span></span>
-    <h2>Les autres clubs t’attendent en haut. Nous, on part d’<em>en bas</em></h2>
-    <p class="lead">Ailleurs, on te demande de prouver que tu gagnes déjà. Ici, il suffit d’avoir envie de monter.</p>
-    <ul class="etiquettes"><li>Offert à vie aux 10 fondateurs</li></ul>
+    <span class="alt">610 m <span class="lieu">Devenir membre</span></span>
+    <h2>La Session est gratuite. Le club, c’est <em>79 € par mois</em>.</h2>
+    <div class="formules">
+      <div class="formule"><b>Gratuit</b><ul><li>Bosser ensemble chaque semaine</li><li>La fête de fin de semaine</li></ul></div>
+      <div class="formule membre"><b>Membre · 79 €/mois</b><ul><li>Une activité en vrai chaque mois</li><li>Les soirées réservées</li><li>Je te présente aux bonnes personnes</li><li>Le Discord privé</li></ul></div>
+    </div>
+    <ul class="etiquettes"><li>Offert à vie aux 10 premiers</li></ul>
   </div>
 </section>
 
@@ -600,9 +610,9 @@ footer a { font-weight: 500; }
     </div>
     <ol class="etapes">
       <li class="etape"><span class="n">1</span><b>La Session, gratuite</b></li>
-      <li class="etape"><span class="n">2</span><b>5 Sessions en invité</b></li>
-      <li class="etape"><span class="n">3</span><b>Ta première marche, autour d’un café</b><span>Ce n’est pas un appel de vente.</span></li>
-      <li class="etape"><span class="n">4</span><b>Tu entres au club</b></li>
+      <li class="etape"><span class="n">2</span><b>Tu viens 5 fois</b></li>
+      <li class="etape"><span class="n">3</span><b>Un café avec moi</b></li>
+      <li class="etape"><span class="n">4</span><b>Tu deviens membre, 79 €/mois</b></li>
     </ol>
     <p class="secondaire">Pas à Montpellier ? <a id="lien-appel" href="#sommet">Réserve un appel de 20 min</a> · <a href="/rejoindre/">Comment ça marche →</a></p>
     <p class="lien-note" id="lien-note" aria-live="polite"></p>
