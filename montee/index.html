@@ -90,7 +90,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <style>
 /* Concept : la page est une ascension. On part du parking de Cazevieille, de nuit (0 m),
-   on arrive au sommet du Pic Saint-Loup au lever du soleil (658 m). Un altimètre suit la montée. */
+   on arrive au dernier étage : la terrasse sur le toit (658 m). Un altimètre suit la montée. */
 :root {
   --nuit: #15120E;
   --nuit-2: #1D1914;
@@ -376,10 +376,16 @@ p { margin: 0; }
 
 /* ---------- SOMMET ---------- */
 .sommet {
-  background:
-    linear-gradient(to bottom, var(--nuit) 0, #2A1610 90px, var(--braise) 220px, var(--orange) 400px, var(--aube) 100%);
-  color: var(--creme);
+  /* Le dernier étage : l'escalier débouche sur la terrasse du toit (image ElevenLabs du 15/11, validée par Adam) */
+  background: url(../media/sommet-terrasse.jpg) center 62% / cover no-repeat, var(--marbre);
+  color: var(--pierre);
 }
+@media (max-width: 760px) { .sommet { background-image: url(../media/sommet-terrasse-m.jpg); background-position: 50% 70%; } }
+html.avec-3d.scene-prete .sommet.palier { background: url(../media/sommet-terrasse.jpg) center 62% / cover no-repeat, var(--marbre); align-items: flex-end; padding-bottom: 6vh; }
+@media (max-width: 760px) { html.avec-3d.scene-prete .sommet.palier { background-image: url(../media/sommet-terrasse-m.jpg); background-position: 50% 70%; } }
+html.avec-3d.scene-prete .sommet.palier > .wrap { margin-inline: clamp(16px, 5vw, 80px) auto; max-width: min(500px, 92vw); background: rgba(242, 235, 221, .9); }
+.sommet .metres { display: none; }
+@media (max-width: 760px) { html.avec-3d.scene-prete .sommet.palier { align-items: flex-end; } html.avec-3d.scene-prete .sommet.palier > .wrap { margin-inline: auto; } }
 .sommet .wrap { padding-block: clamp(90px, 14vw, 170px) clamp(60px, 9vw, 100px); }
 .sommet .metres {
   font-family: var(--f-sans); font-stretch: 112%; font-weight: 600;
@@ -586,9 +592,8 @@ footer a { font-weight: 500; }
 
 <section class="sommet palier" data-etage="8" id="sommet">
   <div class="wrap">
-    <span class="alt" style="color:var(--aube)">Le sommet <span class="lieu" style="color:var(--creme)">Pic Saint-Loup</span></span>
-    <p class="metres" aria-label="658 mètres">658<small> m</small></p>
-    <h2>Ta première marche, c’est <em style="color:var(--creme)">aujourd’hui</em>.</h2>
+    <span class="alt" style="color:var(--aube)">Le dernier étage <span class="lieu" style="color:var(--creme)">Le toit</span></span>
+        <h2>Ta première marche, c’est <em style="color:var(--creme)">aujourd’hui</em>.</h2>
     <div class="fondateurs" id="fondateurs" aria-live="polite">
       <p class="f-places"><b id="f-reste">10</b> places de fondateur sur <span id="f-total">10</span></p>
       <p class="f-compte">Ouverture le <b>mardi 8 décembre</b> · <span id="f-jours"></span></p>
