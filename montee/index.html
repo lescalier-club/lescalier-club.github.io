@@ -465,10 +465,23 @@ footer a { font-weight: 500; }
 }
 .etiquettes { list-style: none; padding: 0; margin: 24px 0 0; display: flex; flex-wrap: wrap; gap: 10px; }
 .etiquettes li { padding: 6px 14px; border: 1px solid currentColor; border-radius: 999px; font-size: var(--t-s); }
-.sommet .etapes { grid-template-columns: repeat(3, minmax(0, 1fr)); border-top-color: var(--pierre); }
+.sommet .etapes { grid-template-columns: repeat(4, minmax(0, 1fr)); border-top-color: var(--pierre); list-style: none; padding: 0; }
+.sommet .etape span:not(.n) { color: var(--pierre); opacity: .8; }
+.sommet .secondaire { margin-top: 28px; font-size: var(--t-s); color: var(--pierre); }
+.sommet .secondaire a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.inscription { margin: 28px auto 0; padding: clamp(20px, 4vw, 32px); background: var(--nuit); border-radius: 16px; max-width: 520px; color: var(--creme); text-align: left; }
+.inscription label { display: grid; gap: 6px; margin-bottom: 16px; font-size: var(--t-s); font-weight: 600; }
+.inscription input[type=text] { width: 100%; box-sizing: border-box; padding: 12px 16px; font: inherit; font-weight: 400; color: var(--creme); background: #221D17; border: 1.5px solid rgba(242,235,221,.25); border-radius: 10px; }
+.inscription input:focus-visible { outline: 2px solid var(--aube, #F4C247); outline-offset: 1px; }
+.inscription .accord { display: flex; gap: 12px; align-items: flex-start; font-weight: 400; font-size: var(--t-xs, .8rem); line-height: 1.45; opacity: .85; }
+.inscription .accord input { margin-top: 2px; width: 18px; height: 18px; flex: none; }
+.inscription .piege { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.sommet .inscription .btn { margin-top: 6px; border: 0; cursor: pointer; background: var(--creme); color: var(--nuit); box-shadow: none; font-size: 1.05rem; padding: 14px 24px; }
+.inscription .retour { margin: 12px 0 0; font-size: var(--t-s); min-height: 1.2em; }
+.inscription.fini form { display: none; }
 .sommet .etape .n, .sommet .etape b { color: var(--pierre); }
 .sommet .etape b { font-size: 1.15rem; }
-@media (max-width: 640px) { .sommet .etapes { grid-template-columns: minmax(0, 1fr); row-gap: 14px; } }
+@media (max-width: 760px) { .sommet .etapes { grid-template-columns: minmax(0, 1fr); row-gap: 14px; } }
 .sommet .actions { margin-top: 32px; }
 .sommet .actions .btn { font-size: 1.25rem; padding: 20px 36px; }
 </style>
@@ -511,9 +524,9 @@ footer a { font-weight: 500; }
 <section class="band palier" data-etage="2" id="entree">
   <div class="wrap">
     <span class="alt">180 m <span class="lieu">Ton entrée</span></span>
-    <h2>On part de <em>ton</em> projet, pas d’un programme</h2>
-    <p class="lead">20 min d’appel avec moi, puis on fixe ton sommet et ta première marche.</p>
-    <ul class="etiquettes"><li>L’appel</li><li>Le cadrage</li><li>Ta fiche projet</li></ul>
+    <h2>Viens bosser avec nous, <em>c’est gratuit</em></h2>
+    <p class="lead">Chaque semaine, on travaille ensemble, en vrai, à Montpellier. Tu viens 5 fois en invité.</p>
+    <ul class="etiquettes"><li>Gratuit</li><li>En vrai</li><li>5 Sessions en invité</li></ul>
   </div>
 </section>
 
@@ -571,13 +584,27 @@ footer a { font-weight: 500; }
       <p class="f-compte">Ouverture le <b>mardi 8 décembre</b> · <span id="f-jours"></span></p>
     </div>
     <div class="actions">
-      <a class="btn" id="lien-appel" href="#sommet">Réserver mon appel de 20 min</a>
+      <button class="btn" type="button" id="ouvrir-session" aria-expanded="false" aria-controls="inscription">Réserve ta place à la Session · 30 s</button>
     </div>
-    <div class="etapes">
-      <div class="etape"><span class="n">1</span><b>L’appel</b></div>
-      <div class="etape"><span class="n">2</span><b>Après l'appel, je t'envoie ton accès</b></div>
-      <div class="etape"><span class="n">3</span><b>Ta première marche, le lundi suivant</b></div>
+    <div class="inscription" id="inscription" hidden>
+      <form id="form-inscription" novalidate>
+        <label>Ton prénom<input type="text" name="prenom" maxlength="60" autocomplete="given-name" required></label>
+        <label>Ton Instagram ou ton téléphone<input type="text" name="contact" maxlength="120" required></label>
+        <label>Ton activité, en une ligne<input type="text" name="projet" maxlength="200" placeholder="Même si c’est juste une idée."></label>
+        <input type="hidden" name="marche" value="Session ouverte">
+        <label class="piege" aria-hidden="true">Site web<input type="text" name="site_web" tabindex="-1" autocomplete="off"></label>
+        <label class="accord"><input type="checkbox" name="accord" required><span>J’accepte qu’Adam garde ces infos pour me recontacter à propos du club. Elles ne sont ni vendues ni partagées, et je peux demander leur suppression à tout moment.</span></label>
+        <button class="btn" type="submit">Je réserve ma place</button>
+      </form>
+      <p class="retour" id="retour-inscription" aria-live="polite"></p>
     </div>
+    <ol class="etapes">
+      <li class="etape"><span class="n">1</span><b>La Session, gratuite</b></li>
+      <li class="etape"><span class="n">2</span><b>5 Sessions en invité</b></li>
+      <li class="etape"><span class="n">3</span><b>Ta première marche, autour d’un café</b><span>Ce n’est pas un appel de vente.</span></li>
+      <li class="etape"><span class="n">4</span><b>Tu entres au club</b></li>
+    </ol>
+    <p class="secondaire">Pas à Montpellier ? <a id="lien-appel" href="#sommet">Réserve un appel de 20 min</a> · <a href="/rejoindre/">Comment ça marche →</a></p>
     <p class="lien-note" id="lien-note" aria-live="polite"></p>
   </div>
 </section>
@@ -612,6 +639,15 @@ const FONDATEURS = { total: 10, pris: 0, jour1: "2026-11-09T00:00:00+01:00", ouv
 })();
 
 
+(function ouvrirSession() {
+  const b = document.getElementById("ouvrir-session"), boite = document.getElementById("inscription"); if (!b || !boite) return;
+  b.addEventListener("click", () => {
+    boite.hidden = false; b.setAttribute("aria-expanded", "true");
+    boite.querySelector("input[name=prenom]").focus({ preventScroll: true });
+    boite.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
+  });
+})();
+
 (function inscription() {
   const form = document.getElementById("form-inscription"); if (!form) return;
   const retour = document.getElementById("retour-inscription");
@@ -626,7 +662,7 @@ const FONDATEURS = { total: 10, pris: 0, jour1: "2026-11-09T00:00:00+01:00", ouv
       const r = await fetch("https://147-93-53-37.sslip.io/inscription", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(d) });
       if (!r.ok) throw new Error(r.status);
       document.getElementById("inscription").classList.add("fini");
-      retour.innerHTML = `C’est noté, ${d.prenom.trim().replace(/[<>&]/g, "")} ✅ Je te recontacte sous 48 h. Tu peux aussi <a href="${LIENS.appel}" target="_blank" rel="noopener" style="color:var(--orange)">réserver ton appel maintenant</a>.`;
+      retour.textContent = `C’est noté, ${d.prenom.trim()} ✅ Je t’envoie la date et le lieu de la prochaine Session sous 48 h.`;
     } catch (err) {
       bouton.disabled = false;
       retour.textContent = "Oups, l’envoi n’a pas marché. Réessaie dans une minute, ou écris-nous sur Instagram.";
