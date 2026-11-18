@@ -12,7 +12,9 @@ export function preparer() {
   before(async () => {
     const ok = await fetch(BASE + '/').then(r => r.ok).catch(() => false);
     if (!ok) { serveur = spawn('npx', ['http-server', '-p', '4173', '-s', '-c-1', '.'], { stdio: 'ignore' }); for (let i = 0; i < 40; i++) { if (await fetch(BASE + '/').then(r => r.ok).catch(() => false)) break; await new Promise(r => setTimeout(r, 250)); } }
-    navigateur = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+    // Le Chrome du Mac (rendu 3D par la carte graphique) : le navigateur de Playwright n'est pas installé ici,
+    // et son rendu logiciel (swiftshader) faisait dépasser les 20 s aux tests de la 3D
+    navigateur = await chromium.launch({ channel: 'chrome' }).catch(() => chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] }));
   });
   after(async () => { await navigateur?.close(); serveur?.kill(); });
 }

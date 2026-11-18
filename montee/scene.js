@@ -31,7 +31,8 @@ import { cameraTourbillon as cameraA } from './spirale.js';
 const TEINTE_OR = new THREE.Color(1.0, 0.86, 0.6);
 const SOLEIL_BAS = new THREE.Color(0xFFE2B8), SOLEIL_HAUT = new THREE.Color(0xFFC27A);
 // Le patio à lumière cuite s'il existe, sinon la version éclairée en temps réel
-const FICHIER_PATIO = './modeles/patio-cuit.glb';
+// Téléphone : une version allégée (textures 1024, arbre simplifié) : 2,6 Mo au lieu de 6,5 Mo
+const FICHIER_PATIO = './modeles/patio-cuit.glb', FICHIER_PATIO_LEGER = './modeles/patio-leger.glb';
 
 export function creerScene(canvas, { qualite = 'pleine' } = {}) {
   const legere = qualite === 'legere';
@@ -125,7 +126,7 @@ export function creerScene(canvas, { qualite = 'pleine' } = {}) {
     scene.background = tex; scene.backgroundIntensity = 1.0; scene.environmentIntensity = 0.55;
   });
   const cuits = [];   // matières à lumière cuite : on les affiche telles que Cycles les a calculées
-  const patio = gltf.loadAsync(new URL(FICHIER_PATIO, import.meta.url).href).then(g => {
+  const patio = gltf.loadAsync(new URL(legere ? FICHIER_PATIO_LEGER : FICHIER_PATIO, import.meta.url).href).then(g => {
     g.scene.traverse(o => {
       if (!o.isMesh) return;
       if (o.material && o.material.name.startsWith('cuit_')) {
@@ -157,7 +158,7 @@ export function creerScene(canvas, { qualite = 'pleine' } = {}) {
       const vie = setInterval(() => { if (!document.hidden) demander(); }, pas);
       lent = () => clearInterval(vie);
     }
-    document.documentElement.classList.add('scene-prete');
+    document.documentElement.classList.add('scene-prete', 'scene-chargee');
     window.__montee = { pret: true, qualite, rendre };
   }).catch(e => {
     console.warn('Montée : chargement 3D impossible, passage en mode texte', e);

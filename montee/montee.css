@@ -31,7 +31,11 @@ body { background: var(--marbre); color: var(--pierre); padding-top: var(--menu-
   #menu { gap: 12px; }
   #menu .logo span { display: none; }
   #menu nav { gap: 14px; }
-  #menu nav a { font-size: 13px; }
+  #menu nav a { font-size: 13px; padding: 14px 0; }
+  /* Liens du bas et liens secondaires : assez hauts pour le doigt */
+  footer a, .secondaire a { display: inline-block; padding-block: 10px; }
+  /* Le menu défile au doigt : un fondu à droite montre qu'il y a la suite */
+  #menu nav { padding-right: 24px; -webkit-mask-image: linear-gradient(to right, #000 82%, transparent); mask-image: linear-gradient(to right, #000 82%, transparent); }
 }
 
 /* Boutons : le jaune doré du roi */
@@ -42,6 +46,10 @@ body { background: var(--marbre); color: var(--pierre); padding-top: var(--menu-
 #altitude { position: fixed; right: clamp(12px, 3vw, 32px); bottom: clamp(12px, 3vw, 28px); z-index: 15;
   font: 400 28px/1 var(--f-display); color: var(--pierre); background: rgba(242, 235, 221, .8);
   padding: 8px 14px; border-radius: 999px; border: 1px solid var(--trait); }
+/* Téléphone : l'altitude petite, en haut à droite sous le menu, pour ne plus cacher la fin des panneaux */
+@media (max-width: 767px) {
+  #altitude { top: calc(var(--menu-h) + 10px); bottom: auto; right: 10px; font-size: 17px; padding: 5px 11px; background: rgba(242, 235, 221, .72); }
+}
 
 /* La scène 3D derrière tout */
 #scene { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; display: block; }
@@ -50,6 +58,9 @@ body { background: var(--marbre); color: var(--pierre); padding-top: var(--menu-
 
 /* Mode texte (sans 3D, ou avant que la scène soit prête) : les paliers s'empilent comme un site classique */
 html.sans-3d #scene { display: none; }
+/* Image d'attente : le premier plan de la 3D, affiché pendant le téléchargement du patio */
+html.avec-3d #scene { background: #E8DAC3 url(modeles/attente-ordi.webp) center / cover no-repeat; }
+@media (max-width: 767.98px) { html.avec-3d #scene { background-image: url(modeles/attente-tel.webp); } }
 html.sans-3d .palier, html.avec-3d:not(.scene-prete) .palier { background: transparent; }
 
 /* Mode 3D : chaque palier est un panneau de marbre translucide ; seul le palier actif se voit */
@@ -81,7 +92,7 @@ html .palier .citation { margin: 0 auto; max-width: 24ch; }
 html .palier .etiquettes { justify-content: center; margin-top: 22px; }
 html .palier .actions { justify-content: center; margin-top: 28px; }
 html .palier .lettre { display: flex; flex-direction: column; align-items: center; gap: 24px; margin-top: 0 !important; }
-html .palier .portrait { max-width: 220px; margin: 0 auto; }
+html .palier .portrait { max-width: min(220px, 50vw); margin: 0 auto; }
 html .palier .signature { justify-content: center; margin-top: 18px; }
 html .sommet .metres { margin: 4px 0 8px; }
 html .sommet .fondateurs { margin: 22px auto 0; }

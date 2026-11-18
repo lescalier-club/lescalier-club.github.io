@@ -50,7 +50,9 @@ const calme = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const webgl = (() => { try { return !!document.createElement('canvas').getContext('webgl2'); } catch { return false; } })();
 if (calme || !webgl) racine.classList.replace('avec-3d', 'sans-3d');
 else {
-  try { scene = creerScene(document.getElementById('scene'), { qualite: innerWidth < 768 ? 'legere' : 'pleine' }); }
+  // La mise en page 3D s'affiche tout de suite, sur une image du premier plan (#scene a l'image en fond) :
+  // le visiteur ne voit plus de page vide pendant que le patio se télécharge
+  try { scene = creerScene(document.getElementById('scene'), { qualite: innerWidth < 768 ? 'legere' : 'pleine' }); racine.classList.add('scene-prete'); }
   catch (e) { console.warn('Montée : 3D indisponible, passage en mode texte', e); racine.classList.replace('avec-3d', 'sans-3d'); }
 }
 // Si le contexte WebGL est perdu, la scène ne dessine plus : on arrête de lui demander.

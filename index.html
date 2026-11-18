@@ -12,6 +12,21 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400;62..125,500;62..125,700;62..125,900&family=Instrument+Serif:ital@0;1&family=Herr+Von+Muellerhoff&display=swap">
 <link rel="canonical" href="https://lescalierclub.fr/">
+<script>/* Mise en page 3D dès la première image (l'image d'attente sert de décor pendant le téléchargement) */(()=>{try{if('WebGL2RenderingContext' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('scene-prete')}catch(e){}})()</script>
+<script type="importmap">{"imports":{"three":"/vendor/three.module.min.js","three/addons/":"/vendor/addons/"}}</script>
+<!-- La 3D : on lance tous les téléchargements dès la première ligne (avant : en cascade, ~8 s) -->
+<link rel="preload" href="/montee/modeles/attente-ordi.webp" as="image" media="(min-width: 768px)" fetchpriority="high">
+<link rel="preload" href="/montee/modeles/attente-tel.webp" as="image" media="(max-width: 767.98px)" fetchpriority="high">
+<link rel="preload" href="/montee/modeles/patio-cuit.glb" as="fetch" crossorigin media="(min-width: 768px)">
+<link rel="preload" href="/montee/modeles/patio-leger.glb" as="fetch" crossorigin media="(max-width: 767.98px)">
+<link rel="preload" href="/montee/modeles/ciel-soir-1k.hdr" as="fetch" crossorigin>
+<link rel="modulepreload" href="/montee/montee.js">
+<link rel="modulepreload" href="/montee/scene.js">
+<link rel="modulepreload" href="/montee/spirale.js">
+<link rel="modulepreload" href="/vendor/three.module.min.js">
+<link rel="modulepreload" href="/vendor/addons/loaders/GLTFLoader.js">
+<link rel="modulepreload" href="/vendor/addons/loaders/DRACOLoader.js">
+<link rel="modulepreload" href="/vendor/addons/loaders/RGBELoader.js">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:site_name" content="L'Escalier">
 <script type="application/ld+json">
@@ -150,6 +165,15 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .portrait { margin: 0; max-width: 380px; }
 .portrait video { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px;
   filter: contrast(1.06) saturate(.9); box-shadow: 14px 14px 0 var(--braise); background: var(--nuit); }
+/* Vidéo d'Adam au Belaroïa (18/11) : cadre d'origine 9:16, jamais recadrée ; logo L'Escalier à la place du logo de la caméra */
+.portrait-video { position: relative; }
+.portrait-video video { display: block; width: 100%; aspect-ratio: 9 / 16; object-fit: contain; border-radius: 14px; background: var(--pierre); filter: none; box-shadow: 0 18px 40px rgba(58, 49, 40, .22); }
+.portrait-video .marque { position: absolute; left: 6%; top: 4.6%; display: flex; align-items: center; gap: 6px; padding: 5px 9px; border-radius: 999px;
+  background: rgba(242, 235, 221, .9); color: var(--pierre); font: 800 10px/1 var(--f-sans); letter-spacing: .06em; }
+.portrait-video .marque svg { width: 12px; height: 13px; }
+.portrait-video .son { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); padding: 10px 16px; min-height: 44px;
+  border: 0; border-radius: 999px; background: var(--or); color: #2A231C; font: 600 14px/1 var(--f-sans); cursor: pointer; white-space: nowrap; box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+.portrait-video .son[aria-pressed="true"] { background: rgba(242, 235, 221, .92); }
 .portrait figcaption { margin-top: 28px; color: var(--creme-2); font-size: var(--t-s); }
 .lettre .citation { margin-bottom: 24px; }
 .paraphe { font-family: "Herr Von Muellerhoff", cursive; font-size: 3.6rem; line-height: .9; color: var(--creme); margin-top: 8px; }
@@ -496,8 +520,7 @@ footer a { font-weight: 500; }
 .sommet .actions { margin-top: 32px; }
 .sommet .actions .btn { font-size: 1.25rem; padding: 20px 36px; }
 </style>
-<script type="importmap">{"imports":{"three":"/vendor/three.module.min.js","three/addons/":"/vendor/addons/"}}</script>
-<link rel="stylesheet" href="/montee/montee.css?v=3">
+<link rel="stylesheet" href="/montee/montee.css?v=5">
 </head>
 <body>
 <a id="aller-sommet" class="evitement" href="#sommet">Aller au sommet</a>
@@ -520,8 +543,10 @@ footer a { font-weight: 500; }
   <div class="wrap">
     <span class="alt">120 m <span class="lieu">Pourquoi</span></span>
     <div class="grid lettre" style="margin-top:28px">
-      <figure class="portrait">
-        <img src="/media/adam.jpg" alt="Adam Abad, fondateur de L’Escalier" loading="lazy">
+      <figure class="portrait portrait-video">
+        <video id="video-adam" src="/media/adam-belaroia.mp4" poster="/media/adam-belaroia.jpg" muted loop playsinline preload="metadata" aria-label="Adam Abad, fondateur de L’Escalier, au Belaroïa à Montpellier"></video>
+        <span class="marque"><svg viewBox="0 0 60 64" aria-hidden="true"><path d="M3 61 V52 H15 V40 H27 V28 H39 V16 H51" fill="none" stroke="var(--pierre)" stroke-width="5" stroke-linecap="square"/><g transform="translate(39.5 0) scale(1.15)" fill="var(--or)"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></svg>L’ESCALIER</span>
+        <button type="button" class="son" id="son-adam" aria-pressed="false">Écouter Adam</button>
       </figure>
       <div>
         <p class="citation">« On a tous besoin d’être <em>entourés</em>. »</p>
@@ -583,7 +608,7 @@ footer a { font-weight: 500; }
     <h2>La Session est gratuite. Le club, c’est <em>79 € par mois</em>.</h2>
     <div class="formules">
       <div class="formule"><b>Gratuit</b><ul><li>Un endroit pour bosser chaque semaine, à Montpellier</li><li>Des entrepreneurs de ton âge à rencontrer</li><li>Une bonne ambiance qui te pousse à avancer</li><li>Des conseils entre nous, au fil de la journée</li></ul></div>
-      <div class="formule membre"><b>Membre · 79 €/mois</b><ul><li>Tout ce qui est gratuit</li><li>Une sortie en vrai chaque mois : la Montée de nuit, la Table…</li><li>Les soirées privées avec des invités de renom</li><li>Je te présente aux personnes qui peuvent t’aider</li><li>Le groupe privé du club, sur Discord</li></ul></div>
+      <div class="formule membre"><b>Membre · 79 €/mois</b><ul><li>Tout ce qui est gratuit</li><li>Une sortie en vrai chaque mois : la Montée de nuit, la Table…</li><li>Les soirées privées avec des invités de renom</li><li>Toutes les 2 semaines, un partenaire du club en visio</li><li>Je te présente aux personnes qui peuvent t’aider</li><li>Le groupe privé du club, sur Discord</li></ul></div>
     </div>
     <ul class="etiquettes"><li>Offert à vie aux 10 premiers</li></ul>
   </div>
@@ -643,6 +668,20 @@ const LIENS = {
 // Membres fondateurs : mettre à jour « pris » à chaque fondateur confirmé (vrais chiffres uniquement).
 const FONDATEURS = { total: 10, pris: 0, jour1: "2026-11-09T00:00:00+01:00", ouverture: "2026-12-08T00:00:00+01:00" };
 
+// Vidéo d'Adam : muette en boucle quand on la voit, « Écouter Adam » remet le son depuis le début
+(function videoAdam() {
+  const v = document.getElementById('video-adam'), b = document.getElementById('son-adam');
+  if (!v || !b) return;
+  const lire = () => { const p = v.play(); if (p) p.catch(() => {}); };
+  if ('IntersectionObserver' in window) new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? lire() : v.pause()), { threshold: .35 }).observe(v);
+  else lire();
+  b.addEventListener('click', () => {
+    const ecoute = b.getAttribute('aria-pressed') === 'true';
+    if (ecoute) { v.muted = true; v.loop = true; b.setAttribute('aria-pressed', 'false'); b.textContent = 'Écouter Adam'; }
+    else { v.muted = false; v.loop = false; v.currentTime = 0; lire(); b.setAttribute('aria-pressed', 'true'); b.textContent = 'Couper le son'; }
+  });
+  v.addEventListener('ended', () => { v.muted = true; v.loop = true; b.setAttribute('aria-pressed', 'false'); b.textContent = 'Réécouter Adam'; lire(); });
+})();
 (function fondateurs() {
   const reste = Math.max(0, FONDATEURS.total - FONDATEURS.pris);
   document.getElementById("f-reste").textContent = reste;
