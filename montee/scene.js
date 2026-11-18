@@ -32,7 +32,7 @@ const TEINTE_OR = new THREE.Color(1.0, 0.86, 0.6);
 const SOLEIL_BAS = new THREE.Color(0xFFE2B8), SOLEIL_HAUT = new THREE.Color(0xFFC27A);
 // Le patio à lumière cuite s'il existe, sinon la version éclairée en temps réel
 // Téléphone : une version allégée (textures 1024, arbre simplifié) : 2,6 Mo au lieu de 6,5 Mo
-const FICHIER_PATIO = './modeles/patio-cuit.glb', FICHIER_PATIO_LEGER = './modeles/patio-leger.glb';
+const FICHIER_PATIO = './modeles/patio-ordi.glb', FICHIER_PATIO_LEGER = './modeles/patio-leger.glb';
 
 export function creerScene(canvas, { qualite = 'pleine' } = {}) {
   const legere = qualite === 'legere';

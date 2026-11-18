@@ -77,3 +77,26 @@ addEventListener('resize', () => {
 // Arrivée directe sur une ancre (#sommet…) : le navigateur a déjà défilé, on se cale dessus.
 maj(); tCamera = tVise; scene?.rendre(tCamera);
 addEventListener('load', maj);
+
+// « Je veux monter » : la caméra monte tout l'escalier en ~2,5 s au lieu de sauter d'un coup (idée validée par Adam, 18/11).
+// Le doigt ou la molette reprennent la main à tout moment ; mouvement réduit = saut direct.
+document.querySelectorAll('#depart a.btn[href="#sommet"]').forEach(lien => lien.addEventListener('click', e => {
+  const cible = document.getElementById('sommet');
+  if (!cible || calme) return;
+  e.preventDefault();
+  const depart = scrollY, arrivee = cible.getBoundingClientRect().top + scrollY, duree = 2600, t0 = performance.now();
+  const racineStyle = document.documentElement.style, avantComportement = racineStyle.scrollBehavior;
+  racineStyle.scrollBehavior = 'auto';
+  let fini = false;
+  const stop = () => { if (fini) return; fini = true; racineStyle.scrollBehavior = avantComportement;
+    ['wheel', 'touchstart', 'keydown'].forEach(t => removeEventListener(t, stop)); };
+  ['wheel', 'touchstart', 'keydown'].forEach(t => addEventListener(t, stop, { passive: true, once: true }));
+  const douce = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  (function pas(t) {
+    if (fini) return;
+    const x = Math.min(1, (t - t0) / duree);
+    scrollTo(0, depart + (arrivee - depart) * douce(x));
+    if (x < 1) requestAnimationFrame(pas);
+    else { stop(); history.replaceState(null, '', '#sommet'); document.getElementById('ouvrir-session')?.focus({ preventScroll: true }); }
+  })(t0);
+}));
