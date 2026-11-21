@@ -1,7 +1,7 @@
 import { test } from 'node:test'; import assert from 'node:assert/strict';
 import { preparer, page, BASE } from './aide.mjs';
 preparer();
-const MENU = ['Le club', 'Rejoindre', 'Les rendez-vous', 'Questions', 'Le fondateur', 'Le journal'];
+const MENU = ['Le club', 'La hype', 'Rejoindre', 'Les rendez-vous', 'Questions', 'Le fondateur', 'Le journal'];
 for (const app of ['desktop', 'mobile']) {
   const ouvrir = async () => { const p = await page(app); await p.goto(BASE + '/'); return p; };
   test(`${app} neuf-paliers-dans-l-ordre`, async () => {
@@ -9,10 +9,11 @@ for (const app of ['desktop', 'mobile']) {
     assert.deepEqual(await p.locator('.palier').evaluateAll(e => e.map(x => x.dataset.etage)), ['0','1','2','3','4','5','6','7','8']);
     assert.match(await p.locator('#depart h1').innerText(), /Le club des entrepreneurs qui/);
   });
-  // Textes v3 adoptés par Adam (15/11) : Discord n'apparaît que dans la formule Membre, le sommet mène à la Session gratuite
-  test(`${app} discord-seulement-formule-membre`, async () => { const p = await ouvrir();
-    const hors = await p.evaluate(() => [...document.querySelectorAll('.palier')].filter(e => e.id !== 'membre').map(e => e.innerText).join(' '));
-    assert.doesNotMatch(hors, /discord/i); });
+  // Vision du 21/11 (Adam) : le Discord devient gratuit, plus aucun prix ni « fondateur » sur l'accueil, compteur de la hype au sommet
+  test(`${app} vision-21-11`, async () => { const p = await ouvrir();
+    const t = await p.evaluate(() => document.querySelector('main').innerText);
+    assert.doesNotMatch(t, /79 €|offert à vie|places de fondateur|appel de 20/i);
+    assert.match(t, /Les Piliers/); assert.match(await p.locator('#hype-compteur').innerText(), /sur 30/); });
   test(`${app} sommet-vers-la-session`, async () => { const p = await ouvrir(); assert.match(await p.locator('#sommet').innerText(), /Réserve ta place à la Session/); });
   // 18/11 (demande d'Adam) : la vidéo du Belaroïa remplace la photo ; muette et en ligne sur iPhone, jamais recadrée
   test(`${app} video-belaroia`, async () => {

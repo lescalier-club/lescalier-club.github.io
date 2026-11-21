@@ -40,7 +40,7 @@
    "url": "https://lescalierclub.fr/",
    "logo": "https://lescalierclub.fr/media/icone.png",
    "image": "https://lescalierclub.fr/media/partage.png",
-   "description": "L'Escalier est un club d'entrepreneurs de 18 à 30 ans à Montpellier (Hérault), fondé en octobre 2026 par Adam Abad. On y entre après un appel de 20 minutes, on avance chaque semaine ensemble en ligne, et on se retrouve en vrai chaque mois.",
+   "description": "L'Escalier est un club d'entrepreneurs de 18 à 30 ans à Montpellier (Hérault), fondé en octobre 2026 par Adam Abad. On y entre gratuitement par la Session de chaque semaine à Montpellier, la communauté vit sur Discord, et on se retrouve en vrai chaque mois.",
    "foundingDate": "2026-10",
    "founder": {
     "@id": "https://lescalierclub.fr/fondateur/#adam"
@@ -97,7 +97,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lescalierclub.fr/">
 <meta property="og:title" content="L’Escalier, le club des entrepreneurs qui montent">
-<meta property="og:description" content="Montpellier, 18 à 30 ans. Viens bosser avec nous, c’est gratuit. Offert à vie aux 10 premiers membres, avant l’ouverture du 8 décembre.">
+<meta property="og:description" content="Montpellier, 18 à 30 ans. Viens bosser avec nous et les Piliers, c’est gratuit. On bosse sérieusement, on kiffe la vie.">
 <meta property="og:image" content="https://lescalierclub.fr/media/partage.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -496,12 +496,12 @@ footer a { font-weight: 500; }
 .etiquettes li { padding: 6px 14px; border: 1px solid currentColor; border-radius: 999px; font-size: var(--t-s); }
 .sommet .etapes { grid-template-columns: repeat(4, minmax(0, 1fr)); border-top-color: var(--pierre); list-style: none; padding: 0; }
 .sommet .etape span:not(.n) { color: var(--pierre); opacity: .8; }
-.formules { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 26px auto 0; max-width: 620px; text-align: left; }
+.formules { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 26px auto 0; max-width: 900px; text-align: left; }
 .formule { border: 1px solid rgba(58,49,40,.2); border-radius: 14px; padding: 16px 18px; }
 .formule b { display: block; margin-bottom: 8px; font-size: var(--t-s); }
 .formule ul { margin: 0; padding-left: 18px; font-size: var(--t-s); line-height: 1.5; }
 .formule.membre { background: rgba(244,194,71,.18); border-color: rgba(184,134,43,.5); }
-@media (max-width: 560px) { .formules { grid-template-columns: 1fr; } }
+@media (max-width: 760px) { .formules { grid-template-columns: 1fr; } }
 .sommet .secondaire { margin-top: 28px; font-size: var(--t-s); color: var(--pierre); }
 .sommet .secondaire a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
 .inscription { margin: 28px auto 0; padding: clamp(20px, 4vw, 32px); background: var(--nuit); border-radius: 16px; max-width: 520px; color: var(--creme); text-align: left; }
@@ -519,12 +519,23 @@ footer a { font-weight: 500; }
 @media (max-width: 760px) { .sommet .etapes { grid-template-columns: minmax(0, 1fr); row-gap: 14px; } }
 .sommet .actions { margin-top: 32px; }
 .sommet .actions .btn { font-size: 1.25rem; padding: 20px 36px; }
+
+/* ---------- LA HYPE : bouton flottant + bouton du départ (21/11) ---------- */
+.btn-hype { background: #15120E; color: #F4F1E9; margin-left: 10px; display: inline-flex; align-items: center; gap: 9px; }
+.hype-point { width: 9px; height: 9px; border-radius: 50%; background: #E5483A; flex: none; animation: hype-pouls 1.6s infinite; }
+@keyframes hype-pouls { 0% { box-shadow: 0 0 0 0 rgba(229,72,58,.6); } 70% { box-shadow: 0 0 0 9px rgba(229,72,58,0); } 100% { box-shadow: 0 0 0 0 rgba(229,72,58,0); } }
+.hype-flottant { position: fixed; left: 16px; bottom: 16px; z-index: 50; display: flex; align-items: center; gap: 10px; padding: 10px 12px 10px 14px; border-radius: 99px; background: rgba(21,18,14,.88); color: #F4F1E9; text-decoration: none; font-size: .88rem; box-shadow: 0 10px 30px rgba(0,0,0,.3); backdrop-filter: blur(8px); transition: transform .2s, opacity .3s; }
+.hype-flottant:hover { transform: translateY(-2px); }
+.hype-flottant .hf-voir { background: #F4C247; color: #2A231C; font-weight: 700; padding: 6px 12px; border-radius: 99px; }
+.hype-flottant.cache { opacity: 0; pointer-events: none; transform: translateY(12px); }
+@media (max-width: 560px) { .btn-hype { margin: 10px 0 0; } .hype-flottant { left: 12px; bottom: 12px; font-size: .8rem; } }
+@media (prefers-reduced-motion: reduce) { .hype-point { animation: none; } }
 </style>
 <link rel="stylesheet" href="/montee/montee.css?v=5">
 </head>
 <body>
 <a id="aller-sommet" class="evitement" href="#sommet">Aller au sommet</a>
-<header id="menu"><a class="logo" href="#depart" aria-label="L'Escalier, retour au départ"><svg viewBox="0 0 60 64" aria-hidden="true"><path d="M3 61 V52 H15 V40 H27 V28 H39 V16 H51" fill="none" stroke="var(--pierre)" stroke-width="5" stroke-linecap="square"/><g transform="translate(39.5 0) scale(1.15)" fill="var(--or)"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></svg><span>L’ESCALIER</span></a><nav aria-label="Pages du club"><a href="/le-club/">Le club</a><a href="/rejoindre/">Rejoindre</a><a href="/rendez-vous/">Les rendez-vous</a><a href="/questions/">Questions</a><a href="/fondateur/">Le fondateur</a><a href="/journal/">Le journal</a></nav></header>
+<header id="menu"><a class="logo" href="#depart" aria-label="L'Escalier, retour au départ"><svg viewBox="0 0 60 64" aria-hidden="true"><path d="M3 61 V52 H15 V40 H27 V28 H39 V16 H51" fill="none" stroke="var(--pierre)" stroke-width="5" stroke-linecap="square"/><g transform="translate(39.5 0) scale(1.15)" fill="var(--or)"><rect x="4" y="0" width="2" height="3"/><rect x="3" y="1" width="4" height="1"/><rect x="3" y="3" width="4" height="2"/><rect x="2" y="5" width="6" height="1"/><polygon points="3.6,6 6.4,6 7.4,12 2.6,12"/><rect x="2" y="12" width="6" height="2"/></g></svg><span>L’ESCALIER</span></a><nav aria-label="Pages du club"><a href="/le-club/">Le club</a><a href="/hype/">La hype</a><a href="/rejoindre/">Rejoindre</a><a href="/rendez-vous/">Les rendez-vous</a><a href="/questions/">Questions</a><a href="/fondateur/">Le fondateur</a><a href="/journal/">Le journal</a></nav></header>
 <canvas id="scene" aria-hidden="true"></canvas>
 <div id="altitude" aria-live="polite">0 m</div>
 <main id="montee">
@@ -535,6 +546,7 @@ footer a { font-weight: 500; }
     <p class="definition">18–30 ans, à Montpellier. On bosse ensemble, on se rencontre, on vit des moments fous.</p>
     <div class="actions">
       <a class="btn" href="#sommet">Je veux monter</a>
+      <a class="btn btn-hype" href="/hype/"><span class="hype-point"></span>Regarder la hype</a>
     </div>
   </div>
 </section>
@@ -604,13 +616,14 @@ footer a { font-weight: 500; }
 
 <section class="band palier" data-etage="7" id="membre">
   <div class="wrap">
-    <span class="alt">610 m <span class="lieu">Devenir membre</span></span>
-    <h2>La Session est gratuite. Le club, c’est <em>79 € par mois</em>.</h2>
+    <span class="alt">610 m <span class="lieu">Comment ça marche</span></span>
+    <h2>70 % sérieux, <em>30 % kiff</em>.</h2>
     <div class="formules">
-      <div class="formule"><b>Gratuit</b><ul><li>Un endroit pour bosser chaque semaine, à Montpellier</li><li>Des entrepreneurs de ton âge à rencontrer</li><li>Une bonne ambiance qui te pousse à avancer</li><li>Des conseils entre nous, au fil de la journée</li></ul></div>
-      <div class="formule membre"><b>Membre · 79 €/mois</b><ul><li>Tout ce qui est gratuit</li><li>Une sortie en vrai chaque mois : la Montée de nuit, la Table…</li><li>Les soirées privées avec des invités de renom</li><li>Toutes les 2 semaines, un partenaire du club en visio</li><li>Je te présente aux personnes qui peuvent t’aider</li><li>Le groupe privé du club, sur Discord</li></ul></div>
+      <div class="formule"><b>Gratuit</b><ul><li>La Session chaque semaine, avec les Piliers, à Montpellier</li><li>La communauté du club, sur Discord</li><li>Toutes les 2 semaines, une visio avec un intervenant</li><li>Des entrepreneurs de ton âge à rencontrer</li></ul></div>
+      <div class="formule"><b>L’événement du mois</b><ul><li>Une sortie en vrai : la Montée de nuit, la Table, une soirée avec un invité…</li><li>Une petite place à payer</li><li>Annoncé à l’avance sur le Discord</li></ul></div>
+      <div class="formule membre"><b>Les Piliers</b><ul><li>Le cercle de ceux qui construisent le club avec moi</li><li>Les bunkers en villa : on bosse, on vit des moments forts</li><li>Tout ce qu’ils vivent, tu le vois sur le Discord</li><li>Le cercle ouvrira plus tard</li></ul></div>
     </div>
-    <ul class="etiquettes"><li>Offert à vie aux 10 premiers</li></ul>
+    <ul class="etiquettes"><li>On bosse sérieusement</li><li>On kiffe la vie</li></ul>
   </div>
 </section>
 
@@ -618,9 +631,10 @@ footer a { font-weight: 500; }
   <div class="wrap">
     <span class="alt" style="color:var(--aube)">Le dernier étage <span class="lieu" style="color:var(--creme)">Le toit</span></span>
         <h2>Ta première marche, c’est <em style="color:var(--creme)">aujourd’hui</em>.</h2>
-    <div class="fondateurs" id="fondateurs" aria-live="polite">
-      <p class="f-places"><b id="f-reste">10</b> places de fondateur sur <span id="f-total">10</span></p>
-      <p class="f-compte">Ouverture le <b>mardi 8 décembre</b> · <span id="f-jours"></span></p>
+    <div class="fondateurs" id="hype-compteur" aria-live="polite">
+      <p class="f-titre">La hype · 30 jours</p>
+      <p class="f-places"><b id="h-jour">Jour 1</b> sur 30</p>
+      <p class="f-compte"><span id="h-texte">Du 22 novembre au 21 décembre</span> · <a href="/hype/" style="color:var(--orange)">Suivre la hype →</a></p>
     </div>
     <div class="actions">
       <button class="btn" type="button" id="ouvrir-session" aria-expanded="false" aria-controls="inscription">Réserve ta place à la Session · 30 s</button>
@@ -639,21 +653,25 @@ footer a { font-weight: 500; }
     </div>
     <ol class="etapes">
       <li class="etape"><span class="n">1</span><b>La Session, gratuite</b></li>
-      <li class="etape"><span class="n">2</span><b>Tu viens 5 fois</b></li>
-      <li class="etape"><span class="n">3</span><b>Un café avec moi</b></li>
-      <li class="etape"><span class="n">4</span><b>Tu deviens membre, 79 €/mois</b></li>
+      <li class="etape"><span class="n">2</span><b>Le Discord, gratuit</b></li>
+      <li class="etape"><span class="n">3</span><b>L’événement du mois</b></li>
+      <li class="etape"><span class="n">4</span><b>Les Piliers, bientôt</b></li>
     </ol>
-    <p class="secondaire">Pas à Montpellier ? <a id="lien-appel" href="#sommet">Réserve un appel de 20 min</a> · <a href="/rejoindre/">Comment ça marche →</a></p>
+    <p class="secondaire">Pas à Montpellier ? <a id="lien-discord" href="#sommet">Rejoins le Discord, gratuit</a> · <a href="/rejoindre/">Comment ça marche →</a></p>
     <p class="lien-note" id="lien-note" aria-live="polite"></p>
   </div>
 </section>
 </main>
 
+<a class="hype-flottant" id="hype-flottant" href="/hype/" aria-label="La hype : regarder">
+  <span class="hype-point"></span><span class="hf-txt"><b>La hype</b> <span id="hf-jour">Jour 1/30</span></span><span class="hf-voir">Regarder ▶</span>
+</a>
+
 <footer>
   <div class="wrap">
     <span>L’Escalier · club d’entrepreneurs 18-30 ans · Montpellier, Hérault</span>
     <a href="mailto:lescalierclub1@gmail.com">lescalierclub1@gmail.com</a>
-    <span class="pied-pages"><a href="/le-club/">Le club</a> · <a href="/rejoindre/">Rejoindre</a> · <a href="/rendez-vous/">Les rendez-vous</a> · <a href="/questions/">Questions</a> · <a href="/fondateur/">Le fondateur</a> · <a href="/journal/">Le journal</a></span>
+    <span class="pied-pages"><a href="/le-club/">Le club</a> · <a href="/hype/">La hype</a> · <a href="/rejoindre/">Rejoindre</a> · <a href="/rendez-vous/">Les rendez-vous</a> · <a href="/questions/">Questions</a> · <a href="/fondateur/">Le fondateur</a> · <a href="/journal/">Le journal</a></span>
     <a id="lien-insta" href="#sommet">Suivre la montée sur Instagram</a>
   </div>
 </footer>
@@ -661,12 +679,12 @@ footer a { font-weight: 500; }
 <script>
 // Liens à compléter avant la mise en ligne
 const LIENS = {
-  appel: "https://calendly.com/adam34abad/appel-l-escalier",
+  discord: "https://discord.gg/2WepaSEGy4",
   instagram: "https://www.instagram.com/lescalier.club"
 };
 
-// Membres fondateurs : mettre à jour « pris » à chaque fondateur confirmé (vrais chiffres uniquement).
-const FONDATEURS = { total: 10, pris: 0, jour1: "2026-11-09T00:00:00+01:00", ouverture: "2026-12-08T00:00:00+01:00" };
+// La hype : Jour 1 = 22/11/2026, Jour 30 = 21/12/2026 (décision d'Adam du 21/11).
+const HYPE = { jour1: "2026-11-22T00:00:00+01:00", fin: "2026-12-21T00:00:00+01:00" };
 
 // Vidéo d'Adam : muette en boucle quand on la voit, « Écouter Adam » remet le son depuis le début
 (function videoAdam() {
@@ -682,13 +700,19 @@ const FONDATEURS = { total: 10, pris: 0, jour1: "2026-11-09T00:00:00+01:00", ouv
   });
   v.addEventListener('ended', () => { v.muted = true; v.loop = true; b.setAttribute('aria-pressed', 'false'); b.textContent = 'Réécouter Adam'; lire(); });
 })();
-(function fondateurs() {
-  const reste = Math.max(0, FONDATEURS.total - FONDATEURS.pris);
-  document.getElementById("f-reste").textContent = reste;
-  document.getElementById("f-total").textContent = FONDATEURS.total;
-  const jours = Math.ceil((new Date(FONDATEURS.ouverture) - new Date()) / 86400000);
-  document.getElementById("f-jours").textContent =
-    jours > 1 ? `dans ${jours} jours` : jours === 1 ? "demain" : "le club est ouvert";
+(function hypeFlottant() {
+  const b = document.getElementById("hype-flottant"), t = document.getElementById("hf-jour"); if (!b || !t) return;
+  const jour = Math.floor((new Date() - new Date(HYPE.jour1)) / 86400000) + 1;
+  t.textContent = jour < 1 ? "dès le 22/11" : jour <= 30 ? `Jour ${jour}/30` : "Jour 30/30";
+  const sommet = document.getElementById("hype-compteur");
+  if (sommet && "IntersectionObserver" in window) new IntersectionObserver(es => es.forEach(e => b.classList.toggle("cache", e.isIntersecting))).observe(sommet);
+})();
+(function hype() {
+  const j = document.getElementById("h-jour"), t = document.getElementById("h-texte"); if (!j || !t) return;
+  const jour = Math.floor((new Date() - new Date(HYPE.jour1)) / 86400000) + 1;
+  if (jour < 1) { j.textContent = "Jour 1"; t.textContent = "Ça commence le dimanche 22 novembre"; }
+  else if (jour <= 30) { j.textContent = `Jour ${jour}`; const r = 30 - jour; t.textContent = r === 0 ? "Dernier jour" : r === 1 ? "Plus qu’un jour" : `Plus que ${r} jours`; }
+  else { j.textContent = "Jour 30"; t.textContent = "La hype est terminée"; }
 })();
 
 
@@ -725,7 +749,7 @@ const FONDATEURS = { total: 10, pris: 0, jour1: "2026-11-09T00:00:00+01:00", ouv
 
 (function liens() {
   const note = document.getElementById("lien-note");
-  [["lien-appel", LIENS.appel], ["lien-insta", LIENS.instagram]].forEach(([id, url]) => {
+  [["lien-discord", LIENS.discord], ["lien-insta", LIENS.instagram]].forEach(([id, url]) => {
     const a = document.getElementById(id); if (!a) return;
     if (url) { a.href = url; a.target = "_blank"; a.rel = "noopener"; }
     else a.addEventListener("click", e => { e.preventDefault(); note.textContent = "Le lien arrive très bientôt. En attendant, écris-nous sur Instagram."; });
@@ -734,7 +758,7 @@ const FONDATEURS = { total: 10, pris: 0, jour1: "2026-11-09T00:00:00+01:00", ouv
 
 // Les marches
 const MARCHES = [
-  ["Tu arrives", "Un appel de 20 minutes avec moi, puis 30 minutes de cadrage : on pose ton histoire, ton sommet et ta première marche.", "tu es là, et tu as envie de monter."],
+  ["Tu arrives", "Tu viens à la Session, gratuite. On pose ton histoire, ton sommet et ta première marche.", "tu es là, et tu as envie de monter."],
   ["Premier client", "Quelqu’un paie pour ce que tu fais. C’est la marche la plus dure, et c’est là que le club pousse le plus fort.", "une facture ou un paiement reçu."],
   ["1 000 € par mois", "Un revenu qui revient chaque mois. Tu n’es plus en test, tu as une activité.", "ton chiffre du mois, montré en privé."],
   ["5 000 € par mois", "Tu peux en vivre. Tu structures : compta, outils, premières délégations. Les partenaires du club t’ouvrent les portes.", "trois mois au-dessus de 5 000 €."],
